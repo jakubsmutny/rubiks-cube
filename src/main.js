@@ -1,44 +1,76 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { TrackballControls } from "three/examples/jsm/controls/TrackballControls.js";
 
 import { RubicksCube } from './RubicksCube.js';
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+var scene;
+var camera;
+var renderer;
+var controls;
 
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize( window.innerWidth, window.innerHeight );
-renderer.setAnimationLoop( animate );
-document.body.appendChild( renderer.domElement );
+main();
 
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enablePan = false;
-controls.enableZoom = false;
+function main() {
 
-const size = 3;
-const dimension = 3;
-const cameraDistance = 6;
+    const cubeSize = 3;
+    const dimension = 3;
+    const cameraDistance = 10;
 
-const rubiksCube = new RubicksCube(size, dimension);
+    scene = new THREE.Scene();
+    setupRenderer();
+    setupCamera(cubeSize, cameraDistance);
 
-rubiksCube.cubies.forEach(cubie => {
-    scene.add(cubie.mesh);
-});
+    setupControls();
+    createFog(cubeSize, cameraDistance);
+    
+    // Debugging position and rotationof the cube
+    // showAxes();
 
-//const axesHelper = new THREE.AxesHelper( 50 );
-//scene.add( axesHelper );
+    var rubiksCube = new RubicksCube(cubeSize, dimension);
+    rubiksCube.cubies.forEach(cubie => {
+        scene.add(cubie.mesh);
+    });
 
-const near = cameraDistance - (size * Math.sqrt(3)) / 2;
-const far = cameraDistance + (size * Math.sqrt(3)) / 2;
-scene.fog = new THREE.Fog(0x000000, near, far);
-
-const cameraPosition = cameraDistance / Math.sqrt(3);
-camera.position.set(cameraPosition, cameraPosition, cameraPosition);
-controls.update();
+}
 
 function animate() {
-
     controls.update();
-	renderer.render( scene, camera );
+	renderer.render(scene, camera);
+}
 
+function showAxes() {
+    let axesHelper = new THREE.AxesHelper( 50 );
+    scene.add(axesHelper);
+}
+
+function createFog(cubeSize, cameraDistance) {
+    let color = 0x000000;
+    let near = cameraDistance - (cubeSize * Math.sqrt(3)) / 2;
+    let far = cameraDistance + (cubeSize * Math.sqrt(3)) / 2;
+    scene.fog = new THREE.Fog(color, near, far);
+}
+
+function setupRenderer() {
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setAnimationLoop(animate);
+    document.body.appendChild(renderer.domElement);
+}
+
+function setupCamera(cubeSize, cameraDistance) {
+    let fov = 45;
+    let aspect = window.innerWidth / window.innerHeight;
+    let near = cameraDistance - (cubeSize * Math.sqrt(3)) / 2;
+    let far = cameraDistance + (cubeSize * Math.sqrt(3)) / 2;
+    camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+
+    let cameraPosition = cameraDistance / Math.sqrt(3);
+    camera.position.set(cameraPosition, cameraPosition, cameraPosition);
+}
+
+function setupControls() {
+    controls = new TrackballControls(camera, renderer.domElement);
+    controls.rotateSpeed = 2;
+    controls.noZoom = true;
+    controls.noPan = true;
 }

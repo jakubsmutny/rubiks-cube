@@ -1,17 +1,14 @@
-import * as THREE from 'three';
-
 import { Cubie } from './cubie.js';
 
 export class RubicksCube {
     
     size;
     dimension;
-    cubies;
+    cubies = [];
 
     constructor(size, dimension) {
         this.size = size;
         this.dimension = dimension;
-        this.cubies = [];
 
         this.#createCubies();
     }
@@ -24,7 +21,7 @@ export class RubicksCube {
             for (let j = 0; j < this.dimension; j++) {
                 for (let k = 0; k < this.dimension; k++) {
 
-                    // make the cube hollow
+                    // Make the cube hollow
                     if (i != 0 && i != this.dimension - 1
                         && j != 0 && j != this.dimension - 1
                         && k != 0 && k != this.dimension - 1) {

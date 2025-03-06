@@ -5,16 +5,16 @@ import {ColorPicker} from "./ColorPicker.js";
 export class Cubie {
     
     size;
-    offsetX; offsetY; offsetZ;
+    positionX; positionY; positionZ;
     geometry;
     materials;
     mesh;
 
-    constructor(size, offsetX, offsetY, offsetZ) {
+    constructor(size, positionX, positionY, positionZ) {
         this.size = size;
-        this.offsetX = this.offsetX;
-        this.offsetY = this.offsetY;
-        this.offsetZ = this.offsetZ;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.positionZ = positionZ;
 
         this.geometry = new THREE.BoxGeometry(this.size, this.size, this.size);
         this.materials = [
@@ -26,7 +26,7 @@ export class Cubie {
                 new THREE.MeshBasicMaterial( { color: ColorPicker.BACK } ),
             ];
         this.mesh = new THREE.Mesh( this.geometry, this.materials );
-        this.mesh.position.set(offsetX, offsetY, offsetZ);
+        this.mesh.position.set(positionX, positionY, positionZ);
     }
 
 }
