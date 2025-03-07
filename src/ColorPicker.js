@@ -5,5 +5,6 @@ export const ColorPicker = {
     LEFT: 0xFFA500,
     FRONT: 0x00FF00,
     BACK: 0x0000FF,
-    BLANK: 0x606060
+    BLANK: 0x606060,
+    BASE: 0x000000
 };

@@ -27,9 +27,8 @@ function main() {
     // showAxes();
 
     var rubiksCube = new RubicksCube(cubeSize, dimension);
-    rubiksCube.cubies.forEach(cubie => {
-        scene.add(cubie.mesh);
-    });
+    for (let cubie of rubiksCube.cubies)
+        scene.add(cubie.graphics);
 
 }
 
@@ -52,6 +51,7 @@ function createFog(cubeSize, cameraDistance) {
 
 function setupRenderer() {
     renderer = new THREE.WebGLRenderer();
+    renderer.setClearColor(0x000000, 0);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setAnimationLoop(animate);
     document.body.appendChild(renderer.domElement);

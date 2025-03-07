@@ -32,7 +32,7 @@ export class RubicksCube {
                     let positionY = j * cubieSize - offset;
                     let positionZ = k * cubieSize - offset;
 
-                    let cubie = new Cubie(cubieSize * 0.95, positionX, positionY, positionZ);
+                    let cubie = new Cubie(cubieSize, positionX, positionY, positionZ);
                     this.cubies.push(cubie);
                 }
             }
