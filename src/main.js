@@ -2,11 +2,14 @@ import * as THREE from 'three';
 import { TrackballControls } from "three/examples/jsm/controls/TrackballControls.js";
 
 import { RubicksCube } from './RubicksCube.js';
+import { Axis } from './Axis.js';
 
 var scene;
 var camera;
 var renderer;
 var controls;
+
+var rubiksCube;
 
 main();
 
@@ -23,22 +26,32 @@ function main() {
     setupControls();
     createFog(cubeSize, cameraDistance);
     
-    // Debugging position and rotationof the cube
+    // Debugging position and rotation of the cube
     // showAxes();
 
-    var rubiksCube = new RubicksCube(cubeSize, dimension);
+    rubiksCube = new RubicksCube(cubeSize, dimension);
     for (let cubie of rubiksCube.cubies)
         scene.add(cubie.graphics);
+
+    rubiksCube.rotate(Axis.X, 0, Math.PI / 2);
+    rubiksCube.rotate(Axis.X, 2, Math.PI / 2);
+    rubiksCube.rotate(Axis.Y, 0, Math.PI / 2);
+    rubiksCube.rotate(Axis.Y, 2, Math.PI / 2);
+    rubiksCube.rotate(Axis.Z, 1, Math.PI / 2);
+    rubiksCube.rotate(Axis.X, 1, Math.PI / 2);
+    rubiksCube.rotate(Axis.Z, 0, Math.PI / 2);
+    rubiksCube.rotate(Axis.Z, 2, Math.PI / 2);
 
 }
 
 function animate() {
     controls.update();
 	renderer.render(scene, camera);
+    //rubiksCube.rotate(Axis.X, 0, Math.PI / 300);
 }
 
 function showAxes() {
-    let axesHelper = new THREE.AxesHelper( 50 );
+    let axesHelper = new THREE.AxesHelper(50);
     scene.add(axesHelper);
 }
 
@@ -73,4 +86,5 @@ function setupControls() {
     controls.rotateSpeed = 2;
     controls.noZoom = true;
     controls.noPan = true;
+    controls.target.set(0, 0, 0);
 }
