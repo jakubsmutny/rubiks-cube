@@ -47,7 +47,7 @@ function main() {
 function animate() {
     controls.update();
 	renderer.render(scene, camera);
-    //rubiksCube.rotate(Axis.X, 0, Math.PI / 300);
+    rubiksCube.rotate(Axis.Y, 2, Math.PI / 300);
 }
 
 function showAxes() {

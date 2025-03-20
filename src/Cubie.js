@@ -3,9 +3,7 @@ import * as THREE from 'three';
 export class Cubie {
     
     position;
-
     faces;
-
     graphics;
 
     constructor(position, faces) {
@@ -17,24 +15,30 @@ export class Cubie {
         let materials = this.#getMaterial();
 
         this.graphics = new THREE.Mesh(geometry, materials);
-        this.updateFromPosition();
+        this.#updateFromPosition();
     }
 
     #getMaterial() {
-        let loader = new THREE.TextureLoader();
-
         let material = [];
         for (let i = 0; i < 6; i++)
             material.push(new THREE.MeshBasicMaterial( { color: 0x000000 } ))
         
         for (let face of this.faces)
-            material[face.directionIndex] = new THREE.MeshBasicMaterial( { map: loader.load(face.sticker) } );
+            material[face.sideId] = new THREE.MeshBasicMaterial( { map: face.getStickerTexture() } );
         
         return material;
     }
 
-    updateFromPosition() {
+    move(axis, radians) {
+        this.position.move(axis, radians);
+        for (let face of this.faces)
+            face.rotate(axis, radians);
+        this.#updateFromPosition();
+    }
+
+    #updateFromPosition() {
         this.graphics.position.copy(this.position.vector);
-        this.graphics.rotation.copy(this.position.euler);
+        let euler = new THREE.Euler().setFromQuaternion(this.position.rotation);
+        this.graphics.rotation.copy(euler);
     }
 }
