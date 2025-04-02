@@ -2,44 +2,44 @@ import * as THREE from 'three';
 
 export class StickerProvider {
 
-    side;
-    colors;
-    backgroundColor;
+    side: number;
+    colors: Array<THREE.Color>;
+    backgroundColor: THREE.Color;
 
-    pixelCount;
-    textures;
+    pixelCount: number;
+    textures: Array<THREE.DataTexture>;
 
-    constructor(dimension, colors, backgroundColor) {
+    constructor(dimension: number, colors?: Array<THREE.Color>, backgroundColor?: THREE.Color) {
         this.side = this.#getSideFromDimension(dimension);
         if(colors !== undefined) this.colors = colors;
         else this.colors = this.#getDefaultColors();
         if(backgroundColor !== undefined) this.backgroundColor = backgroundColor;
-        else this.backgroundColor = new THREE.Color(0, 0, 0, 255);
+        else this.backgroundColor = new THREE.Color(0, 0, 0);
         this.pixelCount = this.side * this.side;
 
         this.textures = this.#createTextures();
     }
 
-    #getSideFromDimension(dimension) {
-        let side = Math.ceil(10000 / (dimension * dimension));
+    #getSideFromDimension(dimension: number): number {
+        let side: number = Math.ceil(10000 / (dimension * dimension));
         side = Math.min(side, 1000);
         side = Math.max(side, 25);
         return side;
     }
 
-    #getDefaultColors() {
+    #getDefaultColors(): Array<THREE.Color> {
         return [
-            new THREE.Color(185, 0, 0, 255),
-            new THREE.Color(255, 89, 0, 255),
-            new THREE.Color(255, 255, 255, 255),
-            new THREE.Color(255, 213, 0, 255),
-            new THREE.Color(0, 155, 32, 255),
-            new THREE.Color(0, 69, 173, 255)
+            new THREE.Color(185, 0, 0),
+            new THREE.Color(255, 89, 0),
+            new THREE.Color(255, 255, 255),
+            new THREE.Color(255, 213, 0),
+            new THREE.Color(0, 155, 32),
+            new THREE.Color(0, 69, 173)
         ];
     }
 
-    #createTextures() {
-        let textures = [];
+    #createTextures(): Array<THREE.DataTexture> {
+        let textures = new Array<THREE.DataTexture>;
         for (let sideId = 0; sideId < 6; sideId++) {
             let pixels = new Uint8Array(this.pixelCount * 4);
             for (let i = 0; i < this.side; i++) for (let j = 0; j < this.side; j++) {
@@ -56,16 +56,17 @@ export class StickerProvider {
         return textures;
     }
 
-    #setPixelColor(data, position, color) {
+    #setPixelColor(data: Uint8Array, position: number, color: THREE.Color): void {
         data[position] = color.r;
         data[position + 1] = color.g;
         data[position + 2] = color.b;
-        data[position + 3] = color.a;
+        // Make the pixel not transparent
+        data[position + 3] = 255;
     }
 
-    #backgroundMask(row, column) {
+    #backgroundMask(row: number, column: number): boolean {
         let frame = Math.ceil(this.side / 25);
-        let radius = 3 * frame;
+        let radius = Math.ceil(this.side / 8);
         let corner = frame + radius;
         let straight = this.side - (2 * corner);
 
@@ -90,7 +91,11 @@ export class StickerProvider {
         return true;
     }
 
-    getStickerTexture(sideId) {
+    getStickerTexture(sideId: number): THREE.DataTexture {
         return this.textures[sideId];
+    }
+
+    getBackgroundColor(): THREE.Color {
+        return this.backgroundColor;
     }
 }
