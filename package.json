@@ -1,4 +1,10 @@
 {
+  "name": "rubiks-cube",
+  "scripts": {
+    "build": "npx vite build",
+    "clean": "rm -rf dist",
+    "build:full": "npm run clean && npm run build"
+  },
   "dependencies": {
     "three": "^0.174.0"
   },
