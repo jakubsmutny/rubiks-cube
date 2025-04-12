@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build
-    uns-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Install npm dependencies
       run: npm install
