@@ -38,11 +38,11 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: static-website
-        path: ./
+        path: ./dist/
     - name: Extract artifact
       run: |
-        tar -xf ./artifact.tar -C ./dist
-        rm ./artifact.tar
+        tar -xf ./dist/artifact.tar -C ./dist
+        rm ./dist/artifact.tar
     - name: Deploy to FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
