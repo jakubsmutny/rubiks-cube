@@ -23,7 +23,7 @@ jobs:
     - name: Copy .htaccess into dist
       run: cp .htaccess dist/
     - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: static-website
         path: dist/
