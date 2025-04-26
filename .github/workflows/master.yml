@@ -38,11 +38,11 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: static-website
-        path: ./dist
+        path: ./dist/
     - name: Deploy to FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ftp.rubik.jakubsmutny.cz
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./dist
+        local-dir: ./dist/
