@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { TrackballControls } from "three/examples/jsm/controls/TrackballControls.js";
 
-import { RubicksCube } from './RubicksCube';
+import { RubiksCube } from './RubiksCube';
 import { Shuffle } from './Shuffle';
 
 export class View {
@@ -17,7 +17,7 @@ export class View {
 
     canvas: HTMLElement;
 
-    rubiksCube: RubicksCube;
+    rubiksCube: RubiksCube;
 
     constructor(cubeSize: number, dimension: number, cameraDistance: number, canvas: HTMLElement) {
         this.cubeSize = cubeSize;
@@ -33,11 +33,31 @@ export class View {
         this.#createFog();
 
         // Debugging position and rotation of the cube
-        // showAxes();
+        // this.#showAxes();
 
-        this.rubiksCube = new RubicksCube(cubeSize, dimension);
+        this.rubiksCube = new RubiksCube(cubeSize, dimension);
         for (let cubie of this.rubiksCube.cubies)
             this.scene.add(cubie.graphics);
+
+        // TODO Test user input
+        document.getElementById("shuffleButton")!.addEventListener("click", () => { this.addShuffle(); });
+        document.querySelector('#shuffle')!.addEventListener('keypress', (e) => {
+            const event = e as KeyboardEvent;
+            if(event.key === 'Enter') this.addShuffle();
+        });
+
+        let buttons = document.getElementsByClassName("dimensionButton")!;
+        for(let button of buttons) {
+            let dim =  +(button.textContent!);
+            button.addEventListener("click", () => {
+                for (let cubie of this.rubiksCube.cubies)
+                    this.scene.remove(cubie.graphics);
+                this.rubiksCube = new RubiksCube(this.cubeSize, dim);
+                for (let cubie of this.rubiksCube.cubies)
+                    this.scene.add(cubie.graphics);
+                this.dimension = dim;
+            });
+        }
     }
     
     #setupRenderer(): THREE.WebGLRenderer {
@@ -88,4 +108,15 @@ export class View {
         this.rubiksCube.update();
 	    this.renderer.render(this.scene, this.camera);
     }
+
+    // TODO Test user input
+    addShuffle(): void {
+        let inputField = document.getElementById("shuffle")! as HTMLInputElement;
+        let value = inputField.value;
+        let shuffle = Shuffle.fromNotation(value, this.rubiksCube.dimension);
+        this.rubiksCube.manipulate(shuffle);
+        inputField.value = "";
+    }
 }
+
+

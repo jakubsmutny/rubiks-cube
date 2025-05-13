@@ -9,17 +9,12 @@ body {
     gap: 30px;
 }
 
-#mainView {
-    width: 600px;
-    height: 600px;
-}
-
 .viewHolder {
     border-radius: 20px;
     background: #303030;
     box-shadow: 0 7px 30px #000000;
-    width: 300px;
-    height: 300px;
+    width: 75vh;
+    height: 75vh;
     margin: auto;
 }
 .viewHolder:first-child {

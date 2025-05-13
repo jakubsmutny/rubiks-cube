@@ -9,7 +9,7 @@ import { Shuffle } from './Shuffle';
 import { AnimationQueue } from './AnimationQueue';
 import { Move } from './Move';
 
-export class RubicksCube {
+export class RubiksCube {
     
     size: number;
     dimension: number;
