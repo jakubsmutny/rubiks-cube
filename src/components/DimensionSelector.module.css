@@ -1,0 +1,58 @@
+.dimensionSelector {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: fit-content;
+    font-family: system-ui, sans-serif;
+}
+
+/* Label */
+.dimensionSelector label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* Select */
+.dimensionSelector select {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+/* Hover/Focusing */
+.dimensionSelector select:hover {
+    border-color: var(--accent);
+}
+
+.dimensionSelector select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-transparent);
+}
+
+/* ----- THEME VARIABLES ----- */
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg-secondary: #f2f2f2;
+        --text-color: #222;
+        --border-color: #bbb;
+        --accent: #4a90e2;
+        --accent-transparent: rgba(74, 144, 226, 0.3);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-secondary: #242424;
+        --text-color: #e0e0e0;
+        --border-color: #555;
+        --accent: #6aa8ff;
+        --accent-transparent: rgba(106, 168, 255, 0.3);
+    }
+}

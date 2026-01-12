@@ -4,26 +4,26 @@ import { TrackballControls } from "three/examples/jsm/controls/TrackballControls
 import { RubiksCube } from './RubiksCube';
 import { Shuffle } from './Shuffle';
 
-export class View {
+export class SceneEngine {
 
     scene: THREE.Scene;
     renderer: THREE.WebGLRenderer;
-    camera: THREE.Camera;
+    camera: THREE.PerspectiveCamera;
     controls: TrackballControls;
 
     cubeSize: number;
     dimension: number;
     cameraDistance: number;
 
-    canvas: HTMLElement;
+    canvas: HTMLCanvasElement;
 
     rubiksCube: RubiksCube;
 
-    constructor(cubeSize: number, dimension: number, cameraDistance: number, canvas: HTMLElement) {
+    constructor(cubeSize: number, dimension: number, cameraDistance: number, canvasName: string) {
         this.cubeSize = cubeSize;
         this.dimension = dimension;
         this.cameraDistance = cameraDistance;
-        this.canvas = canvas;
+        this.canvas = document.getElementById(canvasName) as HTMLCanvasElement;
 
         this.scene = new THREE.Scene();
         this.renderer = this.#setupRenderer();
@@ -36,7 +36,7 @@ export class View {
         // this.#showAxes();
 
         this.rubiksCube = new RubiksCube(cubeSize, dimension);
-        for (let cubie of this.rubiksCube.cubies)
+        for(let cubie of this.rubiksCube.cubies)
             this.scene.add(cubie.graphics);
 
         // TODO Test user input
@@ -46,31 +46,28 @@ export class View {
             if(event.key === 'Enter') this.addShuffle();
         });
 
-        let buttons = document.getElementsByClassName("dimensionButton")!;
-        for(let button of buttons) {
-            let dim =  +(button.textContent!);
-            button.addEventListener("click", () => {
-                for (let cubie of this.rubiksCube.cubies)
-                    this.scene.remove(cubie.graphics);
-                this.rubiksCube = new RubiksCube(this.cubeSize, dim);
-                for (let cubie of this.rubiksCube.cubies)
-                    this.scene.add(cubie.graphics);
-                this.dimension = dim;
-            });
-        }
+        //const select = document.getElementById("dimensionSelect") as HTMLSelectElement;
+        //select.addEventListener("change", () => {
+        //    const dim = Number(select.value);
+        //    for (let cubie of this.rubiksCube.cubies)
+        //        this.scene.remove(cubie.graphics);
+        //    this.rubiksCube = new RubiksCube(this.cubeSize, dim);
+        //    for (let cubie of this.rubiksCube.cubies)
+        //        this.scene.add(cubie.graphics);
+        //    this.dimension = dim;
+        //});
     }
     
     #setupRenderer(): THREE.WebGLRenderer {
-        let renderer = new THREE.WebGLRenderer();
+        let renderer = new THREE.WebGLRenderer({canvas: this.canvas as HTMLCanvasElement}); // renderer. setSize (window.innerWidth, window.innerHeight); document.body.appendChild(renderer.domELement);
         renderer.setClearColor(0x000000, 0);
         renderer.setSize(this.canvas.offsetWidth, this.canvas.offsetHeight);
-        this.animate = this.animate.bind(this);
         renderer.setAnimationLoop(this.animate);
-        this.canvas.appendChild(renderer.domElement);
+        //this.canvas.appendChild(renderer.domElement);
         return renderer;
     }
     
-    #setupCamera(): THREE.Camera {
+    #setupCamera(): THREE.PerspectiveCamera {
         let fov = 45;
         let aspect = this.canvas.offsetWidth / this.canvas.offsetHeight;
         let near = this.cameraDistance - (this.cubeSize * Math.sqrt(3)) / 2;
@@ -103,11 +100,11 @@ export class View {
         this.scene.add(axesHelper);
     }
 
-    animate(): void {
+    animate = (): void => {
         this.controls.update();
         this.rubiksCube.update();
-	    this.renderer.render(this.scene, this.camera);
-    }
+        this.renderer.render(this.scene, this.camera);
+    };
 
     // TODO Test user input
     addShuffle(): void {
@@ -119,4 +116,14 @@ export class View {
     }
 }
 
+document.addEventListener('mousedown', onMouseDown);
+//document.addEventListener('touchstart', onMouseDown);
+document.addEventListener('mouseup' , onMouseUp);
 
+function onMouseUp(event: MouseEvent): void {
+    console.log(`Mouse up at (${event.clientX}, ${event.clientY})`);
+}
+
+function onMouseDown(event: MouseEvent): void {
+    console.log(`Mouse down at (${event.clientX}, ${event.clientY})`);
+}
