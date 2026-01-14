@@ -8,109 +8,53 @@ export class Move {
     steps: number;
 
     constructor(axis: Vector, planes: Array<number>, steps: number) {
-        this.axis = axis;
-        this.planes = Array<number>();
-        for(let plane of planes)
-            this.planes.push(plane);
-        this.steps = Move.normalizeSteps(steps);
-    }
-    static fromNotation(notation: string, dimension: number): Move {
-        
-        if(!this.notationValid(notation, dimension)) return Move.empty();
-
-        // Some notations use small numbers meaning wide rotations
-        notation = notation.replace(/[rludfb]/, match => match.toUpperCase() + 'w');
-
-        let turnDirection = 1;
-        if(/'$/.test(notation)) turnDirection *= -1;
-        if(/2$/.test(notation)) turnDirection *= 2;
-        if(/[RUFSxyz]/.test(notation)) turnDirection *= -1;
-
-        let axis = Axis.undefined;
-        if(/[RLMx]/.test(notation)) axis = Axis.X;
-        if(/[UDEy]/.test(notation)) axis = Axis.Y;
-        if(/[FBSz]/.test(notation)) axis = Axis.Z;
-
-        let wide = /[wxyz]/.test(notation);
-
-        let planeInvers = /[RUF]/.test(notation);
-
-        let planeNumber = /w/.test(notation) ? 2 : 1;
-        let newPlaneNumber = +(/^[0-9]*/.exec(notation)![0]);
-        if(newPlaneNumber) planeNumber = newPlaneNumber;
-        if(/[MES]/.test(notation)) planeNumber = (dimension + 1) / 2;
-        if(/[xyz]/.test(notation)) planeNumber = dimension;
-
-        let planes = [];
-        for (let i = 1; i <= planeNumber; i++)
-            if(wide || i == planeNumber)
-                planes.push(planeInvers ? dimension - i : i - 1);
-
-        return new Move(axis, planes, Math.PI / 2 * turnDirection);
-    }
-    static random(dimension: number): Move {
-        let randomAxis = Math.random();
-        let axis = Axis.X;
-        if(randomAxis >= 0.33) axis = Axis.Y;
-        if(randomAxis >= 0.66) axis = Axis.Z;
-
-        let randomPlane = Math.floor(Math.random() * dimension);
-        let planes = Array.of(randomPlane);
-
-        let turnDirection = 1;
-        if(Math.random() > 0.5) turnDirection = -1;
-
-        return new Move(axis, planes, Math.PI / 2 * turnDirection);
-    }
-    static empty(): Move {
-        return new Move(Axis.undefined, new Array<number>(), 0);
+        this.axis = axis
+        this.planes = Array.from(planes)
+        this.planes.sort()
+        this.steps = Move.normalizeSteps(steps)
     }
 
     clone(): Move {
-        let planes = [];
-        for(let plane of this.planes)
-            planes.push(plane);
-        return new Move(this.axis, planes, this.steps);
-    }
-
-    static notationValid(notation: string, dimension: number): boolean {
-        if(+(/^[0-9]*/.exec(notation)![0]) > dimension) return false;
-        if(/^[0-9]*([RLUDFB])w?(['2])?$/.test(notation))return true;
-        if(/^[0-9]*([rludfb])(['2])?$/.test(notation))return true;
-        if(/^([MES])(['2])?$/.test(notation) && dimension % 2) return true;
-        if(/^([xyz])(['2])?$/.test(notation)) return true;
-        return false;
+        const planes: Array<number> = Array.from(this.planes)
+        return new Move(this.axis.clone(), planes, this.steps)
     }
 
     getInverse(): Move {
-        return new Move(this.axis, this.planes, this.steps * -1);
+        const planes: Array<number> = Array.from(this.planes)
+        const inverseSteps: number = Move.normalizeSteps(-this.steps)
+        return new Move(this.axis.clone(), planes, inverseSteps)
     }
 
-    sameAxisPlanes(other: Move): boolean {
-        if(this.axis != other.axis) return false;
-        for (let plane of this.planes)
-            if(!other.planes.includes(plane)) return false;
-        for (let plane of other.planes)
-            if(!this.planes.includes(plane)) return false;
-        return true;
+    isConcatenableWith(other: Move): boolean {
+        if(this.axis != other.axis) {
+            return false
+        }
+        this.planes.sort()
+        other.planes.sort()
+        return this.planes.every(
+            (plane, index) => plane === other.planes[index]
+        )
     }
 
-    addRadiansFrom(other: Move): void {
-        let angle = this.steps + other.steps;
-        this.steps = Move.normalizeSteps(angle);
+    concatenate(other: Move): Move {
+        if(!this.isConcatenableWith(other)) {
+            return this.clone()
+        }
+        const planes: Array<number> = Array.from(this.planes)
+        const steps: number = Move.normalizeSteps(this.steps + other.steps)
+        return new Move(this.axis.clone(), planes, steps)
     }
 
     private static normalizeSteps(steps: number): number {
-        if(steps < 0) {
-            const toAdd = Math.ceil(-steps / 4) * 4;
-        }
-        return Math.floor(steps + 4) % 4
+        steps = Math.trunc(steps)
+        steps = ((steps % 4) + 4) % 4
+        if(steps > 2) steps -= 4
+        return steps
     }
 
     isEmpty(): boolean {
-        if(this.axis === Axis.undefined) return true;
-        if(this.planes.length === 0) return true;
-        if(this.steps === 0) return true;
-        return false;
+        return this.axis === Axis.undefined
+            || this.planes.length === 0
+            || this.steps === 0
     }
 }

@@ -34,7 +34,7 @@ export class Move {
 
         let wide = /[wxyz]/.test(notation);
 
-        let planeInvers = /[RUF]/.test(notation);
+        let planeInverse = /[RUF]/.test(notation);
 
         let planeNumber = /w/.test(notation) ? 2 : 1;
         let newPlaneNumber = +(/^[0-9]*/.exec(notation)![0]);
@@ -45,7 +45,7 @@ export class Move {
         let planes = [];
         for (let i = 1; i <= planeNumber; i++)
             if(wide || i == planeNumber)
-                planes.push(planeInvers ? dimension - i : i - 1);
+                planes.push(planeInverse ? dimension - i : i - 1);
 
         return new Move(axis, planes, Math.PI / 2 * turnDirection);
     }
