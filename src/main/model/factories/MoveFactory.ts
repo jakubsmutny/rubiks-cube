@@ -28,7 +28,7 @@ export class MoveFactory {
 
         let wide = /[wxyz]/.test(notation);
 
-        let planeInvers = /[RUF]/.test(notation);
+        let planeInverse = /[RUF]/.test(notation);
 
         let planeNumber = /w/.test(notation) ? 2 : 1;
         let newPlaneNumber = +(/^[0-9]*/.exec(notation)![0]);
@@ -36,15 +36,17 @@ export class MoveFactory {
         if(/[MES]/.test(notation)) planeNumber = (this.dimension + 1) / 2;
         if(/[xyz]/.test(notation)) planeNumber = this.dimension;
 
-        let planes = [];
-        for (let i = 1; i <= planeNumber; i++)
-            if(wide || i == planeNumber)
-                planes.push(planeInvers ? this.dimension - i : i - 1);
+        let planes: Array<number> = new Array<number>();
+        for(let i = 1; i <= planeNumber; i++) {
+            if(wide || i == planeNumber) {
+                planes.push(planeInverse ? this.dimension - i : i - 1)
+            }
+        }
 
         return new Move(axis, planes, turnDirection);
     }
 
-    crateRandom(): Move {
+    createRandom(): Move {
         let randomAxis = Math.random();
         let axis = Axis.X;
         if(randomAxis >= 0.33) axis = Axis.Y;
