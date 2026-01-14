@@ -1,16 +1,22 @@
 import styles from './CubeCanvas.module.css';
 import { useEffect } from 'react';
-import { SceneEngine } from '../../cube/SceneEngine';
+import {CubeModel} from "../model/CubeModel";
+import {SceneView} from "../view/SceneView";
 
-export default function CubeCanvas() {
+interface Props {
+    cubeModel: CubeModel
+}
+
+export default function CubeCanvas({ cubeModel }: Props) {
     
     useEffect(() => {
-        const engine = new SceneEngine(2, 3, 5, 'mainCubeCanvas');
+        const sceneView = new SceneView(cubeModel, 'cubeCanvas')
+        const sceneController = sceneView.getController()
     }, []);
     
     return (
         <canvas
-            id="mainCubeCanvas"
+            id='cubeCanvas'
             className={styles.cubeCanvas}
         />
     );

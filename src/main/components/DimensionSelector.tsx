@@ -1,5 +1,4 @@
 import styles from './DimensionSelector.module.css';
-import {useRef} from "react";
 
 interface Props {
     currentDimension: number;
