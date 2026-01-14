@@ -33,13 +33,13 @@ export class Shuffle {
 
     append(toAppend: Shuffle | Move): void {
         if(toAppend instanceof Move)
-            this.#appendMove(toAppend.clone());
+            this.appendMove(toAppend.clone());
         if(toAppend instanceof Shuffle)
             for (let move of toAppend.moves)
-                this.#appendMove(move.clone());
+                this.appendMove(move.clone());
     }
 
-    #appendMove(move: Move): void {
+    private appendMove(move: Move): void {
         if(this.moves.length) {
             let lastMove = this.moves[this.moves.length - 1];
             if(move.sameAxisPlanes(lastMove)) {

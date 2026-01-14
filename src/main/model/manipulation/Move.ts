@@ -1,19 +1,18 @@
-import * as THREE from 'three';
-
-import { Axis } from './Axis';
+import { Axis } from '../geometry/Axis'
+import {Vector} from "../geometry/Vector";
 
 export class Move {
 
-    axis: THREE.Vector3;
+    axis: Vector;
     planes: Array<number>;
-    radians: number;
+    steps: number;
 
-    constructor(axis: THREE.Vector3, planes: Array<number>, radians: number) {
+    constructor(axis: Vector, planes: Array<number>, steps: number) {
         this.axis = axis;
         this.planes = Array<number>();
         for(let plane of planes)
             this.planes.push(plane);
-        this.radians = this.normalizeRadians(radians);
+        this.steps = Move.normalizeSteps(steps);
     }
     static fromNotation(notation: string, dimension: number): Move {
         
@@ -71,7 +70,7 @@ export class Move {
         let planes = [];
         for(let plane of this.planes)
             planes.push(plane);
-        return new Move(this.axis, planes, this.radians);
+        return new Move(this.axis, planes, this.steps);
     }
 
     static notationValid(notation: string, dimension: number): boolean {
@@ -84,7 +83,7 @@ export class Move {
     }
 
     getInverse(): Move {
-        return new Move(this.axis, this.planes, this.radians * -1);
+        return new Move(this.axis, this.planes, this.steps * -1);
     }
 
     sameAxisPlanes(other: Move): boolean {
@@ -97,21 +96,21 @@ export class Move {
     }
 
     addRadiansFrom(other: Move): void {
-        let angle = this.radians + other.radians;
-        this.radians = this.normalizeRadians(angle);
+        let angle = this.steps + other.steps;
+        this.steps = Move.normalizeSteps(angle);
     }
 
-    private normalizeRadians(angle: number): number {
-        let start = Math.PI * -1;
-        let range = Math.PI * 2;
-        let rounds = Math.floor((angle - start) / range);
-        return angle - rounds * range;
+    private static normalizeSteps(steps: number): number {
+        if(steps < 0) {
+            const toAdd = Math.ceil(-steps / 4) * 4;
+        }
+        return Math.floor(steps + 4) % 4
     }
 
     isEmpty(): boolean {
-        if(this.axis == Axis.undefined) return true;
-        if(this.planes.length == 0) return true;
-        if(+this.radians.toFixed(3) == 0) return true;
+        if(this.axis === Axis.undefined) return true;
+        if(this.planes.length === 0) return true;
+        if(this.steps === 0) return true;
         return false;
     }
 }

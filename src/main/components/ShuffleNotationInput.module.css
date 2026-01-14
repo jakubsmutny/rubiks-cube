@@ -1,0 +1,55 @@
+.shuffleNotationInput {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: 0.5rem;
+    border-radius: 8px;
+
+    background-color: #1e1e1e;
+}
+
+.shuffleNotationInput input {
+    flex: 1;
+
+    padding: 0.45rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #444;
+
+    background-color: #121212;
+    color: #ffffff;
+
+    font-size: 0.9rem;
+}
+
+.shuffleNotationInput input::placeholder {
+    color: #888;
+}
+
+.shuffleNotationInput input:focus {
+    outline: none;
+    border-color: #4da3ff;
+}
+
+.shuffleNotationInput button {
+    padding: 0.45rem 0.8rem;
+    border-radius: 6px;
+    border: none;
+
+    background-color: #4da3ff;
+    color: #000;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+.shuffleNotationInput button:hover {
+    background-color: #6bb6ff;
+}
+
+.shuffleNotationInput button:active {
+    transform: translateY(1px);
+}

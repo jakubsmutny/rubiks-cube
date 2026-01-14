@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import { TrackballControls } from "three/examples/jsm/controls/TrackballControls.js";
 
-import { RubiksCube } from './RubiksCube';
-import { Shuffle } from './Shuffle';
+import { CubeModel } from "../../model/CubeModel";
+//import { Shuffle } from './Shuffle';
 
 export class SceneEngine {
 
@@ -17,7 +17,7 @@ export class SceneEngine {
 
     canvas: HTMLCanvasElement;
 
-    rubiksCube: RubiksCube;
+    cubeModel: CubeModel
 
     constructor(cubeSize: number, dimension: number, cameraDistance: number, canvasName: string) {
         this.cubeSize = cubeSize;
@@ -39,7 +39,7 @@ export class SceneEngine {
         for(let cubie of this.rubiksCube.cubies)
             this.scene.add(cubie.graphics);
 
-        // TODO Test user input
+        // TODO User input
         /*document.getElementById("shuffleButton")!.addEventListener("click", () => { this.addShuffle(); });
         document.querySelector('#shuffle')!.addEventListener('keypress', (e) => {
             const event = e as KeyboardEvent;
@@ -106,17 +106,18 @@ export class SceneEngine {
         this.renderer.render(this.scene, this.camera);
     };
 
-    // TODO Test user input
-    addShuffle(): void {
+    // TODO User input
+    /*addShuffle(): void {
         let inputField = document.getElementById("shuffle")! as HTMLInputElement;
         let value = inputField.value;
         let shuffle = Shuffle.fromNotation(value, this.rubiksCube.dimension);
         this.rubiksCube.manipulate(shuffle);
         inputField.value = "";
-    }
+    }*/
 }
 
-document.addEventListener('mousedown', onMouseDown);
+// TODO User Input
+/*document.addEventListener('mousedown', onMouseDown);
 //document.addEventListener('touchstart', onMouseDown);
 document.addEventListener('mouseup' , onMouseUp);
 
@@ -126,4 +127,4 @@ function onMouseUp(event: MouseEvent): void {
 
 function onMouseDown(event: MouseEvent): void {
     console.log(`Mouse down at (${event.clientX}, ${event.clientY})`);
-}
+}*/

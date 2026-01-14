@@ -1,6 +1,6 @@
 import styles from './CubeCanvas.module.css';
 import { useEffect } from 'react';
-import { SceneEngine } from '../cube/SceneEngine';
+import { SceneEngine } from '../../cube/SceneEngine';
 
 export default function CubeCanvas() {
     
