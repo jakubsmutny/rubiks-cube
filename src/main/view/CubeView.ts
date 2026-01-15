@@ -1,20 +1,29 @@
+import * as THREE from 'three';
+
 import {CubeModel} from "../model/CubeModel";
+import {CubieView} from "./CubieView";
 
 export class CubeView {
 
     cubeModel: CubeModel
 
+    cubieViews: Array<CubieView>
+    group: THREE.Group
+
     constructor(cubeModel: CubeModel) {
         this.cubeModel = cubeModel
+        this.cubieViews = new Array<CubieView>()
+        cubeModel.cubies.forEach(cubie => {this.cubieViews.push(new CubieView(cubie, cubeModel.dimension))})
+        this.group = new THREE.Group()
+        this.cubieViews.forEach(cubieView => this.group.add(cubieView.mesh))
     }
 
     update(): void {
+        // Animation logic
+        this.updateFromModel()
+    }
 
+    updateFromModel(): void {
+        this.cubieViews.forEach(cubieView => cubieView.updateFromModel())
     }
 }
-
-// TODO
-/*        this.rubiksCube = new RubiksCube(cubeSize, dimension);
-        for(let cubie of this.rubiksCube.cubies)
-            this.scene.add(cubie.graphics);
-*/

@@ -11,17 +11,17 @@ export class RotationFactory {
         return new Rotation(xAxis, yAxis, zAxis)
     }
 
-    static getRotation(axis: Axis, clockwiseSteps: number): Rotation {
-        let product: Rotation = RotationFactory.getDefaultRotation();
+    static getRotation(axis: Vector, clockwiseSteps: number): Rotation {
+        let product: Rotation = RotationFactory.getDefaultRotation()
 
-        let rotation: Rotation = this.getDefaultRotation()
-        if(axis === Axis.X) rotation = this.getRoll()
-        if(axis === Axis.Y) rotation = this.getPitch()
-        if(axis === Axis.Z) rotation = this.getYaw()
+        let rotation: Rotation = RotationFactory.getDefaultRotation()
+        if(axis.equals(Axis.X)) rotation = RotationFactory.getRoll()
+        if(axis.equals(Axis.Y)) rotation = RotationFactory.getPitch()
+        if(axis.equals(Axis.Z)) rotation = RotationFactory.getYaw()
 
         clockwiseSteps = Math.floor(clockwiseSteps + 4) % 4
         for(let i: number = 0; i < clockwiseSteps; i++) {
-            product = rotation.appliedToRotation(product);
+            product = rotation.appliedToRotation(product)
         }
         return product
     }

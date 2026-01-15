@@ -1,5 +1,5 @@
 import styles from './CubeCanvas.module.css';
-import { useEffect } from 'react';
+import {useEffect, useRef} from 'react';
 import {CubeModel} from "../model/CubeModel";
 import {SceneView} from "../view/SceneView";
 
@@ -8,11 +8,27 @@ interface Props {
 }
 
 export default function CubeCanvas({ cubeModel }: Props) {
-    
+
+    const sceneViewRef = useRef<SceneView | null>(null);
+
     useEffect(() => {
-        const sceneView = new SceneView(cubeModel, 'cubeCanvas')
-        const sceneController = sceneView.getController()
-    }, []);
+        if (!sceneViewRef.current) {
+            sceneViewRef.current = new SceneView(cubeModel, 'cubeCanvas');
+}
+        return () => {
+            if(sceneViewRef.current) {
+                sceneViewRef.current.renderer.setAnimationLoop(null)
+                sceneViewRef.current.renderer.dispose()
+                sceneViewRef.current = null
+            }
+        }
+    }, [cubeModel])
+
+    useEffect(() => {
+        if(sceneViewRef.current) {
+            sceneViewRef.current.setCubeModel(cubeModel);
+        }
+    }, [cubeModel])
     
     return (
         <canvas

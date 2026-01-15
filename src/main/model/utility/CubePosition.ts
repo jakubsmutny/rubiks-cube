@@ -35,14 +35,13 @@ export class CubePosition {
         if(!this.isAffectedBy(move)) {
             return this.clone()
         }
-        let rotation: Rotation = this.rotation.clone()
+        let rotation: Rotation = RotationFactory.getRotation(move.axis, move.getPositiveSteps())
         let rotationCoords: [number, number] = this.getRotatingCoords(move.axis)
         for(let s: number = 0; s < move.getPositiveSteps(); s++) {
             rotationCoords = this.rotateTwoCoords(rotationCoords)
-            rotation = this.getAxisRotation(move.axis).appliedToRotation(rotation)
         }
         const [i, j, k] = this.getReconstructedCoords(move.axis, rotationCoords)
-        return new CubePosition(this.dimension, i, j, k, rotation)
+        return new CubePosition(this.dimension, i, j, k, rotation.appliedToRotation(this.rotation))
     }
 
     private getAxisCoord(axis: Axis): number {
@@ -70,7 +69,7 @@ export class CubePosition {
 
     private getAxisRotation(axis: Axis): Rotation {
         let rotation: Rotation = RotationFactory.getDefaultRotation()
-        if(axis === Axis.X) rotation = RotationFactory.getRoll()
+        if(axis === Axis.X) {rotation = RotationFactory.getRoll(); console.log("got Roll")}
         if(axis === Axis.Y) rotation = RotationFactory.getPitch()
         if(axis === Axis.Z) rotation = RotationFactory.getYaw()
         return rotation

@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { Move } from '../../../main/model/manipulation/Move';
-import {Axis} from "../../../main/model/geometry/Axis";
 
 describe('Move Class', () => {
 
@@ -10,6 +9,6 @@ describe('Move Class', () => {
             const input: number = -2
             const result = Move['normalizeSteps'](input)
             expect(result).toEqual(expected)
-        });
-    });
-});
+        })
+    })
+})

@@ -2,9 +2,9 @@ import {Vector} from "./Vector";
 
 export class Rotation {
 
-    private readonly xAxis: Vector
-    private readonly yAxis: Vector
-    private readonly zAxis: Vector
+    readonly xAxis: Vector
+    readonly yAxis: Vector
+    readonly zAxis: Vector
 
     constructor(xAxis: Vector, yAxis: Vector, zAxis: Vector) {
         this.xAxis = xAxis.clone()
@@ -17,11 +17,10 @@ export class Rotation {
     }
 
     appliedToRotation(original: Rotation): Rotation {
-        let rotation = original.clone()
-        this.appliedToVector(rotation.xAxis)
-        this.appliedToVector(rotation.yAxis)
-        this.appliedToVector(rotation.zAxis)
-        return rotation
+        const xAxis: Vector = this.appliedToVector(original.xAxis)
+        const yAxis: Vector = this.appliedToVector(original.yAxis)
+        const zAxis: Vector = this.appliedToVector(original.zAxis)
+        return new Rotation(xAxis, yAxis, zAxis)
     }
 
     appliedToVector(original: Vector): Vector {

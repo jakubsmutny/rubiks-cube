@@ -29,6 +29,7 @@ export class SceneView {
 
         this.sceneController = new SceneController(this)
         this.cubeView = new CubeView(cubeModel)
+        this.scene.add(this.cubeView.group)
     }
 
     private animate = (): void => {
@@ -37,8 +38,12 @@ export class SceneView {
         this.renderer.render(this.scene, this.camera)
     }
 
-    getController(): SceneController {
-        return this.sceneController
+    setCubeModel(cubeModel: CubeModel): void {
+        this.scene.remove(this.cubeView.group)
+        this.cubeModel = cubeModel
+        this.cubeView = new CubeView(cubeModel)
+        // TODO update controller
+        this.scene.add(this.cubeView.group)
     }
 
     private setupScene(): THREE.Scene {
@@ -54,7 +59,8 @@ export class SceneView {
         renderer.setAnimationLoop(this.animate)
         return renderer
     }
-    
+
+    // TODO Make FOV less and cancel fog ?
     private setupCamera(): THREE.PerspectiveCamera {
         let fov = 45
         let aspect = this.canvas.offsetWidth / this.canvas.offsetHeight
