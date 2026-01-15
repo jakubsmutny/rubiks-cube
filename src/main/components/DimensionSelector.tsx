@@ -1,8 +1,8 @@
 import styles from './DimensionSelector.module.css';
 
 interface Props {
-    currentDimension: number;
-    onDimensionChange: (dim: number) => void;
+    currentDimension: number
+    onDimensionChange: (dim: number) => void
 }
 
 export default function DimensionSelector({ currentDimension, onDimensionChange }: Props) {

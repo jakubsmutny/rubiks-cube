@@ -12,7 +12,7 @@ export class CubieFactory {
             for (let j: number = 0; j < dimension; j++) {
                 for (let k: number = 0; k < dimension; k++) {
 
-                    let position: CubePosition = new CubePosition(i, j, k)
+                    let position: CubePosition = new CubePosition(dimension, i, j, k)
                     let faces: Array<Face> = FaceFactory.createFaces(position, dimension)
 
                     if(faces.length === 0) {

@@ -25,6 +25,10 @@ export class Move {
         return new Move(this.axis.clone(), planes, inverseSteps)
     }
 
+    getPositiveSteps(): number {
+        return this.steps > 0 ? this.steps : this.steps + 4
+    }
+
     isConcatenableWith(other: Move): boolean {
         if(this.axis != other.axis) {
             return false

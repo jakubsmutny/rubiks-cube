@@ -1,4 +1,12 @@
+import {CubeModel} from "../model/CubeModel";
+
 export class CubeView {
+
+    cubeModel: CubeModel
+
+    constructor(cubeModel: CubeModel) {
+        this.cubeModel = cubeModel
+    }
 
     update(): void {
 

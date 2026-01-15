@@ -1,15 +1,40 @@
 import styles from './ShuffleNotationInput.module.css'
-import React from "react";
+import React, {FormEvent, useState} from "react";
+import {ShuffleFactory} from "../model/factories/ShuffleFactory";
+import {CubeModel} from "../model/CubeModel";
 
-export default function ShuffleNotationInput() {
+interface Props {
+    cubeModel: CubeModel
+}
+
+export default function ShuffleNotationInput({ cubeModel }: Props) {
+
+    const [inputValue, setInputValue] = useState("")
+
+    const onShuffleInput = (event?: FormEvent) => {
+        if(event) event.preventDefault()
+        if(inputValue.trim() === "") return
+        const shuffleFactory: ShuffleFactory = new ShuffleFactory(cubeModel.dimension)
+        cubeModel.manipulate(shuffleFactory.createFromNotation(inputValue))
+        setInputValue("")
+    }
+
     return (
-        <div className={styles.shuffleNotationInput}>
+        <form
+            className={styles.shuffleNotationInput}
+            onSubmit={onShuffleInput}
+        >
             <input
                 type="text"
-                id="shuffle"
                 placeholder="Enter shuffle notation"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
             />
-            <button id="shuffleButton">Apply</button>
-        </div>
+            <button
+                onClick={onShuffleInput}
+            >
+                Apply
+            </button>
+        </form>
     );
 }

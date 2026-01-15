@@ -19,7 +19,9 @@ export default function App() {
                 currentDimension={cubeModel.dimension}
                 onDimensionChange={handleDimensionChange}
             />
-            <ShuffleNotationInput />
+            <ShuffleNotationInput
+                cubeModel={cubeModel}
+            />
             <CubeCanvas
                 cubeModel={cubeModel}
             />

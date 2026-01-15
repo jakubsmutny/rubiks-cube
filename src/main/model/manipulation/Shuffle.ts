@@ -19,10 +19,10 @@ export class Shuffle {
     }
 
     append(appendable: Shuffle | Move): void {
-        if (appendable instanceof Move) {
+        if(appendable instanceof Move) {
             this.appendMove(appendable.clone())
         }
-        if (appendable instanceof Shuffle) {
+        if(appendable instanceof Shuffle) {
             for (let move of appendable.moves) {
                 this.appendMove(move.clone())
             }
