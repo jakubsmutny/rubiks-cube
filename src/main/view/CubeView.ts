@@ -19,7 +19,7 @@ export class CubeView {
     }
 
     update(): void {
-        // Animation logic
+        // TODO Animation logic
         this.updateFromModel()
     }
 

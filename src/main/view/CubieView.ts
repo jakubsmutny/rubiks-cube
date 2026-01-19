@@ -36,7 +36,9 @@ export class CubieView {
     private setupMesh(): THREE.Mesh {
         const geometry =  new THREE.BoxGeometry(this.size, this.size, this.size)
         const materials = this.getMaterial()
-        return new THREE.Mesh(geometry, materials)
+        const mesh = new THREE.Mesh(geometry, materials)
+        mesh.userData.cubieView = this
+        return mesh
     }
 
     private getMaterial(): Array<THREE.MeshBasicMaterial> {

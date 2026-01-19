@@ -19,4 +19,8 @@ export class Vector {
     equals(other: Vector): boolean {
         return this.x === other.x && this.y === other.y && this.z === other.z
     }
+
+    negative(): Vector {
+        return new Vector(-this.x, -this.y, -this.z)
+    }
 }

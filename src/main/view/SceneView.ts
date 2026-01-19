@@ -6,8 +6,8 @@ import {CubeView} from "./CubeView";
 
 export class SceneView {
 
-    static cubeSize: number = 2
-    static cameraDistance: number = 5
+    static cubeSize: number = 1
+    static cameraDistance: number = 8
 
     readonly scene: THREE.Scene
     readonly renderer: THREE.WebGLRenderer
@@ -17,7 +17,7 @@ export class SceneView {
     cubeModel: CubeModel
     readonly sceneController: SceneController
 
-    private cubeView: CubeView
+    cubeView: CubeView
 
     constructor(cubeModel: CubeModel, canvasName: string) {
         this.cubeModel = cubeModel
@@ -42,7 +42,6 @@ export class SceneView {
         this.scene.remove(this.cubeView.group)
         this.cubeModel = cubeModel
         this.cubeView = new CubeView(cubeModel)
-        // TODO update controller
         this.scene.add(this.cubeView.group)
     }
 
@@ -53,16 +52,15 @@ export class SceneView {
     }
     
     private setupRenderer(): THREE.WebGLRenderer {
-        let renderer = new THREE.WebGLRenderer({canvas: this.canvas as HTMLCanvasElement})
+        let renderer = new THREE.WebGLRenderer({antialias: true, canvas: this.canvas as HTMLCanvasElement})
         renderer.setClearColor(0x000000, 0)
         renderer.setSize(this.canvas.offsetWidth, this.canvas.offsetHeight)
         renderer.setAnimationLoop(this.animate)
         return renderer
     }
 
-    // TODO Make FOV less and cancel fog ?
     private setupCamera(): THREE.PerspectiveCamera {
-        let fov = 45
+        let fov = 15
         let aspect = this.canvas.offsetWidth / this.canvas.offsetHeight
         let near = SceneView.cameraDistance - (SceneView.cubeSize * Math.sqrt(3)) / 2
         let far = SceneView.cameraDistance + (SceneView.cubeSize * Math.sqrt(3)) / 2
