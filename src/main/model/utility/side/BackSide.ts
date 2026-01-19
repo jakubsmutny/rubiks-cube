@@ -1,0 +1,24 @@
+import {Side} from "./Side";
+import {Vector} from "../../geometry/Vector";
+
+export class BackSide implements Side {
+
+    private static instance: BackSide
+
+    private constructor() {}
+
+    public static getInstance(): BackSide {
+        if(!BackSide.instance) {
+            BackSide.instance = new BackSide()
+        }
+        return BackSide.instance
+    }
+
+    index(): number {
+        return 5
+    }
+
+    getNormal(): Vector {
+        return new Vector(0, 0, -1)
+    }
+}
