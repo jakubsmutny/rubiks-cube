@@ -48,8 +48,9 @@ export class Drag {
         const rail2: THREE.Vector2 = this.projectSceneVectorToScreen(sceneVector2).normalize()
         const projection1 = this.getDragVector().dot(rail1)
         const projection2 = this.getDragVector().dot(rail2)
-        this.rail = Math.abs(projection1) > Math.abs(projection2) ? rail1 : rail2
-        this.rotationAxis = Math.abs(projection1) > Math.abs(projection2) ? vector2 : vector1
+        this.rotationAxis = Math.abs(projection1) < Math.abs(projection2) ? vector1 : vector2
+        const positiveRotationVector = new THREE.Vector3().crossVectors(this.rotationAxis, this.normal).normalize()
+        this.rail = this.projectSceneVectorToScreen(positiveRotationVector).normalize()
     }
 
     private getDragVector(): THREE.Vector2 {
