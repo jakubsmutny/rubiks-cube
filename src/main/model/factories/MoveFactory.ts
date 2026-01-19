@@ -1,5 +1,7 @@
 import {Axis} from "../geometry/Axis";
 import {Move} from "../manipulation/Move";
+import {Drag} from "../../controller/Drag";
+import {Vector} from "../geometry/Vector";
 
 export class MoveFactory {
 
@@ -44,6 +46,15 @@ export class MoveFactory {
         }
 
         return new Move(axis, planes, turnDirection);
+    }
+
+    createFromDrag(drag: Drag): Move {
+        const axis: Vector = drag.rotationAxis ? drag.rotationAxis : Axis.undefined
+        const planes: number[] = new Array<number>()
+        if(axis.equals(Axis.X)) planes.push(drag.clickedCubie.position.i)
+        if(axis.equals(Axis.Y)) planes.push(drag.clickedCubie.position.j)
+        if(axis.equals(Axis.Z)) planes.push(drag.clickedCubie.position.k)
+        return new Move(axis, planes, 1)
     }
 
     createRandom(): Move {

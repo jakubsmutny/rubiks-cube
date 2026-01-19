@@ -2,17 +2,25 @@ import {SceneView} from "../view/SceneView";
 import {TrackballControls} from "three/examples/jsm/controls/TrackballControls";
 import * as THREE from "three";
 import {Drag} from "./Drag";
+import {CubeModel} from "../model/CubeModel";
+import {MoveFactory} from "../model/factories/MoveFactory";
 
 export class SceneController {
 
     sceneView: SceneView
+    cubeModel: CubeModel
+
+    moveFactory: MoveFactory
+
     trackballControls: TrackballControls
 
     raycaster: THREE.Raycaster
     drag: Drag | undefined
 
-    constructor(sceneView: SceneView) {
+    constructor(sceneView: SceneView, cubeModel: CubeModel) {
         this.sceneView = sceneView
+        this.cubeModel = cubeModel
+        this.moveFactory = new MoveFactory(cubeModel.dimension)
         this.trackballControls = this.setupControls()
         this.raycaster = new THREE.Raycaster()
         this.setupEventListeners()
@@ -39,7 +47,7 @@ export class SceneController {
 
     onPointerUp = (event: MouseEvent): void => {
         if(this.drag) {
-            // TODO drag.createMove()
+            this.cubeModel.manipulate(this.moveFactory.createFromDrag(this.drag))
             this.drag = undefined
             this.trackballControls.noRotate = false
         }
@@ -54,10 +62,22 @@ export class SceneController {
         }
     }
 
+    setCubeModel(cubeModel: CubeModel): void {
+        this.cubeModel = cubeModel
+        this.moveFactory = new MoveFactory(cubeModel.dimension)
+        this.drag = undefined
+    }
+
     private setupEventListeners(): void {
         this.sceneView.canvas.addEventListener('pointerdown', this.onPointerDown)
         document.addEventListener('pointerup', this.onPointerUp)
         document.addEventListener('pointermove', this.onPointerMove)
+    }
+
+    removeEventListeners(): void {
+        this.sceneView.canvas.removeEventListener('pointerdown', this.onPointerDown)
+        document.removeEventListener('pointerup', this.onPointerUp)
+        document.removeEventListener('pointermove', this.onPointerMove)
     }
 
     private setupControls(): TrackballControls {

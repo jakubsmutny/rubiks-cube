@@ -27,7 +27,7 @@ export class SceneView {
         this.renderer = this.setupRenderer()
         this.camera = this.setupCamera()
 
-        this.sceneController = new SceneController(this)
+        this.sceneController = new SceneController(this, cubeModel)
         this.cubeView = new CubeView(cubeModel)
         this.scene.add(this.cubeView.group)
     }
@@ -41,6 +41,7 @@ export class SceneView {
     setCubeModel(cubeModel: CubeModel): void {
         this.scene.remove(this.cubeView.group)
         this.cubeModel = cubeModel
+        this.sceneController.setCubeModel(cubeModel)
         this.cubeView = new CubeView(cubeModel)
         this.scene.add(this.cubeView.group)
     }

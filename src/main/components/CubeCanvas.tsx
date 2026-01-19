@@ -19,6 +19,7 @@ export default function CubeCanvas({ cubeModel }: Props) {
             if(sceneViewRef.current) {
                 sceneViewRef.current.renderer.setAnimationLoop(null)
                 sceneViewRef.current.renderer.dispose()
+                sceneViewRef.current.sceneController.removeEventListeners()
                 sceneViewRef.current = null
             }
         }
