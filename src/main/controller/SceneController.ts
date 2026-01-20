@@ -49,6 +49,7 @@ export class SceneController {
 
     onPointerUp = (event: MouseEvent): void => {
         if(this.drag) {
+            this.drag.cleanup()
             this.cubeModel.manipulate(this.moveFactory.createFromDrag(this.drag))
             this.drag = undefined
             this.trackballControls.noRotate = false

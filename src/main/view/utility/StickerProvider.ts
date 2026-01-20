@@ -1,6 +1,6 @@
 import * as THREE from 'three'
-import {Face} from "../model/Face"
-import {ColorPicker} from "./utility/ColorPicker";
+import {Face} from "../../model/Face"
+import {ColorPicker} from "./ColorPicker";
 
 export class StickerProvider {
 

@@ -17,7 +17,7 @@ export class Drag {
     normal: Vector
 
     rail: THREE.Vector2 | undefined
-    rotationAxis: Vector | undefined
+    rotationAxis: Vector
 
     constructor(sceneView: SceneView, startPosition: THREE.Vector2, intersection: THREE.Intersection, button: number) {
         this.sceneView = sceneView
@@ -28,13 +28,39 @@ export class Drag {
         const faceNormal: THREE.Vector3 = !intersection.face ? new THREE.Vector3() :
             intersection.face.normal.clone().transformDirection(intersection.object.matrixWorld).normalize()
         this.normal = new Vector(Math.round(faceNormal.x), Math.round(faceNormal.y), Math.round(faceNormal.z))
+        this.rotationAxis = Axis.undefined
     }
 
     updatePosition(position: THREE.Vector2): void {
         this.currentPosition = position
         if(!this.rail && this.getDragVector().length() > 10) {
             this.lockRailVector()
+            this.setupMeshes()
         }
+        if(this.rail) {
+            this.moveMeshes()
+        }
+    }
+
+    moveGroup: THREE.Group = new THREE.Group()
+    initialQuaternion: THREE.Quaternion = new THREE.Quaternion()
+    originalParent: THREE.Group | null = null
+    private setupMeshes(): void {
+        const planes: number[] = new Array<number>()
+        if(this.rotationAxis.equals(Axis.X)) planes.push(this.clickedCubie.position.i)
+        if(this.rotationAxis.equals(Axis.Y)) planes.push(this.clickedCubie.position.j)
+        if(this.rotationAxis.equals(Axis.Z)) planes.push(this.clickedCubie.position.k)
+        this.originalParent = this.sceneView.cubeView.group
+        this.moveGroup = this.sceneView.cubeView.getTemporaryGroup(this.rotationAxis, planes)
+        this.sceneView.scene.add(this.moveGroup)
+        this.initialQuaternion = this.moveGroup.quaternion.clone()
+    }
+    private moveMeshes(): void {
+        const axis: THREE.Vector3 = new THREE.Vector3(this.rotationAxis.x, this.rotationAxis.y, this.rotationAxis.z)
+        const angle = (this.getInRailSize() / 200) * (Math.PI / 2) // Convert pixels to radians
+        const quaternion = new THREE.Quaternion();
+        quaternion.setFromAxisAngle(axis, angle)
+        this.moveGroup.quaternion.copy(this.initialQuaternion).premultiply(quaternion)
     }
 
     getInRailSize(): number {
@@ -71,5 +97,18 @@ export class Drag {
         const x: number = (projected.x * 0.5 + 0.5) * this.sceneView.canvas.clientWidth
         const y: number = (projected.y * -0.5 + 0.5) * this.sceneView.canvas.clientHeight
         return new THREE.Vector2(x, y)
+    }
+
+    cleanup(): void {
+        if(this.originalParent && this.moveGroup) {
+            // Apply current rotation to each mesh's world matrix
+            //this.moveGroup.updateMatrixWorld(true)
+            const meshes = [...this.moveGroup.children]
+            meshes.forEach(mesh => {
+                this.sceneView.scene.attach(mesh) // Preserve world transform
+                this.originalParent!.attach(mesh) // Move back to original parent
+            })
+            this.sceneView.scene.remove(this.moveGroup)
+        }
     }
 }

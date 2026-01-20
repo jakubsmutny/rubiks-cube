@@ -48,13 +48,14 @@ export class MoveFactory {
         return new Move(axis, planes, turnDirection);
     }
 
+    // TODO Make compatible with Animation
     createFromDrag(drag: Drag): Move {
         const axis: Vector = drag.rotationAxis ? drag.rotationAxis : Axis.undefined
         const planes: number[] = new Array<number>()
         if(axis.equals(Axis.X)) planes.push(drag.clickedCubie.position.i)
         if(axis.equals(Axis.Y)) planes.push(drag.clickedCubie.position.j)
         if(axis.equals(Axis.Z)) planes.push(drag.clickedCubie.position.k)
-        return new Move(axis, planes, Math.sign(drag.getInRailSize()))
+        return new Move(axis, planes, Math.round(drag.getInRailSize() / 200))
     }
 
     createRandom(): Move {

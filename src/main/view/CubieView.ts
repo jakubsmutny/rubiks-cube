@@ -1,7 +1,7 @@
 import {Cubie} from "../model/Cubie";
 import {SceneView} from "./SceneView";
 import * as THREE from "three";
-import {StickerProvider} from "./StickerProvider";
+import {StickerProvider} from "./utility/StickerProvider";
 
 export class CubieView {
 
