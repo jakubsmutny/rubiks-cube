@@ -1,6 +1,8 @@
 import {CubePosition} from "./utility/CubePosition"
 import {Face} from "./Face"
 import {Move} from "./manipulation/Move";
+import {Rotation} from "./geometry/Rotation";
+import {RotationFactory} from "./factories/RotationFactory";
 
 export class Cubie {
 
@@ -12,14 +14,12 @@ export class Cubie {
         this.faces = faces
     }
 
-    isSolved(): boolean {
-        return this.faces.every(face => face.isSolved())
-    }
-
     manipulate(move: Move): void {
         if(!this.position.isAffectedBy(move)) {
             return
         }
         this.position = this.position.apply(move)
+        let rotation: Rotation = RotationFactory.getRotation(move.axis, move.getPositiveSteps())
+        this.faces.forEach(face => face.rotate(rotation))
     }
 }

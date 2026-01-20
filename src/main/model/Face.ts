@@ -7,13 +7,12 @@ export class Face {
     side: Side
     normal: Vector
 
-    constructor(side: Side) {
+    visible: boolean
+
+    constructor(side: Side, visible: boolean) {
         this.side = side
         this.normal = side.getNormal()
-    }
-
-    isSolved(): boolean {
-        return this.normal.equals(this.side.getNormal())
+        this.visible = visible
     }
 
     rotate(rotation: Rotation): void {

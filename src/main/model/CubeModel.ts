@@ -3,6 +3,7 @@ import {CubieFactory} from "./factories/CubieFactory";
 import {Shuffle} from "./manipulation/Shuffle";
 import {ShuffleFactory} from "./factories/ShuffleFactory";
 import {Move} from "./manipulation/Move";
+import {Vector} from "./geometry/Vector";
 
 export class CubeModel {
 
@@ -17,7 +18,29 @@ export class CubeModel {
     }
 
     isSolved(): boolean {
-        return this.cubies.every(cubie => cubie.isSolved())
+        let allVisible: boolean = true
+        for(let cubie of this.cubies) for(let face of cubie.faces)
+            if(!face.visible) allVisible = false
+        return allVisible && this.stepSolved()
+    }
+
+    stepSolved(): boolean {
+        let normals = new Array<Vector>(6)
+        for(let cubie of this.cubies) for(let face of cubie.faces) {
+            if(!face.visible) continue
+            if(!(face.side.index() in normals)) {
+                normals[face.side.index()] = face.normal
+                continue
+            }
+            if(!face.normal.equals(normals[face.side.index()])) {
+                return false
+            }
+        }
+        return true
+    }
+
+    solve(): void {
+        this.manipulate(this.shuffle.getInverse())
     }
 
     manipulate(manipulation: Shuffle | Move): void {
@@ -30,5 +53,8 @@ export class CubeModel {
             }
         }
         this.shuffle.append(manipulation)
+        if(this.isSolved()) {
+            this.shuffle = ShuffleFactory.createEmpty()
+        }
     }
 }
