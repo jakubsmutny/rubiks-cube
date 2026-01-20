@@ -29,13 +29,13 @@ export class Drag {
 
     updatePosition(position: THREE.Vector2): void {
         this.currentPosition = position
-        if(!this.rail) {
+        if(!this.rail && this.getSize() > 5) {
             this.lockRailVector()
         }
     }
 
     getSize(): number {
-        if(!this.rail) return 0
+        if(!this.rail) return this.getDragVector().length()
         return this.getDragVector().dot(this.rail)
     }
 

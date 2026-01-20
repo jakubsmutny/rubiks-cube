@@ -30,6 +30,7 @@ export class SceneView {
         this.sceneController = new SceneController(this, cubeModel)
         this.cubeView = new CubeView(cubeModel)
         this.scene.add(this.cubeView.group)
+        this.setupEventListeners()
     }
 
     private animate = (): void => {
@@ -77,5 +78,27 @@ export class SceneView {
         let near = SceneView.cameraDistance - (SceneView.cubeSize * Math.sqrt(3)) / 2
         let far = SceneView.cameraDistance + (SceneView.cubeSize * Math.sqrt(3)) / 2
         scene.fog = new THREE.Fog(color, near, far)
+    }
+
+    private setupEventListeners(): void {
+        window.addEventListener('resize', this.onWindowResize)
+    }
+
+    removeEventListeners(): void {
+        window.removeEventListener('resize', this.onWindowResize)
+    }
+
+    private onWindowResize = (): void => {
+        this.canvas.style.width = ''
+        this.canvas.style.height = ''
+        const width = this.canvas.clientWidth
+        const height = this.canvas.clientHeight
+        this.canvas.width = width
+        this.canvas.height = height
+
+        this.renderer.setSize(width, height, false)
+        this.camera.aspect = width / height
+        this.camera.updateProjectionMatrix()
+        this.sceneController.trackballControls.handleResize()
     }
 }

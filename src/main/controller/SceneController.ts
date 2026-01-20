@@ -21,9 +21,9 @@ export class SceneController {
         this.sceneView = sceneView
         this.cubeModel = cubeModel
         this.moveFactory = new MoveFactory(cubeModel.dimension)
-        this.trackballControls = this.setupControls()
         this.raycaster = new THREE.Raycaster()
         this.setupEventListeners()
+        this.trackballControls = this.setupControls()
     }
 
     update(): void {
@@ -31,6 +31,16 @@ export class SceneController {
     }
 
     onPointerDown = (event: MouseEvent): void => {
+        if(event.button === 2) event.preventDefault()
+
+        if (event.button === 0) {
+            console.log("Left button clicked")
+        } else if (event.button === 1) {
+            console.log("Middle button clicked")
+        } else if (event.button === 2) {
+            console.log("Right button clicked")
+        }
+
         const mousePosition: THREE.Vector2 = new THREE.Vector2(event.clientX, event.clientY)
         const canvas = event.target as HTMLCanvasElement
         const rect = canvas.getBoundingClientRect()
@@ -72,12 +82,14 @@ export class SceneController {
         this.sceneView.canvas.addEventListener('pointerdown', this.onPointerDown)
         document.addEventListener('pointerup', this.onPointerUp)
         document.addEventListener('pointermove', this.onPointerMove)
+        this.sceneView.canvas.addEventListener('contextmenu', (e) => { e.preventDefault() }, true)
     }
 
     removeEventListeners(): void {
         this.sceneView.canvas.removeEventListener('pointerdown', this.onPointerDown)
         document.removeEventListener('pointerup', this.onPointerUp)
         document.removeEventListener('pointermove', this.onPointerMove)
+        this.sceneView.canvas.removeEventListener('contextmenu', (e) => { e.preventDefault() })
     }
 
     private setupControls(): TrackballControls {
@@ -88,6 +100,10 @@ export class SceneController {
         controls.noZoom = true
         controls.noPan = true
         controls.target.set(0, 0, 0)
+        controls.mouseButtons = {
+            LEFT: THREE.MOUSE.ROTATE,
+            RIGHT: THREE.MOUSE.ROTATE
+        }
         controls.domElement = document.body as any
         return controls;
     }
