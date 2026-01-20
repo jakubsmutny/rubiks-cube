@@ -54,7 +54,7 @@ export class MoveFactory {
         if(axis.equals(Axis.X)) planes.push(drag.clickedCubie.position.i)
         if(axis.equals(Axis.Y)) planes.push(drag.clickedCubie.position.j)
         if(axis.equals(Axis.Z)) planes.push(drag.clickedCubie.position.k)
-        return new Move(axis, planes, Math.sign(drag.getSize()))
+        return new Move(axis, planes, Math.sign(drag.getInRailSize()))
     }
 
     createRandom(): Move {

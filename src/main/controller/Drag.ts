@@ -11,16 +11,19 @@ export class Drag {
     startPosition: THREE.Vector2
     currentPosition: THREE.Vector2
 
+    button: number
+
     clickedCubie: Cubie
     normal: Vector
 
     rail: THREE.Vector2 | undefined
     rotationAxis: Vector | undefined
 
-    constructor(sceneView: SceneView, startPosition: THREE.Vector2, intersection: THREE.Intersection) {
+    constructor(sceneView: SceneView, startPosition: THREE.Vector2, intersection: THREE.Intersection, button: number) {
         this.sceneView = sceneView
         this.startPosition = startPosition.clone()
         this.currentPosition = startPosition.clone()
+        this.button = button
         this.clickedCubie = intersection.object.userData.cubieView.cubie
         const faceNormal: THREE.Vector3 = !intersection.face ? new THREE.Vector3() :
             intersection.face.normal.clone().transformDirection(intersection.object.matrixWorld).normalize()
@@ -29,13 +32,13 @@ export class Drag {
 
     updatePosition(position: THREE.Vector2): void {
         this.currentPosition = position
-        if(!this.rail && this.getSize() > 5) {
+        if(!this.rail && this.getDragVector().length() > 5) {
             this.lockRailVector()
         }
     }
 
-    getSize(): number {
-        if(!this.rail) return this.getDragVector().length()
+    getInRailSize(): number {
+        if(!this.rail) return 0
         return this.getDragVector().dot(this.rail)
     }
 

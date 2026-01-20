@@ -28,19 +28,11 @@ export class SceneController {
 
     update(): void {
         this.trackballControls.update()
+        // TODO Animation logic
     }
 
     onPointerDown = (event: MouseEvent): void => {
         if(event.button === 2) event.preventDefault()
-
-        if (event.button === 0) {
-            console.log("Left button clicked")
-        } else if (event.button === 1) {
-            console.log("Middle button clicked")
-        } else if (event.button === 2) {
-            console.log("Right button clicked")
-        }
-
         const mousePosition: THREE.Vector2 = new THREE.Vector2(event.clientX, event.clientY)
         const canvas = event.target as HTMLCanvasElement
         const rect = canvas.getBoundingClientRect()
@@ -51,7 +43,7 @@ export class SceneController {
         if(intersects.length > 0) {
             this.trackballControls.noRotate = true
             const intersection = intersects[0]
-            this.drag = new Drag(this.sceneView, mousePosition, intersection)
+            this.drag = new Drag(this.sceneView, mousePosition, intersection, event.button)
         }
     }
 
