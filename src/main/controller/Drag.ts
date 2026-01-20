@@ -32,7 +32,7 @@ export class Drag {
 
     updatePosition(position: THREE.Vector2): void {
         this.currentPosition = position
-        if(!this.rail && this.getDragVector().length() > 5) {
+        if(!this.rail && this.getDragVector().length() > 10) {
             this.lockRailVector()
         }
     }

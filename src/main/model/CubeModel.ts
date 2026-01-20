@@ -4,24 +4,29 @@ import {Shuffle} from "./manipulation/Shuffle";
 import {ShuffleFactory} from "./factories/ShuffleFactory";
 import {Move} from "./manipulation/Move";
 import {Vector} from "./geometry/Vector";
+import {Observable} from "./utility/observer/Observeble";
+import {Observer} from "./utility/observer/Observer";
 
-export class CubeModel {
+export class CubeModel implements Observable {
 
     dimension: number;
     cubies: Array<Cubie>
     shuffle: Shuffle;
 
+    observers: Array<Observer>
+
     constructor(dimension: number) {
         this.dimension = dimension
         this.cubies = CubieFactory.createCubies(dimension)
         this.shuffle = ShuffleFactory.createEmpty()
+        this.observers = new Array<Observer>()
     }
 
     isSolved(): boolean {
         let allVisible: boolean = true
         for(let cubie of this.cubies) for(let face of cubie.faces)
             if(!face.visible) allVisible = false
-        return allVisible && this.stepSolved()
+        return this.stepSolved() && allVisible
     }
 
     stepSolved(): boolean {
@@ -56,5 +61,14 @@ export class CubeModel {
         if(this.isSolved()) {
             this.shuffle = ShuffleFactory.createEmpty()
         }
+        this.notify()
+    }
+
+    register(observer: Observer) {
+        this.observers.push(observer)
+    }
+
+    notify() {
+        this.observers.forEach(observer => observer.updateFromObservable())
     }
 }

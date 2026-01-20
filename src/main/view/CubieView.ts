@@ -12,25 +12,24 @@ export class CubieView {
     offset: number
     mesh: THREE.Mesh
 
-    // TODO Refactor
     stickerProvider: StickerProvider
 
-    constructor(cubie: Cubie, dimension: number) {
+    constructor(cubie: Cubie, dimension: number, stickerProvider: StickerProvider) {
         this.cubie = cubie
         this.dimension = dimension
         this.size = SceneView.cubeSize / dimension
         this.offset = (SceneView.cubeSize - this.size) / 2
-        this.stickerProvider = new StickerProvider(dimension)
+        this.stickerProvider = stickerProvider
         this.mesh = this.setupMesh()
         this.updateFromModel()
     }
 
-    // TODO Make Observer
     updateFromModel(): void {
         const position: THREE.Vector3 = this.getCubiePosition()
         this.mesh.position.copy(position)
         const rotation: THREE.Matrix4 = this.getCubieRotation()
         this.mesh.setRotationFromMatrix(rotation)
+        this.mesh.material = this.getMaterial()
     }
 
     private setupMesh(): THREE.Mesh {
@@ -42,14 +41,12 @@ export class CubieView {
     }
 
     private getMaterial(): Array<THREE.MeshBasicMaterial> {
-        let material = Array<THREE.MeshBasicMaterial>();
         // Default to Background Color
-        for(let i = 0; i < 6; i++)
-            material.push(new THREE.MeshBasicMaterial({color: this.stickerProvider.getBackgroundColor()}));
+        let material = Array(6).fill(this.stickerProvider.getMaterial())
         // Draw Stickers only on visible Faces
         for(let face of this.cubie.faces)
-            material[face.side.index()] = new THREE.MeshBasicMaterial({map: this.stickerProvider.getStickerTexture(face.side.index())});
-        return material;
+            material[face.side.index()] = this.stickerProvider.getMaterial(face)
+        return material
     }
 
     private getCubiePosition(): THREE.Vector3 {
