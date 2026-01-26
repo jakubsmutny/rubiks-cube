@@ -40,7 +40,7 @@
 }
 
 .dimensionSelector select:hover {
-    border-color: var(--accent);
+    background-color: var(--accent);
 }
 
 .dimensionSelector select:focus {

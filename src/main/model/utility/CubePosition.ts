@@ -2,6 +2,7 @@ import {Rotation} from "../geometry/Rotation";
 import {RotationFactory} from "../factories/RotationFactory";
 import {Move} from "../manipulation/Move";
 import {Axis} from "../geometry/Axis";
+import {Vector} from "../geometry/Vector";
 
 export class CubePosition {
 
@@ -44,26 +45,26 @@ export class CubePosition {
         return new CubePosition(this.dimension, i, j, k, rotation.appliedToRotation(this.rotation))
     }
 
-    private getAxisCoord(axis: Axis): number {
+    private getAxisCoord(axis: Vector): number {
         let coord = -1
-        if(axis === Axis.X) coord = this.i
-        if(axis === Axis.Y) coord = this.j
-        if(axis === Axis.Z) coord = this.k
+        if(axis.equals(Axis.X)) coord = this.i
+        if(axis.equals(Axis.Y)) coord = this.j
+        if(axis.equals(Axis.Z)) coord = this.k
         return coord
     }
 
-    private getRotatingCoords(axis: Axis): [number, number] {
+    private getRotatingCoords(axis: Vector): [number, number] {
         let coords: [number, number] = [-1, -1]
-        if(axis === Axis.X) coords = [this.j, this.k]
-        if(axis === Axis.Y) coords = [this.k, this.i]
-        if(axis === Axis.Z) coords = [this.i, this.j]
+        if(axis.equals(Axis.X)) coords = [this.j, this.k]
+        if(axis.equals(Axis.Y)) coords = [this.k, this.i]
+        if(axis.equals(Axis.Z)) coords = [this.i, this.j]
         return coords
     }
 
-    private getReconstructedCoords(axis: Axis, rotatingCoords: [number, number]): [number, number, number] {
-        if(axis === Axis.X) return [this.i, rotatingCoords[0], rotatingCoords[1]]
-        if(axis === Axis.Y) return [rotatingCoords[1], this.j, rotatingCoords[0]]
-        if(axis === Axis.Z) return [rotatingCoords[0], rotatingCoords[1], this.k]
+    private getReconstructedCoords(axis: Vector, rotatingCoords: [number, number]): [number, number, number] {
+        if(axis.equals(Axis.X)) return [this.i, rotatingCoords[0], rotatingCoords[1]]
+        if(axis.equals(Axis.Y)) return [rotatingCoords[1], this.j, rotatingCoords[0]]
+        if(axis.equals(Axis.Z)) return [rotatingCoords[0], rotatingCoords[1], this.k]
         return [-1, -1, -1]
     }
 

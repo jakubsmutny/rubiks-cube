@@ -4,6 +4,8 @@ import * as THREE from "three";
 import {Drag} from "./Drag";
 import {CubeModel} from "../model/CubeModel";
 import {MoveFactory} from "../model/factories/MoveFactory";
+import {Shuffle} from "../model/manipulation/Shuffle";
+import {Move} from "../model/manipulation/Move";
 
 export class SceneController {
 
@@ -28,11 +30,11 @@ export class SceneController {
 
     update(): void {
         this.trackballControls.update()
-        // TODO Animation logic
     }
 
     onPointerDown = (event: MouseEvent): void => {
         if(event.button === 2) event.preventDefault()
+        if(this.sceneView.cubeView.isAnimating()) return
         const mousePosition: THREE.Vector2 = new THREE.Vector2(event.clientX, event.clientY)
         const canvas = event.target as HTMLCanvasElement
         const rect = canvas.getBoundingClientRect()
@@ -49,8 +51,10 @@ export class SceneController {
 
     onPointerUp = (event: MouseEvent): void => {
         if(this.drag) {
-            this.drag.cleanup()
-            this.cubeModel.manipulate(this.moveFactory.createFromDrag(this.drag))
+            this.drag.layersRotation?.cleanup()
+            const moveShuffle: Shuffle = new Shuffle([this.moveFactory.createFromDrag(this.drag)])
+            this.sceneView.cubeView.activeTurnSize = Move.reduceTurn(this.drag.getTurnSize())
+            this.cubeModel.manipulate(moveShuffle)
             this.drag = undefined
             this.trackballControls.noRotate = false
         }

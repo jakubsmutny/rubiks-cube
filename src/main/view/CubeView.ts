@@ -4,6 +4,8 @@ import {CubieView} from "./CubieView"
 import {StickerProvider} from "./utility/StickerProvider"
 import {Observer} from "../model/utility/observer/Observer";
 import {Vector} from "../model/geometry/Vector";
+import {Shuffle} from "../model/manipulation/Shuffle";
+import {Move} from "../model/manipulation/Move";
 
 export class CubeView implements Observer {
 
@@ -14,6 +16,8 @@ export class CubeView implements Observer {
     cubieViews: Array<CubieView>
     group: THREE.Group
 
+    activeTurnSize: number
+
     constructor(cubeModel: CubeModel) {
         this.cubeModel = cubeModel
         this.stickerProvider = new StickerProvider(cubeModel.dimension)
@@ -22,20 +26,27 @@ export class CubeView implements Observer {
         this.group = new THREE.Group()
         this.cubieViews.forEach(cubieView => this.group.add(cubieView.mesh))
         cubeModel.register(this)
+        this.activeTurnSize = 0
     }
 
     update(): void {
         // TODO Animation logic
+        // if animation finished, cubies -> updateFromModel()
     }
 
-    updateFromObservable(): void {
+    updateFromObservable(move: Move): void {
         this.cubieViews.forEach(cubieView => cubieView.updateFromModel())
+    }
+
+    isAnimating(): boolean {
+        // TODO Animation detection
+        return false
     }
 
     getTemporaryGroup(axis: Vector, planes: Array<number>): THREE.Group {
         const temporaryGroup: THREE.Group = new THREE.Group()
         for(let cubieView of this.cubieViews)
-            if(cubieView.cubie.inAxisPlanes(axis, planes))
+            if(cubieView.cubie.inAxisLayers(axis, planes))
                 temporaryGroup.add(cubieView.mesh)
         return temporaryGroup
     }

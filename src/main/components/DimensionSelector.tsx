@@ -11,7 +11,7 @@ export default function DimensionSelector({ currentDimension, onDimensionChange 
 
     return (
         <div className={styles.dimensionSelector}>
-            <label htmlFor="dimensionSelector">Cube Dimension</label>
+            <label htmlFor="dimensionSelector">Dimension</label>
             <select
                 value={currentDimension}
                 onChange={(e) => onDimensionChange(Number(e.target.value))}

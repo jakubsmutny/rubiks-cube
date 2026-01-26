@@ -4,16 +4,14 @@ export class Shuffle {
 
     moves: Array<Move>
 
-    constructor(moves: Array<Move>) {
-        this.moves = new Array<Move>()
-        for(let move of moves) {
-            this.appendMove(move)
-        }
+    constructor(moves?: Array<Move>) {
+        if(moves) {this.moves = moves}
+        else this.moves = new Array<Move>()
     }
 
     getInverse(): Shuffle {
         let inverseMoves: Array<Move> = Array<Move>()
-        for (let move of this.moves)
+        for(let move of this.moves)
             inverseMoves.push(move.getInverse())
         return new Shuffle(inverseMoves.reverse())
     }

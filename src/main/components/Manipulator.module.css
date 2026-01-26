@@ -1,0 +1,54 @@
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-secondary: #242424;
+        --text-color: #e0e0e0;
+        --border-color: #555;
+        --accent: #333;
+    }
+}
+
+.manipulator {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+    border-radius: 8px;
+    font-family: system-ui, sans-serif;
+}
+
+.manipulatorButtons {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0.3rem;
+}
+
+.manipulator button {
+    padding: 0.45rem 0.8rem;
+    border-radius: 6px;
+    background-color: var(--bg-secondary);
+    color: var(--text-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+
+    transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+.manipulator button:hover {
+    background-color: var(--accent);
+}
+
+.manipulator button:active {
+    transform: translateY(1px);
+}

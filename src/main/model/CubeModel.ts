@@ -2,16 +2,19 @@ import {Cubie} from "./Cubie";
 import {CubieFactory} from "./factories/CubieFactory";
 import {Shuffle} from "./manipulation/Shuffle";
 import {ShuffleFactory} from "./factories/ShuffleFactory";
-import {Move} from "./manipulation/Move";
 import {Vector} from "./geometry/Vector";
 import {Observable} from "./utility/observer/Observeble";
 import {Observer} from "./utility/observer/Observer";
+import {Move} from "./manipulation/Move";
 
 export class CubeModel implements Observable {
 
-    dimension: number;
+    dimension: number
     cubies: Array<Cubie>
-    shuffle: Shuffle;
+    shuffle: Shuffle
+
+    manipulations: Array<Shuffle>
+    currentManipulation: number
 
     observers: Array<Observer>
 
@@ -19,6 +22,8 @@ export class CubeModel implements Observable {
         this.dimension = dimension
         this.cubies = CubieFactory.createCubies(dimension)
         this.shuffle = ShuffleFactory.createEmpty()
+        this.manipulations = new Array<Shuffle>()
+        this.currentManipulation = 0
         this.observers = new Array<Observer>()
     }
 
@@ -48,27 +53,47 @@ export class CubeModel implements Observable {
         this.manipulate(this.shuffle.getInverse())
     }
 
-    manipulate(manipulation: Shuffle | Move): void {
-        if(manipulation instanceof Move) {
-            this.cubies.forEach(cubie => cubie.manipulate(manipulation))
+    undo(): void {
+        if(this.currentManipulation > 0) {
+            this.execute(this.manipulations[this.currentManipulation - 1].getInverse())
+            this.currentManipulation--
         }
-        if(manipulation instanceof Shuffle) {
-            for (let move of manipulation.moves) {
-                this.cubies.forEach(cubie => cubie.manipulate(move))
-            }
+    }
+
+    redo(): void {
+        if(this.manipulations.length > this.currentManipulation) {
+            this.execute(this.manipulations[this.currentManipulation])
+            this.currentManipulation++
         }
-        this.shuffle.append(manipulation)
+    }
+
+    manipulate(manipulation: Shuffle): void {
+        while(this.manipulations.length > this.currentManipulation) {
+            this.manipulations.pop()
+        }
+        this.execute(manipulation)
+        this.manipulations.push(manipulation)
+        this.currentManipulation++
         if(this.isSolved()) {
             this.shuffle = ShuffleFactory.createEmpty()
+            this.manipulations = new Array<Shuffle>()
+            this.currentManipulation = 0
         }
-        this.notify()
+    }
+
+    private execute(manipulation: Shuffle): void {
+        for(let move of manipulation.moves) {
+            this.cubies.forEach(cubie => cubie.manipulate(move))
+            this.notify(move)
+        }
+        this.shuffle.append(manipulation)
     }
 
     register(observer: Observer) {
         this.observers.push(observer)
     }
 
-    notify() {
-        this.observers.forEach(observer => observer.updateFromObservable())
+    notify(move: Move) {
+        this.observers.forEach(observer => observer.updateFromObservable(move))
     }
 }

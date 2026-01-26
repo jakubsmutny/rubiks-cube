@@ -27,7 +27,9 @@ export class ShuffleFactory {
             { length: moveCount },
             () => this.moveFactory.createRandom()
         )
-        return new Shuffle(moves)
+        const shuffle = new Shuffle()
+        for(let move of moves) shuffle.append(move)
+        return shuffle
     }
 
     static createEmpty(): Shuffle {

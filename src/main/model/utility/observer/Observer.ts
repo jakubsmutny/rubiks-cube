@@ -1,3 +1,5 @@
+import {Move} from "../../manipulation/Move";
+
 export interface Observer {
-    updateFromObservable(): void
+    updateFromObservable(move: Move): void
 }

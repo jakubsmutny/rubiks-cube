@@ -51,9 +51,13 @@ export class Move {
 
     private static normalizeSteps(steps: number): number {
         steps = Math.trunc(steps)
-        steps = ((steps % 4) + 4) % 4
-        if(steps > 2) steps -= 4
-        return steps
+        return this.reduceTurn(steps)
+    }
+
+    static reduceTurn(turnSize: number): number {
+        turnSize = ((turnSize % 4) + 4) % 4
+        if(turnSize > 2) turnSize -= 4
+        return turnSize
     }
 
     isEmpty(): boolean {

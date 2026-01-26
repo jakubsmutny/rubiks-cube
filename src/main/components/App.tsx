@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
-
-import DimensionSelector from './DimensionSelector';
-import CubeCanvas from './CubeCanvas';
-import ShuffleNotationInput from "./ShuffleNotationInput";
-import {CubeModel} from "../model/CubeModel";
+import React, {useState} from 'react'
+import styles from './App.module.css'
+import DimensionSelector from './DimensionSelector'
+import CubeCanvas from './CubeCanvas'
+import ShuffleNotationInput from "./ShuffleNotationInput"
+import {CubeModel} from "../model/CubeModel"
+import Manipulator from "./Manipulator"
 
 export default function App() {
 
@@ -15,10 +16,15 @@ export default function App() {
 
     return (
         <>
-            <DimensionSelector
-                currentDimension={cubeModel.dimension}
-                onDimensionChange={handleDimensionChange}
-            />
+            <div className={styles.controlsContainer}>
+                <DimensionSelector
+                    currentDimension={cubeModel.dimension}
+                    onDimensionChange={handleDimensionChange}
+                />
+                <Manipulator
+                    cubeModel={cubeModel}
+                />
+            </div>
             <ShuffleNotationInput
                 cubeModel={cubeModel}
             />

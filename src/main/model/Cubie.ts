@@ -25,10 +25,14 @@ export class Cubie {
         this.faces.forEach(face => face.rotate(rotation))
     }
 
-    inAxisPlanes(axis: Vector, planes: Array<number>) {
-        if(axis.equals(Axis.X) && planes.includes(this.position.i)) return true
-        if(axis.equals(Axis.Y) && planes.includes(this.position.j)) return true
-        if(axis.equals(Axis.Z) && planes.includes(this.position.k)) return true
-        return false
+    inAxisLayers(axis: Vector, layers: Array<number>): boolean {
+        return layers.includes(this.layerInAxis(axis))
+    }
+
+    layerInAxis(axis: Vector): number {
+        if(axis.equals(Axis.X)) return this.position.i
+        if(axis.equals(Axis.Y)) return this.position.j
+        if(axis.equals(Axis.Z)) return this.position.k
+        return -1
     }
 }
