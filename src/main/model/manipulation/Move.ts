@@ -30,7 +30,7 @@ export class Move {
     }
 
     isConcatenableWith(other: Move): boolean {
-        if(this.axis != other.axis) {
+        if(!this.axis.equals(other.axis)) {
             return false
         }
         this.planes.sort()

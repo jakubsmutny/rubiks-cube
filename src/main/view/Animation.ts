@@ -1,43 +1,47 @@
 import * as THREE from "three"
+import * as TWEEN from "@tweenjs/tween.js"
 import {Move} from "../model/manipulation/Move"
 import {LayersRotation} from "./LayersRotation"
 import {CubeView} from "./CubeView"
 
 export class Animation {
 
-    static simpleTurnDuration: number = 1000
+    static simpleTurnDuration: number = 400
 
     cubeView: CubeView
-    scene: THREE.Scene
-    move: Move
+    started: boolean
+    finished: boolean
 
-    running: boolean
-
-    layersRotation: LayersRotation | undefined
+    layersRotation: LayersRotation
+    private tween: TWEEN.Tween<{fraction: number}>
 
     constructor(cubeView: CubeView, scene: THREE.Scene, move: Move) {
         this.cubeView = cubeView
-        this.scene = scene
-        this.move = move
-        this.running = false
+        this.started = false
+        this.finished = false
+        this.layersRotation = new LayersRotation(cubeView, scene, move.axis, move.planes)
+
+        const turnSize = move.steps - cubeView.activeTurnSize
+        const start = {fraction: 0}
+        const end = {fraction: turnSize}
+
+        this.tween = new TWEEN.Tween(start)
+            .to(end, Animation.simpleTurnDuration * Math.abs(turnSize))
+            // .easing(TWEEN.Easing.Back.Out)
+            .easing(TWEEN.Easing.Quartic.InOut)
+            .onUpdate(() => {
+                this.layersRotation.setStepFraction(start.fraction)
+            })
+            .onComplete(() => {
+                this.layersRotation.cleanup()
+                this.finished = true
+            })
     }
 
-    start() {
-        this.layersRotation = new LayersRotation(this.cubeView, this.scene, this.move.axis, this.move.planes)
+    start(group: TWEEN.Group) {
+        this.cubeView.activeTurnSize = 0
+        this.tween.group(group)
+        this.tween.start()
+        this.started = true
     }
-
-    update() {
-        if (!this.running) {
-            this.start()
-        }
-
-
-    }
-
-
-    // is created as a result of move
-    // has from and to of meshes positions
-    // - important because model can apply bulk moves and possibly
-    //   reference of end of move positions doesnt exist anymore
-
 }

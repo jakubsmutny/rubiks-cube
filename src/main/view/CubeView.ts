@@ -1,15 +1,19 @@
 import * as THREE from 'three'
+import * as TWEEN from "@tweenjs/tween.js"
 import {CubeModel} from "../model/CubeModel"
 import {CubieView} from "./CubieView"
 import {StickerProvider} from "./utility/StickerProvider"
-import {Observer} from "../model/utility/observer/Observer";
-import {Vector} from "../model/geometry/Vector";
-import {Shuffle} from "../model/manipulation/Shuffle";
-import {Move} from "../model/manipulation/Move";
+import {Observer} from "../model/utility/observer/Observer"
+import {Move} from "../model/manipulation/Move"
+import {Animation} from "./Animation"
+import {SceneView} from "./SceneView";
 
 export class CubeView implements Observer {
 
     cubeModel: CubeModel
+    sceneView: SceneView
+    animationQueue: Array<Animation>
+    tweenGroup: TWEEN.Group
 
     stickerProvider: StickerProvider
 
@@ -18,8 +22,11 @@ export class CubeView implements Observer {
 
     activeTurnSize: number
 
-    constructor(cubeModel: CubeModel) {
+    constructor(cubeModel: CubeModel, sceneView: SceneView) {
         this.cubeModel = cubeModel
+        this.sceneView = sceneView
+        this.animationQueue = new Array<Animation>()
+        this.tweenGroup = new TWEEN.Group()
         this.stickerProvider = new StickerProvider(cubeModel.dimension)
         this.cubieViews = new Array<CubieView>()
         cubeModel.cubies.forEach(cubie => {this.cubieViews.push(new CubieView(cubie, cubeModel.dimension, this.stickerProvider))})
@@ -30,24 +37,26 @@ export class CubeView implements Observer {
     }
 
     update(): void {
-        // TODO Animation logic
-        // if animation finished, cubies -> updateFromModel()
+        this.tweenGroup.update()
+        if(this.animationQueue.length > 0) {
+            const currentAnimation = this.animationQueue[0];
+            if(!currentAnimation.started) {
+                currentAnimation.start(this.tweenGroup)
+            }
+            if(currentAnimation.finished) {
+                this.animationQueue.shift()
+                if(this.animationQueue.length === 0) {
+                    this.cubieViews.forEach(cv => cv.updateFromModel());
+                }
+            }
+        }
     }
 
     updateFromObservable(move: Move): void {
-        this.cubieViews.forEach(cubieView => cubieView.updateFromModel())
+        this.animationQueue.push(new Animation(this, this.sceneView.scene, move))
     }
 
     isAnimating(): boolean {
-        // TODO Animation detection
-        return false
-    }
-
-    getTemporaryGroup(axis: Vector, planes: Array<number>): THREE.Group {
-        const temporaryGroup: THREE.Group = new THREE.Group()
-        for(let cubieView of this.cubieViews)
-            if(cubieView.cubie.inAxisLayers(axis, planes))
-                temporaryGroup.add(cubieView.mesh)
-        return temporaryGroup
+        return this.animationQueue.length > 0
     }
 }

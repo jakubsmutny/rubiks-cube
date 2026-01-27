@@ -76,8 +76,6 @@ export class CubeModel implements Observable {
         this.currentManipulation++
         if(this.isSolved()) {
             this.shuffle = ShuffleFactory.createEmpty()
-            this.manipulations = new Array<Shuffle>()
-            this.currentManipulation = 0
         }
     }
 

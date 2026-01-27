@@ -25,7 +25,7 @@ export default function Manipulator({ cubeModel }: Props) {
                 <button
                     onClick={onRandomShuffle}
                 >
-                    Shuffle
+                    Scramble
                 </button>
                 <button
                     onClick={() => cubeModel.undo()}
