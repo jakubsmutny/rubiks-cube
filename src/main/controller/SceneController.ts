@@ -33,7 +33,7 @@ export class SceneController {
     }
 
     onPointerDown = (event: MouseEvent): void => {
-        if(event.button === 2) event.preventDefault()
+        if(event.button === 2) return
         if(this.sceneView.cubeView.isAnimating()) return
         const mousePosition: THREE.Vector2 = new THREE.Vector2(event.clientX, event.clientY)
         const canvas = event.target as HTMLCanvasElement
@@ -52,9 +52,11 @@ export class SceneController {
     onPointerUp = (event: MouseEvent): void => {
         if(this.drag) {
             this.drag.layersRotation?.cleanup()
-            const moveShuffle: Shuffle = new Shuffle([this.moveFactory.createFromDrag(this.drag)])
             this.sceneView.cubeView.activeTurnSize = Move.reduceTurn(this.drag.getTurnSize())
-            this.cubeModel.manipulate(moveShuffle)
+            if(this.drag.rail) {
+                const moveShuffle: Shuffle = new Shuffle([this.moveFactory.createFromDrag(this.drag)])
+                this.cubeModel.manipulate(moveShuffle)
+            }
             this.drag = undefined
             this.trackballControls.noRotate = false
         }
@@ -93,13 +95,14 @@ export class SceneController {
         let controls = new TrackballControls(
             this.sceneView.camera, this.sceneView.renderer.domElement
         )
-        controls.rotateSpeed = 2
+        controls.rotateSpeed = 3
         controls.noZoom = true
         controls.noPan = true
         controls.target.set(0, 0, 0)
         controls.mouseButtons = {
             LEFT: THREE.MOUSE.ROTATE,
-            RIGHT: THREE.MOUSE.ROTATE
+            MIDDLE: null,
+            RIGHT: null
         }
         controls.domElement = document.body as any
         return controls;

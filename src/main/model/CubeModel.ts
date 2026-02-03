@@ -50,7 +50,7 @@ export class CubeModel implements Observable {
     }
 
     solve(): void {
-        this.manipulate(this.shuffle.getInverse())
+        this.execute(this.shuffle.getInverse())
     }
 
     undo(): void {
@@ -74,9 +74,6 @@ export class CubeModel implements Observable {
         this.execute(manipulation)
         this.manipulations.push(manipulation)
         this.currentManipulation++
-        if(this.isSolved()) {
-            this.shuffle = ShuffleFactory.createEmpty()
-        }
     }
 
     private execute(manipulation: Shuffle): void {
@@ -85,6 +82,9 @@ export class CubeModel implements Observable {
             this.notify(move)
         }
         this.shuffle.append(manipulation)
+        if(this.isSolved()) {
+            this.shuffle = ShuffleFactory.createEmpty()
+        }
     }
 
     register(observer: Observer) {

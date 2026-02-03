@@ -28,7 +28,7 @@ export class Animation {
         this.tween = new TWEEN.Tween(start)
             .to(end, Animation.simpleTurnDuration * Math.abs(turnSize))
             // .easing(TWEEN.Easing.Back.Out)
-            .easing(TWEEN.Easing.Quartic.InOut)
+            .easing(TWEEN.Easing.Cubic.InOut)
             .onUpdate(() => {
                 this.layersRotation.setStepFraction(start.fraction)
             })

@@ -7,7 +7,7 @@ interface Props {
 
 export default function DimensionSelector({ currentDimension, onDimensionChange }: Props) {
     const min = 2
-    const max = 9
+    const max = 20
 
     return (
         <div className={styles.dimensionSelector}>
