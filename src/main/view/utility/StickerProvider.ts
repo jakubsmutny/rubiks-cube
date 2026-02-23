@@ -11,7 +11,8 @@ export class StickerProvider {
     side: number
     pixelCount: number
 
-    textures: Array<THREE.DataTexture>
+    withBackgroundTextures: Array<THREE.DataTexture>
+    clearTextures: Array<THREE.DataTexture>
 
     constructor(dimension: number, colors?: Array<THREE.Color>, backgroundColor?: THREE.Color, nonVisibleColor?: THREE.Color) {
         if(!colors) colors = ColorPicker.getDefaultColors()
@@ -24,17 +25,21 @@ export class StickerProvider {
         this.side = this.getSideFromDimension(dimension)
         this.pixelCount = this.side * this.side;
 
-        this.textures = this.createTextures()
+        this.withBackgroundTextures = this.createTextures()
+        this.clearTextures = this.createTextures(true)
     }
 
-    getMaterial(face?: Face): THREE.MeshBasicMaterial {
-        if(face === undefined) return new THREE.MeshBasicMaterial({color: this.getBackgroundColor()})
-        return new THREE.MeshBasicMaterial({map: this.getStickerTexture(face)})
+    getStickerMaterial(face?: Face, clear: boolean = false): THREE.MeshBasicMaterial {
+        if(face === undefined)
+            return new THREE.MeshBasicMaterial({color: this.getBackgroundColor(), transparent: clear, opacity: (clear ? 0 : 1)})
+        return new THREE.MeshBasicMaterial({map: this.getStickerTexture(face, clear), transparent: clear, opacity: (clear ? 0.5 : 1)})
     }
 
-    private getStickerTexture(face: Face): THREE.DataTexture {
-        if(!face.visible) return this.textures[this.colors.length]
-        return this.textures[face.side.index()]
+    private getStickerTexture(face: Face, clear: boolean): THREE.DataTexture {
+        let textures = this.withBackgroundTextures
+        if(clear) textures = this.clearTextures
+        if(!face.visible) return textures[this.colors.length]
+        return textures[face.side.index()]
     }
 
     private getBackgroundColor(): THREE.Color {
@@ -48,16 +53,16 @@ export class StickerProvider {
         return side
     }
 
-    private createTextures(): Array<THREE.DataTexture> {
+    private createTextures(clear: boolean = false): Array<THREE.DataTexture> {
         let textures = new Array<THREE.DataTexture>
-        for (let color of [...this.colors, this.nonVisibleColor]) {
+        for(let color of [...this.colors, this.nonVisibleColor]) {
             let pixels = new Uint8Array(this.pixelCount * 4)
             for (let i = 0; i < this.side; i++) for (let j = 0; j < this.side; j++) {
                 let position = (i * this.side + j) * 4
                 let pickedColor = color
                 if(this.backgroundMask(i, j))
                     pickedColor = this.backgroundColor
-                this.setPixelColor(pixels, position, pickedColor)
+                this.setPixelColor(pixels, position, pickedColor, clear)
             }
             let texture = new THREE.DataTexture(pixels, this.side, this.side)
             texture.needsUpdate = true
@@ -66,12 +71,11 @@ export class StickerProvider {
         return textures
     }
 
-    private setPixelColor(data: Uint8Array, position: number, color: THREE.Color): void {
+    private setPixelColor(data: Uint8Array, position: number, color: THREE.Color, clear: boolean): void {
         data[position] = color.r
         data[position + 1] = color.g
         data[position + 2] = color.b
-        // Make the pixel not transparent
-        data[position + 3] = 255
+        data[position + 3] = clear && color.equals(this.backgroundColor) ? 0 : 255
     }
 
     private backgroundMask(row: number, column: number): boolean {

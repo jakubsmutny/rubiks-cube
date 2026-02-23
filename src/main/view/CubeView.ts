@@ -7,6 +7,7 @@ import {Observer} from "../model/utility/observer/Observer"
 import {Move} from "../model/manipulation/Move"
 import {Animation} from "./Animation"
 import {SceneView} from "./SceneView";
+import {GeometryProvider} from "./utility/GeometryProvider";
 
 export class CubeView implements Observer {
 
@@ -16,6 +17,7 @@ export class CubeView implements Observer {
     tweenGroup: TWEEN.Group
 
     stickerProvider: StickerProvider
+    geometryProvider: GeometryProvider
 
     cubieViews: Array<CubieView>
     group: THREE.Group
@@ -28,10 +30,13 @@ export class CubeView implements Observer {
         this.animationQueue = new Array<Animation>()
         this.tweenGroup = new TWEEN.Group()
         this.stickerProvider = new StickerProvider(cubeModel.dimension)
+        this.geometryProvider = new GeometryProvider(SceneView.cubeSize / cubeModel.dimension)
         this.cubieViews = new Array<CubieView>()
-        cubeModel.cubies.forEach(cubie => {this.cubieViews.push(new CubieView(cubie, cubeModel.dimension, this.stickerProvider))})
+        cubeModel.cubies.forEach(cubie => {
+            this.cubieViews.push(new CubieView(cubie, cubeModel.dimension, this.stickerProvider, this.geometryProvider))
+        })
         this.group = new THREE.Group()
-        this.cubieViews.forEach(cubieView => this.group.add(cubieView.mesh))
+        this.cubieViews.forEach(cubieView => this.group.add(cubieView.meshGroup))
         cubeModel.register(this)
         this.activeTurnSize = 0
     }
@@ -46,7 +51,7 @@ export class CubeView implements Observer {
             if(currentAnimation.finished) {
                 this.animationQueue.shift()
                 if(this.animationQueue.length === 0) {
-                    this.cubieViews.forEach(cv => cv.updateFromModel());
+                    this.cubieViews.forEach(cv => cv.updatePositionFromModel());
                 }
             }
         }

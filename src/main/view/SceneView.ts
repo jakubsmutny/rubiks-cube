@@ -65,7 +65,7 @@ export class SceneView {
         let fov = 15
         let aspect = this.canvas.offsetWidth / this.canvas.offsetHeight
         let near = SceneView.cameraDistance - (SceneView.cubeSize * Math.sqrt(3)) / 2
-        let far = SceneView.cameraDistance + (SceneView.cubeSize * Math.sqrt(3)) / 2
+        let far = SceneView.cameraDistance + (SceneView.cubeSize * Math.sqrt(2)) / 2
         let camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
     
         let cameraPosition = SceneView.cameraDistance / Math.sqrt(3)
@@ -76,7 +76,7 @@ export class SceneView {
     private createFog(scene: THREE.Scene): void {
         let color = 0x000000
         let near = SceneView.cameraDistance - (SceneView.cubeSize * Math.sqrt(3)) / 2
-        let far = SceneView.cameraDistance + (SceneView.cubeSize * Math.sqrt(3)) / 2
+        let far = SceneView.cameraDistance + (SceneView.cubeSize * Math.sqrt(3)) / 1.8
         scene.fog = new THREE.Fog(color, near, far)
     }
 

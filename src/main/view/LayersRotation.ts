@@ -43,7 +43,7 @@ export class LayersRotation {
         this.moveGroup = new THREE.Group()
         for(let cubieView of this.cubeView.cubieViews)
             if(this.cubiesInLayer.includes(cubieView.cubie))
-                this.moveGroup.add(cubieView.mesh)
+                this.moveGroup.add(cubieView.meshGroup)
         this.scene.add(this.moveGroup)
         this.initialQuaternion = this.moveGroup.quaternion.clone()
     }
