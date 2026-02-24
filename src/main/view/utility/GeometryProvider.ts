@@ -20,4 +20,9 @@ export class GeometryProvider {
     getPlaneGeometry(): THREE.PlaneGeometry {
         return this.planeGeometry
     }
+
+    dispose(): void {
+        this.boxGeometry.dispose()
+        this.planeGeometry.dispose()
+    }
 }

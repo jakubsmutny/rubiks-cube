@@ -29,7 +29,6 @@ export class SceneView {
 
         this.sceneController = new SceneController(this, cubeModel)
         this.cubeView = new CubeView(cubeModel, this)
-        this.scene.add(this.cubeView.group)
         this.setupEventListeners()
     }
 
@@ -40,11 +39,10 @@ export class SceneView {
     }
 
     setCubeModel(cubeModel: CubeModel): void {
-        this.scene.remove(this.cubeView.group)
+        this.cubeView.dispose()
         this.cubeModel = cubeModel
         this.sceneController.setCubeModel(cubeModel)
         this.cubeView = new CubeView(cubeModel, this)
-        this.scene.add(this.cubeView.group)
     }
 
     private setupScene(): THREE.Scene {
@@ -82,10 +80,12 @@ export class SceneView {
 
     private setupEventListeners(): void {
         window.addEventListener('resize', this.onWindowResize)
+        window.addEventListener('beforeunload', this.dispose)
     }
 
     removeEventListeners(): void {
         window.removeEventListener('resize', this.onWindowResize)
+        window.removeEventListener('beforeunload', this.dispose)
     }
 
     private onWindowResize = (): void => {
@@ -100,5 +100,11 @@ export class SceneView {
         this.camera.aspect = width / height
         this.camera.updateProjectionMatrix()
         this.sceneController.trackballControls.handleResize()
+    }
+
+    private dispose = (): void => {
+        this.cubeView.dispose()
+        this.renderer.dispose()
+        this.sceneController.removeEventListeners()
     }
 }

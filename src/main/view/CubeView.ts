@@ -37,6 +37,7 @@ export class CubeView implements Observer {
         })
         this.group = new THREE.Group()
         this.cubieViews.forEach(cubieView => this.group.add(cubieView.meshGroup))
+        sceneView.scene.add(this.group)
         cubeModel.register(this)
         this.activeTurnSize = 0
     }
@@ -63,5 +64,12 @@ export class CubeView implements Observer {
 
     isAnimating(): boolean {
         return this.animationQueue.length > 0
+    }
+
+    dispose(): void {
+        this.tweenGroup.removeAll();
+        this.sceneView.scene.remove(this.group)
+        //this.stickerProvider.dispose()
+        this.geometryProvider.dispose()
     }
 }
