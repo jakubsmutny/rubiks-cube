@@ -53,7 +53,6 @@ export class MaterialProvider {
         let side: number = Math.ceil(10000 / (dimension * dimension))
         side = Math.min(side, 1000)
         side = Math.max(side, 25)
-        if(dimension >= 50) side = 1
         return side
     }
 
@@ -98,8 +97,11 @@ export class MaterialProvider {
     }
 
     private backgroundMask(row: number, column: number): boolean {
-        let frame = Math.floor(this.side / 25)
-        let radius = Math.floor(this.side / 8)
+        // Stop with frame at low resolution (stops at 50x50 cube)
+        if(this.dimension >= 50) return false
+
+        let frame = Math.ceil(this.side / 25)
+        let radius = Math.ceil(this.side / 8)
         let corner = frame + radius
         let straight = this.side - (2 * corner)
 
