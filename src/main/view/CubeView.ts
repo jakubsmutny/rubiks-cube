@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import * as TWEEN from "@tweenjs/tween.js"
 import {CubeModel} from "../model/CubeModel"
 import {CubieView} from "./CubieView"
-import {StickerProvider} from "./utility/StickerProvider"
+import {MaterialProvider} from "./utility/MaterialProvider"
 import {Observer} from "../model/utility/observer/Observer"
 import {Move} from "../model/manipulation/Move"
 import {Animation} from "./Animation"
@@ -16,7 +16,7 @@ export class CubeView implements Observer {
     animationQueue: Array<Animation>
     tweenGroup: TWEEN.Group
 
-    stickerProvider: StickerProvider
+    stickerProvider: MaterialProvider
     geometryProvider: GeometryProvider
 
     cubieViews: Array<CubieView>
@@ -29,8 +29,8 @@ export class CubeView implements Observer {
         this.sceneView = sceneView
         this.animationQueue = new Array<Animation>()
         this.tweenGroup = new TWEEN.Group()
-        this.stickerProvider = new StickerProvider(cubeModel.dimension)
-        this.geometryProvider = new GeometryProvider(SceneView.cubeSize / cubeModel.dimension)
+        this.stickerProvider = new MaterialProvider(cubeModel.dimension)
+        this.geometryProvider = new GeometryProvider(SceneView.cubeSize, cubeModel.dimension)
         this.cubieViews = new Array<CubieView>()
         cubeModel.cubies.forEach(cubie => {
             this.cubieViews.push(new CubieView(cubie, cubeModel.dimension, this.stickerProvider, this.geometryProvider))
@@ -69,7 +69,7 @@ export class CubeView implements Observer {
     dispose(): void {
         this.tweenGroup.removeAll();
         this.sceneView.scene.remove(this.group)
-        //this.stickerProvider.dispose()
+        this.stickerProvider.dispose()
         this.geometryProvider.dispose()
     }
 }

@@ -2,27 +2,31 @@ import * as THREE from 'three'
 
 export class GeometryProvider {
 
+    cubeSize: number
+    dimension: number
     cubieSize: number
 
-    boxGeometry: THREE.BoxGeometry
-    planeGeometry: THREE.PlaneGeometry
+    faceGeometry: THREE.PlaneGeometry
+    turnSideGeometry: THREE.PlaneGeometry
 
-    constructor(cubieSize: number) {
-        this.cubieSize = cubieSize
-        this.boxGeometry = new THREE.BoxGeometry(this.cubieSize, this.cubieSize, this.cubieSize)
-        this.planeGeometry = new THREE.PlaneGeometry(this.cubieSize, this.cubieSize)
+    constructor(cubeSize: number, dimension: number) {
+        this.cubeSize = cubeSize
+        this.dimension = dimension
+        this.cubieSize = cubeSize / dimension
+        this.faceGeometry = new THREE.PlaneGeometry(this.cubieSize, this.cubieSize)
+        this.turnSideGeometry = new THREE.PlaneGeometry(this.cubeSize, this.cubeSize)
     }
 
-    getBoxGeometry(): THREE.BoxGeometry {
-        return this.boxGeometry
+    getFaceGeometry(): THREE.PlaneGeometry {
+        return this.faceGeometry
     }
 
-    getPlaneGeometry(): THREE.PlaneGeometry {
-        return this.planeGeometry
+    getTurnSideGeometry(): THREE.PlaneGeometry {
+        return this.turnSideGeometry
     }
 
     dispose(): void {
-        this.boxGeometry.dispose()
-        this.planeGeometry.dispose()
+        this.faceGeometry.dispose()
+        this.turnSideGeometry.dispose()
     }
 }

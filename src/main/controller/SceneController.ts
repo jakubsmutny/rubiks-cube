@@ -42,7 +42,7 @@ export class SceneController {
         const canvasY: number = -((event.clientY - rect.top) / canvas.clientHeight) * 2 + 1
         this.raycaster.setFromCamera(new THREE.Vector2(canvasX, canvasY), this.sceneView.camera)
         const intersects = this.raycaster.intersectObjects([this.sceneView.cubeView.group], true)
-        if(intersects.length > 0 && intersects[0].object.userData.cubieView !== undefined) {
+        if(intersects.length > 0 && intersects[0].object.userData.draggable) {
             this.trackballControls.noRotate = true
             const intersection = intersects[0]
             this.drag = new Drag(this.sceneView, mousePosition, intersection, event.button)

@@ -27,7 +27,7 @@ export class Drag {
         this.startPosition = startPosition.clone()
         this.currentPosition = startPosition.clone()
         this.button = button
-        this.clickedCubie = intersection.object.userData.cubieView.cubie
+        this.clickedCubie = intersection.object.userData.cubieModel
         const faceNormal: THREE.Vector3 = !intersection.face ? new THREE.Vector3() :
             intersection.face.normal.clone().transformDirection(intersection.object.matrixWorld).normalize()
         this.normal = new Vector(Math.round(faceNormal.x), Math.round(faceNormal.y), Math.round(faceNormal.z))
