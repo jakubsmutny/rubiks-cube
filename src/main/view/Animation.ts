@@ -21,13 +21,12 @@ export class Animation {
         this.finished = false
         this.layersRotation = new LayersRotation(cubeView, scene, move.axis, move.planes)
 
-        const turnSize = move.steps - cubeView.activeTurnSize
+        const turnSize = Move.reduceTurn(move.steps - cubeView.activeTurnSize)
         const start = {fraction: 0}
         const end = {fraction: turnSize}
 
         this.tween = new TWEEN.Tween(start)
             .to(end, Animation.simpleTurnDuration * Math.abs(turnSize))
-            // .easing(TWEEN.Easing.Back.Out)
             .easing(TWEEN.Easing.Cubic.InOut)
             .onUpdate(() => {
                 this.layersRotation.setStepFraction(start.fraction)
