@@ -106,5 +106,6 @@ export class SceneView {
         this.cubeView.dispose()
         this.renderer.dispose()
         this.sceneController.removeEventListeners()
+        this.removeEventListeners()
     }
 }

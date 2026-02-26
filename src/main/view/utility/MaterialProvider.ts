@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import {Face} from "../../model/Face"
-import {ColorPicker} from "./ColorPicker";
+import {ColorPicker} from "./ColorPicker"
+import {Side} from "../../model/utility/side/Side"
 
 export class MaterialProvider {
 
@@ -19,13 +20,12 @@ export class MaterialProvider {
 
     backgroundMaterial: THREE.MeshBasicMaterial
 
-    constructor(dimension: number, colors?: Array<THREE.Color>, backgroundColor?: THREE.Color, nonVisibleColor?: THREE.Color) {
-        if(!colors) colors = ColorPicker.getDefaultColors()
-        this.colors = colors
-        if(!backgroundColor) backgroundColor = ColorPicker.BACKGROUND
-        this.backgroundColor = backgroundColor
-        if(!nonVisibleColor) nonVisibleColor = ColorPicker.NON_VISIBLE
-        this.colors.push(nonVisibleColor)
+    constructor(dimension: number) {
+        this.colors = new Array<THREE.Color>()
+        for(let side of Side.getAll())
+            this.colors.push(ColorPicker.getColor(side))
+        this.colors.push(ColorPicker.NON_VISIBLE)
+        this.backgroundColor = ColorPicker.BACKGROUND
 
         this.dimension = dimension
         this.side = this.getSideFromDimension(dimension)
@@ -98,7 +98,7 @@ export class MaterialProvider {
 
     private backgroundMask(row: number, column: number): boolean {
         // Stop with frame at low resolution (stops at 50x50 cube)
-        if(this.dimension >= 50) return false
+        if(this.dimension > 50) return false
 
         let frame = Math.ceil(this.side / 25)
         let radius = Math.ceil(this.side / 8)
