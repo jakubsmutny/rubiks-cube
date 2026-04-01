@@ -44,6 +44,7 @@ export class MoveFactory {
                 planes.push(planeInverse ? this.dimension - i : i - 1)
             }
         }
+        planes.sort()
 
         return new Move(axis, planes, turnDirection);
     }

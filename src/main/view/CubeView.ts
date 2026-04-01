@@ -5,9 +5,10 @@ import {CubieView} from "./CubieView"
 import {MaterialProvider} from "./utility/MaterialProvider"
 import {Observer} from "../model/utility/observer/Observer"
 import {Move} from "../model/manipulation/Move"
-import {Animation} from "./Animation"
+import {Animation} from "./rotation/Animation"
 import {SceneView} from "./SceneView";
 import {GeometryProvider} from "./utility/GeometryProvider";
+import {LayerRotation} from "./rotation/LayerRotation";
 
 export class CubeView implements Observer {
 
@@ -16,30 +17,29 @@ export class CubeView implements Observer {
     animationQueue: Array<Animation>
     tweenGroup: TWEEN.Group
 
-    stickerProvider: MaterialProvider
+    materialProvider: MaterialProvider
     geometryProvider: GeometryProvider
 
     cubieViews: Array<CubieView>
     group: THREE.Group
 
-    activeTurnSize: number
+    activeLayerRotation: LayerRotation | undefined
 
     constructor(cubeModel: CubeModel, sceneView: SceneView) {
         this.cubeModel = cubeModel
         this.sceneView = sceneView
         this.animationQueue = new Array<Animation>()
         this.tweenGroup = new TWEEN.Group()
-        this.stickerProvider = new MaterialProvider(cubeModel.dimension)
+        this.materialProvider = new MaterialProvider(cubeModel.dimension)
         this.geometryProvider = new GeometryProvider(SceneView.cubeSize, cubeModel.dimension)
         this.cubieViews = new Array<CubieView>()
         cubeModel.cubies.forEach(cubie => {
-            this.cubieViews.push(new CubieView(cubie, cubeModel.dimension, this.stickerProvider, this.geometryProvider))
+            this.cubieViews.push(new CubieView(cubie, cubeModel.dimension, this.materialProvider, this.geometryProvider))
         })
         this.group = new THREE.Group()
         this.cubieViews.forEach(cubieView => this.group.add(cubieView.meshGroup))
         sceneView.scene.add(this.group)
         cubeModel.register(this)
-        this.activeTurnSize = 0
     }
 
     update(): void {
@@ -59,7 +59,9 @@ export class CubeView implements Observer {
     }
 
     updateFromObservable(move: Move): void {
-        this.animationQueue.push(new Animation(this, this.sceneView.scene, move))
+        if(!this.activeLayerRotation) this.activeLayerRotation = new LayerRotation(this, this.sceneView.scene, move.axis, move.planes)
+        this.animationQueue.push(new Animation(this.activeLayerRotation, move.steps))
+        this.activeLayerRotation = undefined
     }
 
     isAnimating(): boolean {
@@ -69,7 +71,7 @@ export class CubeView implements Observer {
     dispose(): void {
         this.tweenGroup.removeAll();
         this.sceneView.scene.remove(this.group)
-        this.stickerProvider.dispose()
+        this.materialProvider.dispose()
         this.geometryProvider.dispose()
     }
 }

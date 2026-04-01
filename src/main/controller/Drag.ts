@@ -3,7 +3,7 @@ import {Cubie} from "../model/Cubie";
 import {Vector} from "../model/geometry/Vector";
 import {SceneView} from "../view/SceneView";
 import {Axis} from "../model/geometry/Axis";
-import {LayersRotation} from "../view/LayersRotation";
+import {LayerRotation} from "../view/rotation/LayerRotation";
 
 export class Drag {
 
@@ -20,7 +20,7 @@ export class Drag {
     rail: THREE.Vector2 | undefined
     rotationAxis: Vector
 
-    layersRotation: LayersRotation | undefined
+    layerRotation: LayerRotation | undefined
 
     constructor(sceneView: SceneView, startPosition: THREE.Vector2, intersection: THREE.Intersection, button: number) {
         this.sceneView = sceneView
@@ -38,13 +38,13 @@ export class Drag {
         this.currentPosition = position
         if(!this.rail && this.getDragVector().length() > 10) {
             this.lockRailVector()
-            this.layersRotation = new LayersRotation(this.sceneView.cubeView,
+            this.layerRotation = new LayerRotation(this.sceneView.cubeView,
                                                      this.sceneView.scene,
                                                      this.rotationAxis,
                                                      Array.of(this.clickedCubie.layerInAxis(this.rotationAxis)))
         }
-        if(this.layersRotation) {
-            this.layersRotation.setStepFraction(this.getTurnSize())
+        if(this.layerRotation) {
+            this.layerRotation.setStepFraction(this.getTurnSize())
         }
     }
 

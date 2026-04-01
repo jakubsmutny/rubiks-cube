@@ -8,10 +8,10 @@ import Manipulator from "./Manipulator"
 
 export default function App() {
 
-    const [cubeModel, setCubeModel] = useState(new CubeModel(3));
+    const [cubeModel, setCubeModel] = useState(new CubeModel(3))
 
     const handleDimensionChange = (dim: number) => {
-        setCubeModel(new CubeModel(dim));
+        setCubeModel(new CubeModel(dim))
     }
 
     return (

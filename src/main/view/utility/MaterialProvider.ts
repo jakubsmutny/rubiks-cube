@@ -39,7 +39,7 @@ export class MaterialProvider {
         this.backgroundMaterial = new THREE.MeshBasicMaterial({color: this.backgroundColor})
     }
 
-    getStickerMaterial(face: Face, clear: boolean = false): THREE.MeshBasicMaterial {
+    getMaterial(face: Face, clear: boolean = false): THREE.MeshBasicMaterial {
         let materials = this.withBackgroundMaterials
         if(clear) materials = this.clearMaterials
         return materials[this.faceToColorIndex(face)]

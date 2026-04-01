@@ -5,7 +5,6 @@ import {Drag} from "./Drag";
 import {CubeModel} from "../model/CubeModel";
 import {MoveFactory} from "../model/factories/MoveFactory";
 import {Shuffle} from "../model/manipulation/Shuffle";
-import {Move} from "../model/manipulation/Move";
 
 export class SceneController {
 
@@ -50,16 +49,15 @@ export class SceneController {
     }
 
     onPointerUp = (event: MouseEvent): void => {
-        if(this.drag) {
-            this.drag.layersRotation?.cleanup()
-            this.sceneView.cubeView.activeTurnSize = Move.reduceTurn(this.drag.getTurnSize())
-            if(this.drag.rail) {
-                const moveShuffle: Shuffle = new Shuffle([this.moveFactory.createFromDrag(this.drag)])
-                this.cubeModel.manipulate(moveShuffle)
-            }
-            this.drag = undefined
-            this.trackballControls.noRotate = false
+        if(!this.drag) return
+        if(this.drag.layerRotation?.isFinished()) this.drag.layerRotation?.cleanup()
+        else this.sceneView.cubeView.activeLayerRotation = this.drag.layerRotation
+        if(this.drag.rail) {
+            const moveShuffle: Shuffle = new Shuffle([this.moveFactory.createFromDrag(this.drag)])
+            this.cubeModel.manipulate(moveShuffle)
         }
+        this.drag = undefined
+        this.trackballControls.noRotate = false
     }
 
     onPointerMove = (event: MouseEvent): void => {

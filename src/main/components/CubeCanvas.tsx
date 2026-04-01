@@ -9,29 +9,21 @@ interface Props {
 
 export default function CubeCanvas({ cubeModel }: Props) {
 
-    const sceneViewRef = useRef<SceneView | null>(null);
+    const sceneViewRef = useRef<SceneView | null>(null)
 
     useEffect(() => {
-        if (!sceneViewRef.current) {
-            sceneViewRef.current = new SceneView(cubeModel, 'cubeCanvas');
-}
+        if(sceneViewRef.current) sceneViewRef.current.setCubeModel(cubeModel)
+        else sceneViewRef.current = new SceneView(cubeModel, 'cubeCanvas')
+
         return () => {
             if(sceneViewRef.current) {
                 sceneViewRef.current.renderer.setAnimationLoop(null)
-                sceneViewRef.current.renderer.dispose()
-                sceneViewRef.current.removeEventListeners()
-                sceneViewRef.current.sceneController.removeEventListeners()
+                sceneViewRef.current.dispose()
                 sceneViewRef.current = null
             }
         }
     }, [cubeModel])
 
-    useEffect(() => {
-        if(sceneViewRef.current) {
-            sceneViewRef.current.setCubeModel(cubeModel);
-        }
-    }, [cubeModel])
-    
     return (
         <canvas
             id='cubeCanvas'

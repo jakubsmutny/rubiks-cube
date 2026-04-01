@@ -14,15 +14,15 @@ export class CubieView {
     offset: number
     meshGroup: THREE.Group
 
-    stickerProvider: MaterialProvider
+    materialProvider: MaterialProvider
     geometryProvider: GeometryProvider
 
-    constructor(cubie: Cubie, dimension: number, stickerProvider: MaterialProvider, geometryProvider: GeometryProvider) {
+    constructor(cubie: Cubie, dimension: number, materialProvider: MaterialProvider, geometryProvider: GeometryProvider) {
         this.cubie = cubie
         this.dimension = dimension
         this.size = SceneView.cubeSize / dimension
         this.offset = (SceneView.cubeSize - this.size) / 2
-        this.stickerProvider = stickerProvider
+        this.materialProvider = materialProvider
         this.geometryProvider = geometryProvider
         this.meshGroup = new THREE.Group()
         this.setupMeshes()
@@ -45,7 +45,7 @@ export class CubieView {
         const coreGeometry = this.geometryProvider.getFaceGeometry()
 
         for(let face of this.cubie.faces) {
-            const mirrorMesh = new THREE.Mesh(coreGeometry, this.stickerProvider.getStickerMaterial(face))
+            const mirrorMesh = new THREE.Mesh(coreGeometry, this.materialProvider.getMaterial(face))
             mirrorMesh.userData.cubieModel = this.cubie
             mirrorMesh.userData.draggable = true
             this.positionCoreMesh(mirrorMesh, face.normal)
@@ -57,7 +57,7 @@ export class CubieView {
         const mirrorGeometry = this.geometryProvider.getFaceGeometry()
 
         for(let face of this.cubie.faces) {
-            const mirrorMesh = new THREE.Mesh(mirrorGeometry, this.stickerProvider.getStickerMaterial(face, true))
+            const mirrorMesh = new THREE.Mesh(mirrorGeometry, this.materialProvider.getMaterial(face, true))
             mirrorMesh.userData.cubieModel = this.cubie
             mirrorMesh.userData.draggable = false
             this.positionMirrorMesh(mirrorMesh, face.normal)

@@ -102,7 +102,7 @@ export class SceneView {
         this.sceneController.trackballControls.handleResize()
     }
 
-    private dispose = (): void => {
+    dispose = (): void => {
         this.cubeView.dispose()
         this.renderer.dispose()
         this.sceneController.removeEventListeners()
