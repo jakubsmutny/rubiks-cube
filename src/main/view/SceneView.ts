@@ -19,9 +19,9 @@ export class SceneView {
 
     cubeView: CubeView
 
-    constructor(cubeModel: CubeModel, canvasName: string) {
+    constructor(cubeModel: CubeModel, canvas: HTMLCanvasElement) {
         this.cubeModel = cubeModel
-        this.canvas = document.getElementById(canvasName) as HTMLCanvasElement
+        this.canvas = canvas
 
         this.scene = this.setupScene()
         this.renderer = this.setupRenderer()

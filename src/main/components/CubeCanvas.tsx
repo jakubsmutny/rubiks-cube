@@ -9,11 +9,14 @@ interface Props {
 
 export default function CubeCanvas({ cubeModel }: Props) {
 
+    const canvasRef = useRef<HTMLCanvasElement | null>(null)
     const sceneViewRef = useRef<SceneView | null>(null)
 
     useEffect(() => {
+        if(!canvasRef.current) return
+
         if(sceneViewRef.current) sceneViewRef.current.setCubeModel(cubeModel)
-        else sceneViewRef.current = new SceneView(cubeModel, 'cubeCanvas')
+        else sceneViewRef.current = new SceneView(cubeModel, canvasRef.current)
 
         return () => {
             if(sceneViewRef.current) {
@@ -26,7 +29,7 @@ export default function CubeCanvas({ cubeModel }: Props) {
 
     return (
         <canvas
-            id='cubeCanvas'
+            ref={canvasRef}
             className={styles.cubeCanvas}
         />
     );
