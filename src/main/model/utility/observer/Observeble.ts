@@ -3,5 +3,5 @@ import {Move} from "../../manipulation/Move";
 
 export interface Observable {
     register(observer: Observer): void
-    notify(move: Move): void
+    notify(move: Move, speed: number): void
 }

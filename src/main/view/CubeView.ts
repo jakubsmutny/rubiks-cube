@@ -30,6 +30,7 @@ export class CubeView implements Observer {
         this.sceneView = sceneView
         this.animationQueue = new Array<Animation>()
         this.tweenGroup = new TWEEN.Group()
+
         this.materialProvider = new MaterialProvider(cubeModel.dimension)
         this.geometryProvider = new GeometryProvider(SceneView.cubeSize, cubeModel.dimension)
         this.cubieViews = new Array<CubieView>()
@@ -58,9 +59,9 @@ export class CubeView implements Observer {
         }
     }
 
-    updateFromObservable(move: Move): void {
+    updateFromObservable(move: Move, speed: number): void {
         if(!this.activeLayerRotation) this.activeLayerRotation = new LayerRotation(this, this.sceneView.scene, move.axis, move.planes)
-        this.animationQueue.push(new Animation(this.activeLayerRotation, move.steps))
+        this.animationQueue.push(new Animation(this.activeLayerRotation, move.steps - this.activeLayerRotation.activeTurnStep, speed))
         this.activeLayerRotation = undefined
     }
 

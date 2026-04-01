@@ -50,7 +50,12 @@ export class CubeModel implements Observable {
     }
 
     solve(): void {
-        this.execute(this.shuffle.getInverse())
+        this.manipulate(this.shuffle.getInverse().makeFast())
+    }
+
+    scramble(): void {
+        const shuffleFactory: ShuffleFactory = new ShuffleFactory(this.dimension)
+        this.manipulate(shuffleFactory.scramble().makeFast())
     }
 
     undo(): void {
@@ -79,7 +84,7 @@ export class CubeModel implements Observable {
     private execute(manipulation: Shuffle): void {
         for(let move of manipulation.moves) {
             this.cubies.forEach(cubie => cubie.manipulate(move))
-            this.notify(move)
+            this.notify(move, manipulation.getSpeed())
         }
         this.shuffle.append(manipulation)
         if(this.isSolved()) {
@@ -91,7 +96,7 @@ export class CubeModel implements Observable {
         this.observers.push(observer)
     }
 
-    notify(move: Move) {
-        this.observers.forEach(observer => observer.updateFromObservable(move))
+    notify(move: Move, speed: number) {
+        this.observers.forEach(observer => observer.updateFromObservable(move, speed))
     }
 }

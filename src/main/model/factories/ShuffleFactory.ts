@@ -32,6 +32,11 @@ export class ShuffleFactory {
         return shuffle
     }
 
+    scramble(): Shuffle {
+        const moveCount = 10 * this.dimension
+        return this.createRandom(moveCount)
+    }
+
     static createEmpty(): Shuffle {
         return new Shuffle(new Array<Move>())
     }

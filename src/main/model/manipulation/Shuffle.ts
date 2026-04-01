@@ -4,16 +4,19 @@ export class Shuffle {
 
     moves: Array<Move>
 
-    constructor(moves?: Array<Move>) {
+    fast: boolean
+
+    constructor(moves?: Array<Move>, fast: boolean = false) {
         if(moves) {this.moves = moves}
         else this.moves = new Array<Move>()
+        this.fast = fast
     }
 
     getInverse(): Shuffle {
         let inverseMoves: Array<Move> = Array<Move>()
         for(let move of this.moves)
             inverseMoves.push(move.getInverse())
-        return new Shuffle(inverseMoves.reverse())
+        return new Shuffle(inverseMoves.reverse(), this.fast)
     }
 
     append(appendable: Shuffle | Move): void {
@@ -40,7 +43,24 @@ export class Shuffle {
         }
     }
 
+    makeFast(): Shuffle {
+        this.fast = true
+        return this
+    }
+
+    getSpeed(): number {
+        if(!this.fast) return 1
+        let speed = Math.pow(this.size(), 2 / 3) / 4
+        speed = Math.max(speed, 1)
+        speed = Math.min(speed, 4)
+        return speed
+    }
+
     isEmpty(): boolean {
-        return this.moves.length === 0
+        return this.size() === 0
+    }
+
+    size(): number {
+        return this.moves.length
     }
 }

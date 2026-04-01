@@ -3,7 +3,8 @@ import {LayerRotation} from "./LayerRotation"
 
 export class Animation {
 
-    static simpleTurnDuration: number = 400
+    static normalTurnDuration: number = 400
+    turnDuration: number
 
     started: boolean
     finished: boolean
@@ -11,16 +12,16 @@ export class Animation {
     layerRotation: LayerRotation
     private tween: TWEEN.Tween<{fraction: number}>
 
-    constructor(layerRotation: LayerRotation, moveStep: number) {
+    constructor(layerRotation: LayerRotation, turnSize: number, speed: number = 1) {
+        this.turnDuration = Animation.normalTurnDuration / speed
         this.started = false
         this.finished = false
         this.layerRotation = layerRotation
 
-        const turnSize = Math.abs(layerRotation.activeTurnStep - moveStep)
         const start = {fraction: layerRotation.activeTurnStep}
-        const end = {fraction: moveStep}
+        const end = {fraction: layerRotation.activeTurnStep + turnSize}
         this.tween = new TWEEN.Tween(start)
-            .to(end, Animation.simpleTurnDuration * turnSize)
+            .to(end, this.turnDuration * Math.abs(turnSize))
             .easing(TWEEN.Easing.Cubic.InOut)
             .onUpdate(() => {
                 this.layerRotation.setStepFraction(start.fraction)
