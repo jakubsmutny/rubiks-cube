@@ -61,7 +61,8 @@ export class CubeView implements Observer {
 
     updateFromObservable(move: Move, speed: number): void {
         if(!this.activeLayerRotation) this.activeLayerRotation = new LayerRotation(this, this.sceneView.scene, move.axis, move.planes)
-        this.animationQueue.push(new Animation(this.activeLayerRotation, move.steps - this.activeLayerRotation.activeTurnStep, speed))
+        const turnSize: number = Move.reduceTurn(move.steps - this.activeLayerRotation.activeTurnStep)
+        this.animationQueue.push(new Animation(this.activeLayerRotation, turnSize, speed))
         this.activeLayerRotation = undefined
     }
 
