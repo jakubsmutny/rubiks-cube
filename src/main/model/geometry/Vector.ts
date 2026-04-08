@@ -1,4 +1,5 @@
-import {Rotation} from "./Rotation";
+import {Side} from "../utility/side/Side"
+import {Axis} from "./Axis";
 
 export class Vector {
 
@@ -22,5 +23,31 @@ export class Vector {
 
     negative(): Vector {
         return new Vector(-this.x, -this.y, -this.z)
+    }
+
+    dot(other: Vector): number {
+        return this.x * other.x + this.y * other.y + this.z * other.z
+    }
+
+    cross(other: Vector): Vector {
+        return new Vector(
+            this.y * other.z - this.z * other.y,
+            this.z * other.x - this.x * other.z,
+            this.x * other.y - this.y * other.x
+        )
+    }
+
+    snappedToGrid(exclude?: Vector): Vector {
+        const sides = Side.getAll()
+            .map(side => side.getNormal())
+            .filter(side => !exclude || side.dot(exclude) === 0)
+        let maxDot = -Infinity
+        let maxDotSide: Vector = new Vector(0, 0, 0)
+        for(let side of sides)
+            if(side.dot(this) > maxDot) {
+                maxDot = side.dot(this)
+                maxDotSide = side
+            }
+        return maxDotSide.clone()
     }
 }

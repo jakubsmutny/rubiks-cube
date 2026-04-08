@@ -1,4 +1,4 @@
-import {Vector} from "./Vector";
+import {Vector} from "./Vector"
 
 export class Axis {
     static readonly X = new Vector(1, 0, 0)
@@ -11,5 +11,11 @@ export class Axis {
         if(vector.equals(Axis.Y) || vector.negative().equals(Axis.Y)) return [Axis.X, Axis.Z]
         if(vector.equals(Axis.Z) || vector.negative().equals(Axis.Z)) return [Axis.X, Axis.Y]
         return [Axis.undefined, Axis.undefined]
+    }
+
+    static isNegative(vector: Vector): boolean {
+        return vector.negative().equals(Axis.X)
+            || vector.negative().equals(Axis.Y)
+            || vector.negative().equals(Axis.Z)
     }
 }

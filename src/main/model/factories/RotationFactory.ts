@@ -1,6 +1,7 @@
-import {Axis} from "../geometry/Axis";
-import {Vector} from "../geometry/Vector";
-import {Rotation} from "../geometry/Rotation";
+import * as THREE from 'three'
+import {Axis} from "../geometry/Axis"
+import {Vector} from "../geometry/Vector"
+import {Rotation} from "../geometry/Rotation"
 
 export class RotationFactory {
 
@@ -24,6 +25,13 @@ export class RotationFactory {
             product = rotation.appliedToRotation(product)
         }
         return product
+    }
+
+    static getRotationFromMatrixWorld(m: THREE.Matrix4) {
+        const vectorX = new Vector(m.elements[0], m.elements[1], m.elements[2])
+        const vectorY = new Vector(m.elements[4], m.elements[5], m.elements[6])
+        const vectorZ = new Vector(m.elements[8], m.elements[9], m.elements[10])
+        return new Rotation(vectorX, vectorY, vectorZ)
     }
 
     static getRoll(): Rotation {

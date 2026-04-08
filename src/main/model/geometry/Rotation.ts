@@ -16,6 +16,13 @@ export class Rotation {
         return new Rotation(this.xAxis.clone(), this.yAxis.clone(), this.zAxis.clone())
     }
 
+    snappedToGrid(): Rotation {
+        const snappedX: Vector = this.xAxis.snappedToGrid()
+        const snappedY: Vector = this.yAxis.snappedToGrid(snappedX)
+        const snappedZ: Vector = snappedX.cross(snappedY)
+        return new Rotation(snappedX, snappedY, snappedZ)
+    }
+
     appliedToRotation(original: Rotation): Rotation {
         const xAxis: Vector = this.appliedToVector(original.xAxis)
         const yAxis: Vector = this.appliedToVector(original.yAxis)

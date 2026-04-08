@@ -1,8 +1,8 @@
-import * as THREE from 'three';
+import * as THREE from 'three'
 
-import {CubeModel} from "../model/CubeModel";
-import {SceneController} from "../controller/SceneController";
-import {CubeView} from "./CubeView";
+import {CubeModel} from "../model/CubeModel"
+import {SceneController} from "../controller/SceneController"
+import {CubeView} from "./CubeView"
 
 export class SceneView {
 

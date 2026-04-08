@@ -5,6 +5,7 @@ import {Drag} from "./Drag";
 import {CubeModel} from "../model/CubeModel";
 import {MoveFactory} from "../model/factories/MoveFactory";
 import {Shuffle} from "../model/manipulation/Shuffle";
+import {CameraMoveTranslator} from "./CameraMoveTranslator";
 
 export class SceneController {
 
@@ -12,6 +13,7 @@ export class SceneController {
     cubeModel: CubeModel
 
     moveFactory: MoveFactory
+    cameraMoveTranslator: CameraMoveTranslator
 
     trackballControls: TrackballControls
 
@@ -22,6 +24,7 @@ export class SceneController {
         this.sceneView = sceneView
         this.cubeModel = cubeModel
         this.moveFactory = new MoveFactory(cubeModel.dimension)
+        this.cameraMoveTranslator = new CameraMoveTranslator(sceneView.camera, cubeModel.dimension)
         this.raycaster = new THREE.Raycaster()
         this.setupEventListeners()
         this.trackballControls = this.setupControls()
@@ -72,6 +75,7 @@ export class SceneController {
     setCubeModel(cubeModel: CubeModel): void {
         this.cubeModel = cubeModel
         this.moveFactory = new MoveFactory(cubeModel.dimension)
+        this.cameraMoveTranslator = new CameraMoveTranslator(this.sceneView.camera, cubeModel.dimension)
         this.drag = undefined
     }
 
