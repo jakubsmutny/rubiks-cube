@@ -1,4 +1,5 @@
 import {Vector} from "./Vector";
+import {Axis} from "./Axis";
 
 export class Rotation {
 
@@ -21,6 +22,12 @@ export class Rotation {
         const snappedY: Vector = this.yAxis.snappedToGrid(snappedX)
         const snappedZ: Vector = snappedX.cross(snappedY)
         return new Rotation(snappedX, snappedY, snappedZ)
+    }
+
+    transposed(): Rotation {
+        return new Rotation(new Vector(this.xAxis.x, this.yAxis.x, this.zAxis.x),
+                            new Vector(this.xAxis.y, this.yAxis.y, this.zAxis.y),
+                            new Vector(this.xAxis.z, this.yAxis.z, this.zAxis.z))
     }
 
     appliedToRotation(original: Rotation): Rotation {

@@ -21,7 +21,7 @@ export class CameraMoveTranslator {
 
     getSnappedRotation(): Rotation {
         const rotation = RotationFactory.getRotationFromMatrixWorld(this.camera.matrixWorld)
-        return rotation.snappedToGrid()
+        return rotation.snappedToGrid().transposed()
     }
 
     translateShuffle(shuffle: Shuffle): Shuffle {

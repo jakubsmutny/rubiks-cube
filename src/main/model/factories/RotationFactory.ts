@@ -28,9 +28,9 @@ export class RotationFactory {
     }
 
     static getRotationFromMatrixWorld(m: THREE.Matrix4) {
-        const vectorX = new Vector(m.elements[0], m.elements[1], m.elements[2])
-        const vectorY = new Vector(m.elements[4], m.elements[5], m.elements[6])
-        const vectorZ = new Vector(m.elements[8], m.elements[9], m.elements[10])
+        const vectorX = new Vector(m.elements[0], m.elements[4], m.elements[8])
+        const vectorY = new Vector(m.elements[1], m.elements[5], m.elements[9])
+        const vectorZ = new Vector(m.elements[2], m.elements[6], m.elements[10])
         return new Rotation(vectorX, vectorY, vectorZ)
     }
 
