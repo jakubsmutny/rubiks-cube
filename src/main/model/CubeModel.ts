@@ -1,11 +1,14 @@
-import {Cubie} from "./Cubie";
-import {CubieFactory} from "./factories/CubieFactory";
-import {Shuffle} from "./manipulation/Shuffle";
-import {ShuffleFactory} from "./factories/ShuffleFactory";
-import {Vector} from "./geometry/Vector";
-import {Observable} from "./utility/observer/Observeble";
-import {Observer} from "./utility/observer/Observer";
-import {Move} from "./manipulation/Move";
+import {Cubie} from "./Cubie"
+import {CubieFactory} from "./factories/CubieFactory"
+import {Shuffle} from "./manipulation/Shuffle"
+import {ShuffleFactory} from "./factories/ShuffleFactory"
+import {Vector} from "./geometry/Vector"
+import {Observable} from "./utility/observer/Observeble"
+import {Observer} from "./utility/observer/Observer"
+import {Move} from "./manipulation/Move"
+import {Beginners3x3Method} from "./solve/Beginners3x3Method"
+import {SolveMethod} from "./solve/SolveMethod"
+import {EmptyMethod} from "./solve/EmptyMethod"
 
 export class CubeModel implements Observable {
 
@@ -18,6 +21,8 @@ export class CubeModel implements Observable {
 
     observers: Array<Observer>
 
+    method: SolveMethod
+
     constructor(dimension: number) {
         this.dimension = dimension
         this.cubies = CubieFactory.createCubies(dimension)
@@ -25,19 +30,12 @@ export class CubeModel implements Observable {
         this.manipulations = new Array<Shuffle>()
         this.currentManipulation = 0
         this.observers = new Array<Observer>()
+        this.method = dimension === 3 ? new Beginners3x3Method(this) : new EmptyMethod()
     }
 
     isSolved(): boolean {
-        let allVisible: boolean = true
-        for(let cubie of this.cubies) for(let face of cubie.faces)
-            if(!face.visible) allVisible = false
-        return this.stepSolved() && allVisible
-    }
-
-    stepSolved(): boolean {
         let normals = new Array<Vector>(6)
         for(let cubie of this.cubies) for(let face of cubie.faces) {
-            if(!face.visible) continue
             if(!(face.side.index() in normals)) {
                 normals[face.side.index()] = face.normal
                 continue
@@ -56,6 +54,7 @@ export class CubeModel implements Observable {
     scramble(): void {
         const shuffleFactory: ShuffleFactory = new ShuffleFactory(this.dimension)
         this.manipulate(shuffleFactory.scramble().makeFast())
+        this.method.start()
     }
 
     undo(): void {
@@ -84,19 +83,22 @@ export class CubeModel implements Observable {
     private execute(manipulation: Shuffle): void {
         for(let move of manipulation.moves) {
             this.cubies.forEach(cubie => cubie.manipulate(move))
-            this.notify(move, manipulation.getSpeed())
+            this.notifyMove(move, manipulation.getSpeed())
         }
         this.shuffle.append(manipulation)
-        if(this.isSolved()) {
-            this.shuffle = ShuffleFactory.createEmpty()
-        }
+        if(this.isSolved()) this.shuffle = ShuffleFactory.createEmpty()
+        this.method.update()
     }
 
     register(observer: Observer) {
         this.observers.push(observer)
     }
 
-    notify(move: Move, speed: number) {
-        this.observers.forEach(observer => observer.updateFromObservable(move, speed))
+    notifyMove(move: Move, speed: number) {
+        this.observers.forEach(observer => observer.updateMove(move, speed))
+    }
+
+    notifyVisibility() {
+        this.observers.forEach(observer => observer.updateVisibility())
     }
 }

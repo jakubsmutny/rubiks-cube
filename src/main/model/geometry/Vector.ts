@@ -1,5 +1,6 @@
 import {Side} from "../utility/side/Side"
 import {Axis} from "./Axis";
+import {SideFactory} from "../factories/SideFactory";
 
 export class Vector {
 
@@ -38,7 +39,7 @@ export class Vector {
     }
 
     snappedToGrid(exclude?: Vector): Vector {
-        const sides = Side.getAll()
+        const sides = SideFactory.getAll()
             .map(side => side.getNormal())
             .filter(side => !exclude || side.dot(exclude) === 0)
         let maxDot = -Infinity

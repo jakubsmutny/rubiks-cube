@@ -15,17 +15,17 @@ export class ColorPicker {
     static readonly GREEN = new THREE.Color(0, 155, 32)
     static readonly BLUE = new THREE.Color(0, 69, 173)
 
-    static readonly NON_VISIBLE = new THREE.Color(100, 100, 100)
+    static readonly NON_VISIBLE = new THREE.Color(80, 80, 80)
     static readonly BACKGROUND = new THREE.Color(0, 0, 0)
 
     static getColor(side :Side): THREE.Color {
         switch(side.index()) {
-            case RightSide.getInstance().index(): return this.RED
-            case LeftSide.getInstance().index(): return this.ORANGE
-            case UpSide.getInstance().index(): return this.WHITE
-            case DownSide.getInstance().index(): return this.YELLOW
-            case FrontSide.getInstance().index(): return this.GREEN
-            case BackSide.getInstance().index(): return this.BLUE
+            case RightSide.get().index(): return this.RED
+            case LeftSide.get().index(): return this.ORANGE
+            case UpSide.get().index(): return this.WHITE
+            case DownSide.get().index(): return this.YELLOW
+            case FrontSide.get().index(): return this.GREEN
+            case BackSide.get().index(): return this.BLUE
             default: return this.BACKGROUND
         }
     }

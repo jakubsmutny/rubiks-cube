@@ -1,13 +1,15 @@
-import {Side} from "./Side";
-import {Vector} from "../../geometry/Vector";
+import {Side} from "./Side"
+import {Vector} from "../../geometry/Vector"
 
-export class FrontSide implements Side {
+export class FrontSide extends Side {
 
     private static instance: FrontSide
 
-    private constructor() {}
+    private constructor() {
+        super()
+    }
 
-    public static getInstance(): FrontSide {
+    public static get(): FrontSide {
         if(!FrontSide.instance) {
             FrontSide.instance = new FrontSide()
         }

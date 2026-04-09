@@ -59,11 +59,15 @@ export class CubeView implements Observer {
         }
     }
 
-    updateFromObservable(move: Move, speed: number): void {
+    updateMove(move: Move, speed: number): void {
         if(!this.activeLayerRotation) this.activeLayerRotation = new LayerRotation(this, this.sceneView.scene, move.axis, move.planes)
         const turnSize: number = Move.reduceTurn(move.steps - this.activeLayerRotation.activeTurnStep)
         this.animationQueue.push(new Animation(this.activeLayerRotation, turnSize, speed))
         this.activeLayerRotation = undefined
+    }
+
+    updateVisibility(): void {
+        this.cubieViews.forEach(cubieView => cubieView.updateMeshMaterial())
     }
 
     isAnimating(): boolean {

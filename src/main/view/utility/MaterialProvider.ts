@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import {Face} from "../../model/Face"
 import {ColorPicker} from "./ColorPicker"
 import {Side} from "../../model/utility/side/Side"
+import {SideFactory} from "../../model/factories/SideFactory";
 
 export class MaterialProvider {
 
@@ -22,7 +23,7 @@ export class MaterialProvider {
 
     constructor(dimension: number) {
         this.colors = new Array<THREE.Color>()
-        for(let side of Side.getAll())
+        for(let side of SideFactory.getAll())
             this.colors.push(ColorPicker.getColor(side))
         this.colors.push(ColorPicker.NON_VISIBLE)
         this.backgroundColor = ColorPicker.BACKGROUND
@@ -78,7 +79,7 @@ export class MaterialProvider {
             for (let i = 0; i < this.side; i++) for (let j = 0; j < this.side; j++) {
                 let position = (i * this.side + j) * 4
                 let pickedColor = color
-                if(this.backgroundMask(i, j))
+                if(this.backgroundMask(i, j) || (color.equals(ColorPicker.NON_VISIBLE) && clear))
                     pickedColor = this.backgroundColor
                 this.setPixelColor(pixels, position, pickedColor, clear)
             }

@@ -27,6 +27,7 @@ export class CubieView {
         this.meshGroup = new THREE.Group()
         this.setupMeshes()
         this.updatePositionFromModel()
+        this.updateMeshMaterial()
     }
 
     updatePositionFromModel(): void {
@@ -34,6 +35,12 @@ export class CubieView {
         this.meshGroup.position.copy(position)
         const rotation: THREE.Matrix4 = this.getCubieRotation()
         this.meshGroup.setRotationFromMatrix(rotation)
+    }
+
+    updateMeshMaterial(): void {
+        (this.meshGroup.children as THREE.Mesh[]).forEach((mesh) =>
+            mesh.material = this.materialProvider.getMaterial(mesh.userData.face, !mesh.userData.draggable)
+        )
     }
 
     private setupMeshes(): void {
@@ -45,11 +52,12 @@ export class CubieView {
         const coreGeometry = this.geometryProvider.getFaceGeometry()
 
         for(let face of this.cubie.faces) {
-            const mirrorMesh = new THREE.Mesh(coreGeometry, this.materialProvider.getMaterial(face))
-            mirrorMesh.userData.cubieModel = this.cubie
-            mirrorMesh.userData.draggable = true
-            this.positionCoreMesh(mirrorMesh, face.normal)
-            this.meshGroup.add(mirrorMesh)
+            const coreMesh = new THREE.Mesh(coreGeometry)
+            coreMesh.userData.cubieModel = this.cubie
+            coreMesh.userData.face = face
+            coreMesh.userData.draggable = true
+            this.positionCoreMesh(coreMesh, face.normal)
+            this.meshGroup.add(coreMesh)
         }
     }
 
@@ -57,8 +65,9 @@ export class CubieView {
         const mirrorGeometry = this.geometryProvider.getFaceGeometry()
 
         for(let face of this.cubie.faces) {
-            const mirrorMesh = new THREE.Mesh(mirrorGeometry, this.materialProvider.getMaterial(face, true))
+            const mirrorMesh = new THREE.Mesh(mirrorGeometry)
             mirrorMesh.userData.cubieModel = this.cubie
+            mirrorMesh.userData.face = face
             mirrorMesh.userData.draggable = false
             this.positionMirrorMesh(mirrorMesh, face.normal)
             this.meshGroup.add(mirrorMesh)
