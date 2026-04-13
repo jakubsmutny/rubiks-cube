@@ -5,6 +5,7 @@ import {UpSide} from "../utility/side/UpSide"
 import {DownSide} from "../utility/side/DownSide"
 import {Vector} from "../geometry/Vector"
 import {CubeModel} from "../CubeModel"
+import {SolveMethod} from "./SolveMethod"
 
 enum Step {
     WhiteCross,
@@ -41,6 +42,7 @@ export class Beginners3x3Method implements SolveMethod {
             face.visible = false
         this.activeStepFaceGroup().forEach(face => face.visible = true)
         this.cubeModel.notifyVisibility()
+        this.update()
     }
 
     update(): void {

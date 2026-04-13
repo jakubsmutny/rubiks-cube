@@ -5,7 +5,8 @@ import CubeCanvas from './CubeCanvas'
 import ShuffleNotationInput from "./ShuffleNotationInput"
 import {CubeModel} from "../model/CubeModel"
 import Manipulator from "./Manipulator"
-import {CameraMoveTranslator} from "../controller/CameraMoveTranslator";
+import {CameraMoveTranslator} from "../controller/CameraMoveTranslator"
+import HintDisplay from "./HintDisplay"
 
 export default function App() {
 
@@ -35,6 +36,7 @@ export default function App() {
                 cubeModel={cubeModel}
                 onMoveTranslatorReady={setMoveTranslator}
             />
+            <HintDisplay/>
         </>
     );
 }
