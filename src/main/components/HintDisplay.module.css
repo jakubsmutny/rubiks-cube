@@ -32,6 +32,14 @@
     font-size: calc(min(90vh, 45vw) * 0.03);
     line-height: 0.5;
     word-break: break-word;
+    padding: 2px 4px;
+    background-color: #505050;
+    border-radius: 4px;
+}
+
+.hintDisplay code:hover {
+    color: #ffffff;
+    cursor: pointer;
 }
 
 @media (orientation: portrait) {

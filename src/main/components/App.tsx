@@ -37,7 +37,10 @@ export default function App() {
                     cubeModel={cubeModel}
                     onMoveTranslatorReady={setMoveTranslator}
                 />
-                <HintDisplay/>
+                <HintDisplay
+                    cubeModel={cubeModel}
+                    moveTranslator={moveTranslator}
+                />
             </div>
         </div>
     );
