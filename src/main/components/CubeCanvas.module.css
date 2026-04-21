@@ -2,8 +2,8 @@
     border-radius: 20px;
     background: #303030;
     box-shadow: 0 7px 30px #000000;
-    width: min(80vh, 40vw);
-    height: min(80vh, 40vw);
+    width: min(90vh, 45vw);
+    height: min(90vh, 45vw);
     margin: auto;
 }
 

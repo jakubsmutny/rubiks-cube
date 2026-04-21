@@ -2,22 +2,53 @@
     border-radius: 20px;
     background: #303030;
     box-shadow: 0 7px 30px #000000;
-    width: min(80vh, 40vw);
-    height: min(80vh, 40vw);
+    width: min(90vh, 45vw);
+    height: min(90vh, 45vw);
     margin: auto;
-    padding: 20px;
-    box-sizing: border-box;
+    padding-left: 20px;
+}
+
+.hintDisplay h1 {
+    color: #e0e0e0;
+    font-weight: 700;
+    font-family: system-ui, sans-serif;
+    font-size: calc(min(90vh, 45vw) * 0.04);
+    line-height: 0.5;
+    word-break: break-word;
 }
 
 .hintDisplay p {
     color: #e0e0e0;
-    font-weight: 600;
+    font-weight: 500;
     font-family: system-ui, sans-serif;
+    font-size: calc(min(90vh, 45vw) * 0.03);
+    line-height: 0.5;
+    word-break: break-word;
+}
+
+.hintDisplay code {
+    color: #c0c0c0;
+    font-weight: 600;
+    font-size: calc(min(90vh, 45vw) * 0.03);
+    line-height: 0.5;
+    word-break: break-word;
 }
 
 @media (orientation: portrait) {
     .hintDisplay {
         width: min(40vh, 98vw);
         height: min(40vh, 98vw);
+    }
+
+    .hintDisplay h1 {
+        font-size: calc(min(40vh, 98vw) * 0.04);
+    }
+
+    .hintDisplay p {
+        font-size: calc(min(40vh, 98vw) * 0.02);
+    }
+
+    .hintDisplay code {
+        font-size: calc(min(40vh, 98vw) * 0.02);
     }
 }

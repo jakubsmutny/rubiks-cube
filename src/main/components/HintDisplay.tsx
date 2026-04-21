@@ -4,7 +4,9 @@ export default function HintDisplay() {
 
     return (
         <div className={styles.hintDisplay}>
-            <p>R U R' U'</p>
+            <h1>Corner placement</h1>
+            <p>Do this:</p>
+            <code>R U R' U'</code>
         </div>
     );
 }
