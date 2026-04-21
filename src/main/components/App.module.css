@@ -1,5 +1,24 @@
+.appContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: fit-content;
+}
+
 .controlsContainer {
     display: flex;
     flex-direction: row;
     gap: 20px;
+}
+
+.displayContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+@media (orientation: portrait) {
+    .displayContainer {
+        flex-direction: column;
+    }
 }

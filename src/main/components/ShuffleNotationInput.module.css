@@ -53,3 +53,13 @@
 .shuffleNotationInput button:active {
     transform: translateY(1px);
 }
+
+@media (orientation: portrait) {
+    .shuffleNotationInput input {
+        font-size: 1.5rem;
+    }
+
+    .shuffleNotationInput button {
+        font-size: 1.5rem;
+    }
+}

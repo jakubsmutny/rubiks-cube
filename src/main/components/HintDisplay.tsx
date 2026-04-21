@@ -1,8 +1,10 @@
+import styles from "./HintDisplay.module.css"
+
 export default function HintDisplay() {
 
     return (
-        <div>
-            <p>Hint Display</p>
+        <div className={styles.hintDisplay}>
+            <p>R U R' U'</p>
         </div>
     );
 }

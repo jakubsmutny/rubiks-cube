@@ -18,7 +18,7 @@ export default function App() {
     }
 
     return (
-        <>
+        <div className={styles.appContainer}>
             <div className={styles.controlsContainer}>
                 <DimensionSelector
                     currentDimension={cubeModel.dimension}
@@ -32,11 +32,13 @@ export default function App() {
                 cubeModel={cubeModel}
                 moveTranslator={moveTranslator}
             />
-            <CubeCanvas
-                cubeModel={cubeModel}
-                onMoveTranslatorReady={setMoveTranslator}
-            />
-            <HintDisplay/>
-        </>
+            <div className={styles.displayContainer}>
+                <CubeCanvas
+                    cubeModel={cubeModel}
+                    onMoveTranslatorReady={setMoveTranslator}
+                />
+                <HintDisplay/>
+            </div>
+        </div>
     );
 }

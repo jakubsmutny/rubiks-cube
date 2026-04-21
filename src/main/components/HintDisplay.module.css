@@ -1,14 +1,22 @@
-.cubeCanvas {
+.hintDisplay {
     border-radius: 20px;
     background: #303030;
     box-shadow: 0 7px 30px #000000;
     width: min(80vh, 40vw);
     height: min(80vh, 40vw);
     margin: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.hintDisplay p {
+    color: #e0e0e0;
+    font-weight: 600;
+    font-family: system-ui, sans-serif;
 }
 
 @media (orientation: portrait) {
-    .cubeCanvas {
+    .hintDisplay {
         width: min(40vh, 98vw);
         height: min(40vh, 98vw);
     }
