@@ -18,7 +18,7 @@
     font-family: system-ui, sans-serif;
     font-size: calc(min(70vh, 45vw) * 0.04);
     word-break: break-word;
-    margin: calc(min(70vh, 45vw) * 30px) 0 calc(min(70vh, 45vw) * 10px) 0;
+    margin: calc(min(70vh, 45vw) * 0.03) 0 calc(min(70vh, 45vw) * 0.01) 0;
 }
 
 .hintDisplay p {
@@ -27,20 +27,20 @@
     font-family: system-ui, sans-serif;
     font-size: calc(min(70vh, 45vw) * 0.03);
     word-break: break-word;
-    margin: calc(min(70vh, 45vw) * 10px) 0 0 0;
+    margin: calc(min(70vh, 45vw) * 0.01) 0 0 0;
 }
 
 .hintDisplay code {
     display: block;
     width: fit-content;
-    margin: calc(min(70vh, 45vw) * 10px) 0 0 0;
+    margin: calc(min(70vh, 45vw) * 0.01) 0 0 0;
     color: #c0c0c0;
     font-weight: 600;
     font-size: calc(min(70vh, 45vw) * 0.03);
     word-break: break-word;
-    padding: calc(min(70vh, 45vw) * 2px) calc(min(70vh, 45vw) * 4px);
+    padding: calc(min(70vh, 45vw) * 0.002) calc(min(70vh, 45vw) * 0.004);
     background-color: #505050;
-    border-radius: calc(min(70vh, 45vw) * 4px);
+    border-radius: calc(min(70vh, 45vw) * 0.004);
 }
 
 .hintDisplay code:hover {
@@ -56,18 +56,18 @@
 
     .hintDisplay h1 {
         font-size: calc(min(40vh, 98vw) * 0.04);
-        margin: calc(min(40vh, 98vw) * 30px) 0 calc(min(40vh, 98vw) * 10px) 0;
+        margin: calc(min(40vh, 98vw) * 0.03) 0 calc(min(40vh, 98vw) * 0.01) 0;
     }
 
     .hintDisplay p {
         font-size: calc(min(40vh, 98vw) * 0.03);
-        margin: calc(min(40vh, 98vw) * 10px) 0 0 0;
+        margin: calc(min(40vh, 98vw) * 0.01) 0 0 0;
     }
 
     .hintDisplay code {
         font-size: calc(min(40vh, 98vw) * 0.03);
-        margin: calc(min(40vh, 98vw) * 10px) 0 0 0;
-        padding: calc(min(40vh, 98vw) * 2px) calc(min(40vh, 98vw) * 4px);
-        border-radius: calc(min(40vh, 98vw) * 4px);
+        margin: calc(min(40vh, 98vw) * 0.01) 0 0 0;
+        padding: calc(min(40vh, 98vw) * 0.002) calc(min(40vh, 98vw) * 0.004);
+        border-radius: calc(min(40vh, 98vw) * 0.004);
     }
 }
