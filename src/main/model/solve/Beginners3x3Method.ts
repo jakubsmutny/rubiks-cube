@@ -161,7 +161,7 @@ export class Beginners3x3Method implements SolveMethod {
                                                     new DisplayableText("The upper left corner is now your working space, where you orient the corner, so the yellow side faces up. There are 3 possible cases:"), new DisplayableText("1. The corner is oriented correctly - you don't need to do anything."),
                                                     new DisplayableText("2. The yellow side of the corner is facing you - perform the following notation."),
                                                     new DisplayableNotation("L D' L' D L D' L' D"),
-                                                    new DisplayableText("3. The yellow side of the corner is not facing left - perform the following notation."),
+                                                    new DisplayableText("3. The yellow side of the corner is facing left - perform the following notation."),
                                                     new DisplayableNotation("D' L D L' D' L D L'"),
                                                     new DisplayableText("To continue to the next corner, move the upper layer, do not rotate the whole cube."),
                                                     new DisplayableNotation("U"),

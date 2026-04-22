@@ -35,11 +35,12 @@ export default function HintDisplay({ cubeModel, moveTranslator }: Props) {
     return (
         <div className={styles.hintDisplay}>
             <div className={styles.content}>
-                {cubeModel.method.getHint().map((hint: Displayable) => {
+                {cubeModel.method.getHint().map((hint: Displayable, index: number) => {
+                    const key = `${hint.getType()}-${index}`
                     switch(hint.getType()) {
-                        case 'heading': return <h1>{hint.getContents()}</h1>
-                        case 'text': return <p>{hint.getContents()}</p>
-                        case 'notation': return <code onClick={manipulate}>{hint.getContents()}</code>
+                        case 'heading': return <h1 key={key}>{hint.getContents()}</h1>
+                        case 'text': return <p key={key}>{hint.getContents()}</p>
+                        case 'notation': return <code key={key} onClick={manipulate}>{hint.getContents()}</code>
                         default: return null
                     }
                 })}
