@@ -22,15 +22,6 @@ export class EmptyMethod implements SolveMethod {
     }
 
     getHint(): Array<Displayable> {
-        if(this.cubeModel.dimension === 2) return [new DisplayableHeading("Solving tutorial with Hints"),
-            new DisplayableText("No hints are available for a " + this.cubeModel.dimension + "x" + this.cubeModel.dimension + " cube."),
-            new DisplayableText("Change the cube dimension to 3x3 and hit the Scramble button to start solving with Hints!"),
-            new DisplayableHeading("Notation"),
-            new DisplayableNotation("R U R' U'"),
-            new DisplayableText("If you see this, you can rotate the cube directly with mouse or touch according to the official Rubik's cube notation, or just click on the notation and let the cube rotate for you."),
-            new DisplayableText("You can also enter notation in the text box above, be aware that moves applied by notation are always relative to the cube's orientation."),
-            new DisplayableHeading("Credits"),
-            new DisplayableText("The app was created by Jakub Smutný as a bachelor thesis on FIT CTU. Source code is available on GitHub.")]
         return [new DisplayableHeading("Solving tutorial with Hints"),
             new DisplayableText("No hints are available for a " + this.cubeModel.dimension + "x" + this.cubeModel.dimension + " cube."),
             new DisplayableText("Change the cube dimension to 3x3 and hit the Scramble button to start solving with Hints!"),
@@ -38,10 +29,6 @@ export class EmptyMethod implements SolveMethod {
             new DisplayableNotation("R U R' U'"),
             new DisplayableText("If you see this, you can rotate the cube directly with mouse or touch according to the official Rubik's cube notation, or just click on the notation and let the cube rotate for you."),
             new DisplayableText("You can also enter notation in the text box above, be aware that moves applied by notation are always relative to the cube's orientation."),
-            new DisplayableHeading("Funny Scrambles"),
-            new DisplayableText("Try applying these on a solved cube!"),
-            new DisplayableNotation("R2 L2 U2 D2 F2 B2"),
-            new DisplayableNotation("R L' U D' F' B R L'"),
             new DisplayableHeading("Credits"),
             new DisplayableText("The app was created by Jakub Smutný as a bachelor thesis on FIT CTU. Source code is available on GitHub.")]
     }

@@ -53,6 +53,7 @@ export class Beginners3x3Method implements SolveMethod {
         while(this.stepFinished() && !this.finished()) {
             if(!this.finished()) this.activeStep++
             this.groups[this.activeStep].forEach(face => face.visible = true)
+            console.log(this.activeStep)
             this.cubeModel.notifyMethodStep()
         }
     }
@@ -142,7 +143,7 @@ export class Beginners3x3Method implements SolveMethod {
                                             new DisplayableText("If there is a corner placed incorrectly, orient the cube so that the incorrect corner is in the bottom right and perform the \"sexy\" move once. This will move it to the upper layer.")]
             case Step.MiddleLayer: return [new DisplayableHeading("Middle Layer (4/8)"),
                                            new DisplayableText("In this step, you need to insert 4 edges between the center pieces."),
-                                           new DisplayableText("Keep the White side facing down, rotate the upper layer until you match color of and Edge piece with a Center piece, orient the to face this side. By looking at the second colour (on the top) of the Edge, decide if you want the Edge to go to the left or the right side."),
+                                           new DisplayableText("Keep the White side facing down, rotate the upper layer until you match color of the Edge piece with a Center piece, orient the cube to face this side. By looking at the second colour (on the top) of the Edge, decide if you want the Edge to go to the left or the right side."),
                                            new DisplayableText("Use the first notation to move it left and second to move it right."),
                                            new DisplayableNotation("U' L' U L U F U' F'"),
                                            new DisplayableNotation("U R U' R' U' F' U F"),
