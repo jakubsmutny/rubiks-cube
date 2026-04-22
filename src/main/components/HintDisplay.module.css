@@ -60,10 +60,10 @@
     }
 
     .hintDisplay p {
-        font-size: calc(min(40vh, 98vw) * 0.02);
+        font-size: calc(min(40vh, 98vw) * 0.03);
     }
 
     .hintDisplay code {
-        font-size: calc(min(40vh, 98vw) * 0.02);
+        font-size: calc(min(40vh, 98vw) * 0.03);
     }
 }
