@@ -52,8 +52,8 @@ export class Beginners3x3Method implements SolveMethod {
     update(): void {
         while(this.stepFinished() && !this.finished()) {
             if(!this.finished()) this.activeStep++
-            this.groups[this.activeStep].forEach(face => face.visible = true)
-            console.log(this.activeStep)
+            if(!this.finished())
+                this.groups[this.activeStep].forEach(face => face.visible = true)
             this.cubeModel.notifyMethodStep()
         }
     }
