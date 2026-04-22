@@ -171,13 +171,13 @@ export class Beginners3x3Method implements SolveMethod {
                                                 new DisplayableNotation("R' F R' B2 R F' R' B2 R2 U'"),
                                                 new DisplayableText("Any rearrangement can be done by using this at most 2 times."),
                                                 new DisplayableText("If you have trouble, try to find a side where the corner pieces colour matches each other, the other two are the ones you need to swap. If no such side exists, swap any two of them and one side should appear.")]
-            case Step.YellowEdgesRest: return [new DisplayableHeading("Yellow Edges position"),
+            case Step.YellowEdgesRest: return [new DisplayableHeading("Yellow Edges position (8/8)"),
                                                new DisplayableText("In the last step you need to swap some edge pieces on the upper layer."),
                                                new DisplayableText("If all 4 edges are incorrectly placed - apply any of the following notations (with white side facing down) - this should solve one of them."),
                                                new DisplayableText("Orient the cube with the white side facing down and the solved side facing back. Now there are 2 possible cases:"),
-                                               new DisplayableText("1. The wrongly placed edge piece in front of you should belong to the left side - apply the following notation."),
+                                               new DisplayableText("1. The wrongly placed edge piece in front of you belongs to the left side - apply the following notation."),
                                                new DisplayableNotation("F2 U L R' F2 L' R U F2"),
-                                               new DisplayableText("2. The wrongly placed edge piece in front of you should belong to the right side - apply the following notation."),
+                                               new DisplayableText("2. The wrongly placed edge piece in front of you belongs to the right side - apply the following notation."),
                                                new DisplayableNotation("F2 U' L R' F2 L' R U' F2"),
                                                new DisplayableText("This should solve the cube.")]
             default: return [new DisplayableHeading("Solving tutorial with Hints"),
