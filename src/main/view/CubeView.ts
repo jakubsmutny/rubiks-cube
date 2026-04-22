@@ -66,7 +66,7 @@ export class CubeView implements Observer {
         this.activeLayerRotation = undefined
     }
 
-    updateVisibility(): void {
+    updateMethodStep(): void {
         this.cubieViews.forEach(cubieView => cubieView.updateMeshMaterial())
     }
 

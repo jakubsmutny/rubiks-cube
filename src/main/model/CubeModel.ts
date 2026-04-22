@@ -30,7 +30,7 @@ export class CubeModel implements Observable {
         this.manipulations = new Array<Shuffle>()
         this.currentManipulation = 0
         this.observers = new Array<Observer>()
-        this.method = dimension === 3 ? new Beginners3x3Method(this) : new EmptyMethod()
+        this.method = dimension === 3 ? new Beginners3x3Method(this) : new EmptyMethod(this)
     }
 
     isSolved(): boolean {
@@ -98,7 +98,7 @@ export class CubeModel implements Observable {
         this.observers.forEach(observer => observer.updateMove(move, speed))
     }
 
-    notifyVisibility() {
-        this.observers.forEach(observer => observer.updateVisibility())
+    notifyMethodStep() {
+        this.observers.forEach(observer => observer.updateMethodStep())
     }
 }

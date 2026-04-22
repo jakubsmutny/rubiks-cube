@@ -5,7 +5,11 @@
     width: min(90vh, 45vw);
     height: min(90vh, 45vw);
     margin: auto;
+}
+
+.content {
     padding-left: 20px;
+    padding-right: 20px;
 }
 
 .hintDisplay h1 {
@@ -15,6 +19,7 @@
     font-size: calc(min(90vh, 45vw) * 0.04);
     line-height: 0.5;
     word-break: break-word;
+    margin: 40px 0 20px 0;
 }
 
 .hintDisplay p {
@@ -22,15 +27,17 @@
     font-weight: 500;
     font-family: system-ui, sans-serif;
     font-size: calc(min(90vh, 45vw) * 0.03);
-    line-height: 0.5;
     word-break: break-word;
+    margin: 10px 0 0 0;
 }
 
 .hintDisplay code {
+    display: block;
+    width: fit-content;
+    margin: 10px 0 0 0;
     color: #c0c0c0;
     font-weight: 600;
     font-size: calc(min(90vh, 45vw) * 0.03);
-    line-height: 0.5;
     word-break: break-word;
     padding: 2px 4px;
     background-color: #505050;
