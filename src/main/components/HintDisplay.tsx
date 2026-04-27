@@ -39,8 +39,26 @@ export default function HintDisplay({ cubeModel, moveTranslator }: Props) {
                     const key = `${hint.getType()}-${index}`
                     switch(hint.getType()) {
                         case 'heading': return <h1 key={key}>{hint.getContents()}</h1>
-                        case 'text': return <p key={key}>{hint.getContents()}</p>
                         case 'notation': return <code key={key} onClick={manipulate}>{hint.getContents()}</code>
+                        case 'text': {
+                            const parts = hint.getContents().split(/(\[.*?]\(.*?\))/g);
+                            return (
+                                <p key={key}>
+                                    {parts.map((part, i) => {
+                                        const match = part.match(/\[(.*?)]\((.*?)\)/);
+                                        if(match) {
+                                            const [, linkText, url] = match;
+                                            return (
+                                                <a key={i} href={url} target="_blank" rel="noreferrer">
+                                                    {linkText}
+                                                </a>
+                                            );
+                                        }
+                                        return part;
+                                    })}
+                                </p>
+                            );
+                        }
                         default: return null
                     }
                 })}

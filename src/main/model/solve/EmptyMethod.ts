@@ -23,13 +23,12 @@ export class EmptyMethod implements SolveMethod {
 
     getHint(): Array<Displayable> {
         return [new DisplayableHeading("Solving tutorial with Hints"),
-            new DisplayableText("No hints are available for a " + this.cubeModel.dimension + "x" + this.cubeModel.dimension + " cube."),
-            new DisplayableText("Change the cube dimension to 3x3 and hit the Scramble button to start solving with Hints!"),
+            new DisplayableText("Hit the Scramble button to start solving with Hints!"),
             new DisplayableHeading("Notation"),
             new DisplayableNotation("R U R' U'"),
-            new DisplayableText("If you see this, you can rotate the cube directly with mouse or touch according to the official Rubik's cube notation, or just click on the notation and let the cube rotate for you."),
+            new DisplayableText("If you see this, you can rotate the cube directly with mouse or touch according to the [Rubik's cube notation](https://solvethecube.com/notation), or just click on the notation and let the cube rotate for you."),
             new DisplayableText("You can also enter notation in the text box above, be aware that moves applied by notation are always relative to the cube's orientation."),
             new DisplayableHeading("Credits"),
-            new DisplayableText("The app was created by Jakub Smutný as a bachelor thesis on FIT CTU. Source code is available on GitHub.")]
+            new DisplayableText("The app was created by [Jakub Smutný](https://jakubsmutny.cz) as bachelor thesis on [FIT CTU](https://fit.cvut.cz/en). Source code is available on [GitHub](https://github.com/jakubsmutny/rubiks-cube).")]
     }
 }

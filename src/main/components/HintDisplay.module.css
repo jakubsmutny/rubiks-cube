@@ -30,6 +30,16 @@
     margin: calc(min(70vh, 45vw) * 0.01) 0 0 0;
 }
 
+.content p a {
+    color: #e0e0e0;
+    text-decoration: underline;
+}
+
+.content p a:hover {
+    color: #ffffff;
+    cursor: pointer;
+}
+
 .hintDisplay code {
     display: block;
     width: fit-content;
