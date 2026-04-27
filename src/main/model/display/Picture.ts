@@ -1,13 +1,13 @@
-import {Displayable, DisplayableType} from "./Displayable";
+import {Displayable, DisplayableType} from "./Displayable"
 
-export class DisplayableText implements Displayable {
+export class Picture implements Displayable {
 
     contents: string
     type: DisplayableType
 
     constructor(contents: string) {
         this.contents = contents
-        this.type = 'text'
+        this.type = 'picture'
     }
 
     getContents(): string {

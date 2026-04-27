@@ -1,6 +1,6 @@
 import {Displayable, DisplayableType} from "./Displayable"
 
-export class DisplayableNotation implements Displayable {
+export class Notation implements Displayable {
 
     contents: string
     type: DisplayableType

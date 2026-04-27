@@ -1,6 +1,6 @@
 import {Displayable, DisplayableType} from "./Displayable";
 
-export class DisplayableHeading implements Displayable {
+export class Heading implements Displayable {
 
     contents: string
     type: DisplayableType

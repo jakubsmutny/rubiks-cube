@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function HintDisplay({ cubeModel, moveTranslator }: Props) {
-    const [, setTick] = useState(0)
+    const [tick, setTick] = useState(0)
     useEffect(() => {
         const observer: Observer = {
             updateMethodStep: () => {
@@ -33,7 +33,7 @@ export default function HintDisplay({ cubeModel, moveTranslator }: Props) {
     }
 
     return (
-        <div className={styles.hintDisplay}>
+        <div key={tick} className={styles.hintDisplay}>
             <div className={styles.content}>
                 {cubeModel.method.getHint().map((hint: Displayable, index: number) => {
                     const key = `${hint.getType()}-${index}`

@@ -15,6 +15,7 @@ export default function App() {
 
     const handleDimensionChange = (dim: number) => {
         setCubeModel(new CubeModel(dim))
+        cubeModel.notifyMethodStep()
     }
 
     return (
