@@ -40,6 +40,7 @@ export default function HintDisplay({ cubeModel, moveTranslator }: Props) {
                     switch(hint.getType()) {
                         case 'heading': return <h1 key={key}>{hint.getContents()}</h1>
                         case 'notation': return <code key={key} onClick={manipulate}>{hint.getContents()}</code>
+                        case 'picture': return <img key={key} src={"public/" + hint.getContents()} alt="Diagram"/>
                         case 'text': {
                             const parts = hint.getContents().split(/(\[.*?]\(.*?\))/g);
                             return (

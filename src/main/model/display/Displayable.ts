@@ -1,4 +1,4 @@
-export type DisplayableType = 'heading' | 'text' | 'notation'
+export type DisplayableType = 'heading' | 'text' | 'notation' | 'picture'
 
 export interface Displayable {
     getContents(): string

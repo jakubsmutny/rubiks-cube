@@ -10,6 +10,7 @@ import {Displayable} from "../display/Displayable"
 import {DisplayableHeading} from "../display/DisplayableHeading"
 import {DisplayableText} from "../display/DisplayableText"
 import {DisplayableNotation} from "../display/DisplayableNotation"
+import {DisplayablePicture} from "../display/DisplayablePicture";
 
 enum Step {
     WhiteCross,
@@ -123,39 +124,44 @@ export class Beginners3x3Method implements SolveMethod {
             case Step.WhiteCross: return [new DisplayableHeading("White cross (1/8)"),
                                           new DisplayableText("Your task is to solve the white cross intuitively."),
                                           new DisplayableText("Create a white cross on any side of the cube."),
-                                          new DisplayableText("The best way to do this is to locate the white center piece and try to move the 4 white edges to it one by one. The white center serves as a reference where the white cross will end up.")]
+                                          new DisplayableText("The best way to do this is to locate the white center piece and try to move the 4 white edges to it one by one. The white center serves as a reference where the white cross will end up."),
+                                          new DisplayablePicture("white_cross.png")]
             case Step.WhiteEdgesRest: return [new DisplayableHeading("Swapping the Edges (2/8)"),
                                               new DisplayableText("We need the second color on the edge piece to match the center."),
                                               new DisplayableText("You can do this by rotating the edge to the side opposite of the white cross, then match the edge with the correct center piece and rotate it back."),
                                               new DisplayableText("Repeat this for all incorrectly placed edges."),
-                                              new DisplayableText("If you need a little help with this, orient the cube so that the white cross if facing down and a incorrect pair is facing you. You can now do this to rotate the edge to the other side."),
+                                              new DisplayableText("If you need a little help with this, orient the cube so that the white cross if facing up and a incorrect pair is facing you. You can now do this to rotate the edge to the other side."),
                                               new DisplayableNotation("F2"),
                                               new DisplayableText("Match the Edge with the correct center by doing this repeatedly."),
-                                              new DisplayableNotation("d"),
+                                              new DisplayableNotation("u"),
                                               new DisplayableText("Turn the edge back. This will likely rotate another edge to the other side."),
                                               new DisplayableNotation("F2"),
-                                              new DisplayableText("Repeat this until all edges are correctly placed.")]
+                                              new DisplayableText("Repeat this until all edges are correctly placed."),
+                                              new DisplayablePicture("swap_edge.png")]
             case Step.WhiteCorners: return [new DisplayableHeading("White Corner placement (3/8)"),
                                             new DisplayableText("Now make the white cross face the bottom side."),
                                             new DisplayableText("You can rotate the upper layer freely, rotate it until the corner you want in your bottom right position is above it (in the upper right position)."),
                                             new DisplayableText("To correctly place the corner to the bottom, we can use the \"sexy\" move. Do it until the corner is in the bottom position oriented correctly (you may need to do this up to 5 times)."),
                                             new DisplayableNotation("R U R' U'"),
                                             new DisplayableText("Repeat this for all corners."),
-                                            new DisplayableText("If there is a corner placed incorrectly, orient the cube so that the incorrect corner is in the bottom right and perform the \"sexy\" move once. This will move it to the upper layer.")]
+                                            new DisplayableText("If there is a corner placed incorrectly, orient the cube so that the incorrect corner is in the bottom right and perform the \"sexy\" move once. This will move it to the upper layer."),
+                                            new DisplayablePicture("white_corners.png")]
             case Step.MiddleLayer: return [new DisplayableHeading("Middle Layer (4/8)"),
                                            new DisplayableText("In this step, you need to insert 4 edges between the center pieces."),
                                            new DisplayableText("Keep the white side facing down, rotate the upper layer until you match color of the edge piece with a center piece, orient the cube to face this side. By looking at the second color (on the top) of the edge, decide if you want the edge to go to the left or the right side."),
                                            new DisplayableText("Use the first notation to move it left and second to move it right."),
                                            new DisplayableNotation("U' L' U L U F U' F'"),
                                            new DisplayableNotation("U R U' R' U' F' U F"),
-                                           new DisplayableText("Repeat this for all 4 edges, if an edge is placed incorrectly, imagine you have the correct edge prepared in the upper layer and perform the notation. This will push the incorrectly placed edge out of the slot to the upper layer, so it's available to place differently.")]
+                                           new DisplayableText("Repeat this for all 4 edges, if an edge is placed incorrectly, imagine you have the correct edge prepared in the upper layer and perform the notation. This will push the incorrectly placed edge out of the slot to the upper layer, so it's available to place differently."),
+                                           new DisplayablePicture("middle_layer.png")]
             case Step.YellowCross: return [new DisplayableHeading("Yellow Cross (5/8)"),
                                            new DisplayableText("Now we need to solve the yellow cross on the upper side. This can be achieved just by applying the following notation. Always keep the white side facing down when applying the notation."),
                                            new DisplayableNotation("F U R U' R' F'"),
                                            new DisplayableText("There are 3 possible cases:"),
                                            new DisplayableText("1. There is only the yellow center piece on the upper side - apply the notation with any side facing you (white side needs to face down) and pick the next case."),
                                            new DisplayableText("2. There is a straight yellow line on the upper side - apply the notation with any side facing you (white side needs to face down) and pick the next case."),
-                                           new DisplayableText("3. There is a yellow \"L\" on the upper side - apply the notation with the two correct yellow edges being on the left and back of the upper side (white side needs to face down) - this should finish this step.")]
+                                           new DisplayableText("3. There is a yellow \"L\" on the upper side - apply the notation with the two correct yellow edges being on the left and back of the upper side (white side needs to face down) - this should finish this step."),
+                                            new DisplayablePicture("yellow_cross.png")]
             case Step.YellowCornerStickers: return [new DisplayableHeading("Yellow Corner Orientation (6/8)"),
                                                     new DisplayableText("This step will orient the corners and thus solve the whole yellow side."),
                                                     new DisplayableText("You need to orient the cube with the white side facing down and any side facing you, but you can't change the side facing you through the whole step."),
@@ -167,13 +173,17 @@ export class Beginners3x3Method implements SolveMethod {
                                                     new DisplayableNotation("D' L D L' D' L D L'"),
                                                     new DisplayableText("To continue to the next corner, move the upper layer, do not rotate the whole cube."),
                                                     new DisplayableNotation("U"),
-                                                    new DisplayableText("Repeat this until all the yellow corners are oriented correctly.")]
+                                                    new DisplayableText("Repeat this until all the yellow corners are oriented correctly."),
+                                                    new DisplayablePicture("corner_orientation.png")]
             case Step.YellowCornerRest: return [new DisplayableHeading("Yellow Corner position (7/8)"),
                                                 new DisplayableText("In this step you need to swap some corner pieces on the upper layer."),
                                                 new DisplayableText("To swap two corner pieces, orient the cube with the white side facing down and the two corner pieces you want to swap in the front, then apply the following notation."),
                                                 new DisplayableNotation("R' F R' B2 R F' R' B2 R2 U'"),
                                                 new DisplayableText("Any rearrangement can be done by using this at most 2 times."),
-                                                new DisplayableText("If you have trouble, try to find a side where the corner pieces color matches each other, the other two are the ones you need to swap. If no such side exists, swap any two of them and one side should appear.")]
+                                                new DisplayableText("If you have trouble, try to find a side where the corner pieces color matches each other, the other two are the ones you need to swap. If no such side exists, swap any two of them and one side should appear."),
+                                                new DisplayableText("you also need to match the swapped corners with the rest of the cube by rotating the upper layer."),
+                                                new DisplayableNotation("U"),
+                                                new DisplayablePicture("yellow_corners.png")]
             case Step.YellowEdgesRest: return [new DisplayableHeading("Yellow Edges position (8/8)"),
                                                new DisplayableText("In the last step you need to swap some edge pieces on the upper layer."),
                                                new DisplayableText("If all 4 edges are incorrectly placed - apply any of the following notations (with white side facing down) - this should solve one of them."),
@@ -182,12 +192,13 @@ export class Beginners3x3Method implements SolveMethod {
                                                new DisplayableNotation("F2 U L R' F2 L' R U F2"),
                                                new DisplayableText("2. The wrongly placed edge piece in front of you belongs to the right side - apply the following notation."),
                                                new DisplayableNotation("F2 U' L R' F2 L' R U' F2"),
-                                               new DisplayableText("This should solve the cube.")]
+                                               new DisplayableText("This should solve the cube."),
+                                               new DisplayablePicture("yellow_edges.png")]
             default: return [new DisplayableHeading("Solving tutorial with Hints"),
                              new DisplayableText("Hit the Scramble button to start solving with Hints!"),
                              new DisplayableHeading("Notation"),
                              new DisplayableNotation("R U R' U'"),
-                             new DisplayableText("If you see this, you can rotate the cube directly with mouse or touch according to the [Rubik's cube notation](https://solvethecube.com/notation), or just click on the notation and let the cube rotate for you."),
+                             new DisplayableText("If you see this, you can rotate the cube directly with mouse or touch according to the [Rubik's cube notation](https://ruwix.com/the-rubiks-cube/notation), or just click on the notation and let the cube rotate for you."),
                              new DisplayableText("You can also enter notation in the text box above, be aware that moves applied by notation are always relative to the cube's orientation."),
                              new DisplayableHeading("Funny Scrambles"),
                              new DisplayableText("Try applying these on a solved cube!"),

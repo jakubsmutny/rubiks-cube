@@ -58,6 +58,11 @@
     cursor: pointer;
 }
 
+.hintDisplay img {
+    height: calc(min(70vh, 45vw) * 0.2);
+    margin: calc(min(70vh, 45vw) * 0.02) 0 0 0;
+}
+
 @media (orientation: portrait) {
     .hintDisplay {
         width: min(40vh, 98vw);
@@ -79,5 +84,10 @@
         margin: calc(min(40vh, 98vw) * 0.01) 0 0 0;
         padding: calc(min(40vh, 98vw) * 0.002) calc(min(40vh, 98vw) * 0.004);
         border-radius: calc(min(40vh, 98vw) * 0.004);
+    }
+
+    .hintDisplay img {
+        height: calc(min(40vh, 98vw) * 0.2);
+        margin: calc(min(40vh, 98vw) * 0.02) 0 0 0;
     }
 }
