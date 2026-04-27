@@ -166,10 +166,10 @@ export class Beginners3x3Method implements SolveMethod {
                                                     new Text("You need to orient the cube with the white side facing down and any side facing you. Don't change the orientation through the whole step."),
                                                     new Text("The upper left corner is now your working space where you orient the corner, so the yellow side faces up. There are 3 possible cases:"),
                                                     new Text("1. The corner is oriented correctly - you don't need to do anything."),
-                                                    new Text("2. The yellow side of the corner is facing you - do this."),
-                                                    new Notation("L D' L' D L D' L' D"),
-                                                    new Text("3. The yellow side of the corner is facing left - do this."),
+                                                    new Text("2. The yellow side of the corner is facing left - do this."),
                                                     new Notation("D' L D L' D' L D L'"),
+                                                    new Text("3. The yellow side of the corner is facing you - do this."),
+                                                    new Notation("L D' L' D L D' L' D"),
                                                     new Text("Repeat this until all the yellow corners are oriented correctly. To continue to the next corner, move only the upper layer, do not rotate the whole cube."),
                                                     new Picture("/corner_orientation.png")]
             case Step.YellowCornerRest: return [new Heading("Yellow Corner position (7/8)"),
