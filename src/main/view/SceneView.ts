@@ -54,6 +54,7 @@ export class SceneView {
     private setupRenderer(): THREE.WebGLRenderer {
         let renderer = new THREE.WebGLRenderer({antialias: true, canvas: this.canvas as HTMLCanvasElement})
         renderer.setClearColor(0x000000, 0)
+        renderer.setPixelRatio(window.devicePixelRatio)
         renderer.setSize(this.canvas.offsetWidth, this.canvas.offsetHeight)
         renderer.setAnimationLoop(this.animate)
         return renderer
