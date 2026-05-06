@@ -1,4 +1,4 @@
-import {Side} from "../utility/side/Side"
+import {Side} from "../side/Side"
 import {Axis} from "./Axis";
 import {SideFactory} from "../factories/SideFactory";
 

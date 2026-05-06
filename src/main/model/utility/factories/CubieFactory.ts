@@ -1,6 +1,6 @@
-import {Cubie} from "../Cubie"
-import {CubePosition} from "../utility/CubePosition"
-import {Face} from "../Face"
+import {Cubie} from "../../Cubie"
+import {CubePosition} from "../CubePosition"
+import {Face} from "../../Face"
 import {FaceFactory} from "./FaceFactory"
 
 export class CubieFactory {

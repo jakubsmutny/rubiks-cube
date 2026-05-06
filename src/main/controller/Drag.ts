@@ -1,8 +1,8 @@
 import * as THREE from "three"
 import {Cubie} from "../model/Cubie"
-import {Vector} from "../model/geometry/Vector"
+import {Vector} from "../model/utility/geometry/Vector"
 import {SceneView} from "../view/SceneView"
-import {Axis} from "../model/geometry/Axis"
+import {Axis} from "../model/utility/geometry/Axis"
 import {LayerRotation} from "../view/rotation/LayerRotation"
 
 export class Drag {

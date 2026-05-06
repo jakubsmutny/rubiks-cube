@@ -1,5 +1,5 @@
-import { Axis } from '../geometry/Axis'
-import {Vector} from "../geometry/Vector";
+import { Axis } from '../utility/geometry/Axis'
+import {Vector} from "../utility/geometry/Vector";
 
 export class Move {
 

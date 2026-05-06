@@ -1,11 +1,11 @@
-import {Face} from "../Face"
-import {CubePosition} from "../utility/CubePosition"
-import {LeftSide} from "../utility/side/LeftSide"
-import {DownSide} from "../utility/side/DownSide"
-import {BackSide} from "../utility/side/BackSide"
-import {RightSide} from "../utility/side/RightSide"
-import {UpSide} from "../utility/side/UpSide"
-import {FrontSide} from "../utility/side/FrontSide"
+import {Face} from "../../Face"
+import {CubePosition} from "../CubePosition"
+import {LeftSide} from "../side/LeftSide"
+import {DownSide} from "../side/DownSide"
+import {BackSide} from "../side/BackSide"
+import {RightSide} from "../side/RightSide"
+import {UpSide} from "../side/UpSide"
+import {FrontSide} from "../side/FrontSide"
 
 export class FaceFactory {
 

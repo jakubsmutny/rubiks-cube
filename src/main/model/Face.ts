@@ -1,6 +1,6 @@
-import {Vector} from "./geometry/Vector";
+import {Vector} from "./utility/geometry/Vector";
 import {Side} from "./utility/side/Side";
-import {Rotation} from "./geometry/Rotation";
+import {Rotation} from "./utility/geometry/Rotation";
 
 export class Face {
 

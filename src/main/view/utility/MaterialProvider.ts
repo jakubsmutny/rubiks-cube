@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import {Face} from "../../model/Face"
 import {ColorPicker} from "./ColorPicker"
 import {Side} from "../../model/utility/side/Side"
-import {SideFactory} from "../../model/factories/SideFactory";
+import {SideFactory} from "../../model/utility/factories/SideFactory";
 
 export class MaterialProvider {
 
@@ -84,6 +84,7 @@ export class MaterialProvider {
                 this.setPixelColor(pixels, position, pickedColor, clear)
             }
             let texture = new THREE.DataTexture(pixels, this.side, this.side)
+            texture.magFilter = THREE.LinearFilter
             texture.needsUpdate = true
             textures.push(texture)
         }

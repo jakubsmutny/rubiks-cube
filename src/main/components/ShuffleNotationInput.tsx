@@ -1,6 +1,6 @@
 import styles from './ShuffleNotationInput.module.css'
 import React, {FormEvent, useState} from "react";
-import {ShuffleFactory} from "../model/factories/ShuffleFactory";
+import {ShuffleFactory} from "../model/utility/factories/ShuffleFactory";
 import {CubeModel} from "../model/CubeModel";
 import {CameraMoveTranslator} from "../controller/CameraMoveTranslator";
 

@@ -1,8 +1,8 @@
-import {Rotation} from "../geometry/Rotation";
-import {RotationFactory} from "../factories/RotationFactory";
+import {Rotation} from "./geometry/Rotation";
+import {RotationFactory} from "./factories/RotationFactory";
 import {Move} from "../manipulation/Move";
-import {Axis} from "../geometry/Axis";
-import {Vector} from "../geometry/Vector";
+import {Axis} from "./geometry/Axis";
+import {Vector} from "./geometry/Vector";
 
 export class CubePosition {
 
@@ -66,14 +66,6 @@ export class CubePosition {
         if(axis.equals(Axis.Y)) return [rotatingCoords[1], this.j, rotatingCoords[0]]
         if(axis.equals(Axis.Z)) return [rotatingCoords[0], rotatingCoords[1], this.k]
         return [-1, -1, -1]
-    }
-
-    private getAxisRotation(axis: Axis): Rotation {
-        let rotation: Rotation = RotationFactory.getDefaultRotation()
-        if(axis === Axis.X) {rotation = RotationFactory.getRoll(); console.log("got Roll")}
-        if(axis === Axis.Y) rotation = RotationFactory.getPitch()
-        if(axis === Axis.Z) rotation = RotationFactory.getYaw()
-        return rotation
     }
 
     private rotateTwoCoords([from, to]: [number, number]): [number, number] {

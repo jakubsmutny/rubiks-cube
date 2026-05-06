@@ -1,9 +1,9 @@
 import {Cubie} from "../model/Cubie";
 import {SceneView} from "./SceneView";
 import * as THREE from "three";
-import {MaterialProvider} from "./utility/MaterialProvider";
-import {GeometryProvider} from "./utility/GeometryProvider";
-import {Vector} from "../model/geometry/Vector";
+import {MaterialProvider} from "./utility/MaterialProvider"
+import {GeometryProvider} from "./utility/GeometryProvider"
+import {Vector} from "../model/utility/geometry/Vector"
 
 export class CubieView {
 

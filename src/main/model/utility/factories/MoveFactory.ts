@@ -1,6 +1,6 @@
 import {Axis} from "../geometry/Axis";
-import {Move} from "../manipulation/Move";
-import {Drag} from "../../controller/Drag";
+import {Move} from "../../manipulation/Move";
+import {Drag} from "../../../controller/Drag";
 import {Vector} from "../geometry/Vector";
 
 export class MoveFactory {

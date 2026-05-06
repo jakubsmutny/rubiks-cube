@@ -1,4 +1,4 @@
-import {Vector} from "../../geometry/Vector"
+import {Vector} from "../geometry/Vector"
 import {RightSide} from "./RightSide"
 import {LeftSide} from "./LeftSide"
 import {UpSide} from "./UpSide"

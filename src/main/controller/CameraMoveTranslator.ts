@@ -1,10 +1,10 @@
 import * as THREE from 'three'
 import {Move} from "../model/manipulation/Move"
 import {Shuffle} from "../model/manipulation/Shuffle"
-import {Axis} from "../model/geometry/Axis"
-import {Rotation} from "../model/geometry/Rotation"
-import {RotationFactory} from "../model/factories/RotationFactory"
-import {Vector} from "../model/geometry/Vector"
+import {Axis} from "../model/utility/geometry/Axis"
+import {Rotation} from "../model/utility/geometry/Rotation"
+import {RotationFactory} from "../model/utility/factories/RotationFactory"
+import {Vector} from "../model/utility/geometry/Vector"
 
 export class CameraMoveTranslator {
 

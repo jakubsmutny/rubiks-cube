@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import {Rotation} from "../../../main/model/geometry/Rotation";
-import {RotationFactory} from "../../../main/model/factories/RotationFactory";
-import {Vector} from "../../../main/model/geometry/Vector";
+import {Rotation} from "../../../main/model/utility/geometry/Rotation";
+import {RotationFactory} from "../../../main/model/utility/factories/RotationFactory";
+import {Vector} from "../../../main/model/utility/geometry/Vector";
 
 describe('Rotation Class', () => {
     it('should roll vector', () => {

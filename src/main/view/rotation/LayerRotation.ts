@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import {CubeView} from "../CubeView";
-import {Vector} from "../../model/geometry/Vector";
+import {Vector} from "../../model/utility/geometry/Vector";
 import {CubieView} from "../CubieView";
 
 export class LayerRotation {

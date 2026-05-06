@@ -2,8 +2,8 @@ import styles from "./HintDisplay.module.css"
 import React, {useEffect, useState} from "react"
 import {CubeModel} from "../model/CubeModel"
 import {CameraMoveTranslator} from "../controller/CameraMoveTranslator"
-import {ShuffleFactory} from "../model/factories/ShuffleFactory"
-import {Displayable} from "../model/display/Displayable"
+import {ShuffleFactory} from "../model/utility/factories/ShuffleFactory"
+import {Displayable} from "../model/utility/display/Displayable"
 import {Observer} from "../model/utility/observer/Observer"
 
 interface Props {

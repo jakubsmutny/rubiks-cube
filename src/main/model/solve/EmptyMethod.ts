@@ -1,8 +1,8 @@
 import {SolveMethod} from "./SolveMethod"
-import {Displayable} from "../display/Displayable"
-import {Text} from "../display/Text"
-import {Heading} from "../display/Heading"
-import {Notation} from "../display/Notation"
+import {Displayable} from "../utility/display/Displayable"
+import {Text} from "../utility/display/Text"
+import {Heading} from "../utility/display/Heading"
+import {Notation} from "../utility/display/Notation"
 import {CubeModel} from "../CubeModel";
 
 export class EmptyMethod implements SolveMethod {

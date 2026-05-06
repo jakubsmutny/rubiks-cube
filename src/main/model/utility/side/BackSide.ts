@@ -1,5 +1,5 @@
 import {Side} from "./Side"
-import {Vector} from "../../geometry/Vector"
+import {Vector} from "../geometry/Vector"
 
 export class BackSide extends Side {
 

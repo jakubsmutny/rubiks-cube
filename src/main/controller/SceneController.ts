@@ -3,7 +3,7 @@ import {TrackballControls} from "three/examples/jsm/controls/TrackballControls";
 import * as THREE from "three";
 import {Drag} from "./Drag";
 import {CubeModel} from "../model/CubeModel";
-import {MoveFactory} from "../model/factories/MoveFactory";
+import {MoveFactory} from "../model/utility/factories/MoveFactory";
 import {Shuffle} from "../model/manipulation/Shuffle";
 import {CameraMoveTranslator} from "./CameraMoveTranslator";
 

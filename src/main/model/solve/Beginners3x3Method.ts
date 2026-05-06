@@ -3,14 +3,14 @@ import {Cubie} from "../Cubie"
 import {Side} from "../utility/side/Side"
 import {UpSide} from "../utility/side/UpSide"
 import {DownSide} from "../utility/side/DownSide"
-import {Vector} from "../geometry/Vector"
+import {Vector} from "../utility/geometry/Vector"
 import {CubeModel} from "../CubeModel"
 import {SolveMethod} from "./SolveMethod"
-import {Displayable} from "../display/Displayable"
-import {Heading} from "../display/Heading"
-import {Text} from "../display/Text"
-import {Notation} from "../display/Notation"
-import {Picture} from "../display/Picture";
+import {Displayable} from "../utility/display/Displayable"
+import {Heading} from "../utility/display/Heading"
+import {Text} from "../utility/display/Text"
+import {Notation} from "../utility/display/Notation"
+import {Picture} from "../utility/display/Picture";
 
 enum Step {
     WhiteCross,
