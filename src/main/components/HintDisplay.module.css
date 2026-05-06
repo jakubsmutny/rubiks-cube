@@ -43,6 +43,17 @@
     cursor: pointer;
 }
 
+.notationContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.hintDisplay .notationContainer img {
+    height: calc(min(70vh, 45vw) * 0.035);
+    margin: calc(min(70vh, 45vw) * 0.01) 0 0 0;
+}
+
 .hintDisplay code {
     display: block;
     width: fit-content;
@@ -79,6 +90,11 @@
 
     .hintDisplay p {
         font-size: calc(min(40vh, 98vw) * 0.03);
+        margin: calc(min(40vh, 98vw) * 0.01) 0 0 0;
+    }
+
+    .hintDisplay .notationContainer img {
+        height: calc(min(40vh, 98vw) * 0.035);
         margin: calc(min(40vh, 98vw) * 0.01) 0 0 0;
     }
 
