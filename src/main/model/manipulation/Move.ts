@@ -1,5 +1,5 @@
 import { Axis } from '../utility/geometry/Axis'
-import {Vector} from "../utility/geometry/Vector";
+import {Vector} from "../utility/geometry/Vector"
 
 export class Move {
 
@@ -11,7 +11,7 @@ export class Move {
         this.axis = axis
         this.planes = Array.from(planes)
         this.planes.sort()
-        this.steps = Move.normalizeSteps(steps)
+            this.steps = Move.normalizeSteps(steps)
     }
 
     clone(): Move {
@@ -31,6 +31,17 @@ export class Move {
 
     isConcatenableWith(other: Move): boolean {
         if(!this.axis.equals(other.axis)) {
+            return false
+        }
+        this.planes.sort()
+        other.planes.sort()
+        return this.planes.every(
+            (plane, index) => plane === other.planes[index]
+        )
+    }
+
+    equals(other: Move): boolean {
+        if(!this.axis.equals(other.axis) || this.steps !== other.steps) {
             return false
         }
         this.planes.sort()

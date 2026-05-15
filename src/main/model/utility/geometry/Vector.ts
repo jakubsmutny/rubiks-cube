@@ -1,6 +1,4 @@
-import {Side} from "../side/Side"
-import {Axis} from "./Axis";
-import {SideFactory} from "../factories/SideFactory";
+import {SideFactory} from "../factories/SideFactory"
 
 export class Vector {
 

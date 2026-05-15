@@ -1,8 +1,7 @@
 import * as THREE from 'three'
 import {Face} from "../../model/Face"
 import {ColorPicker} from "./ColorPicker"
-import {Side} from "../../model/utility/side/Side"
-import {SideFactory} from "../../model/utility/factories/SideFactory";
+import {SideFactory} from "../../model/utility/factories/SideFactory"
 
 export class MaterialProvider {
 

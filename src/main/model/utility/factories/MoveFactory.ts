@@ -1,7 +1,7 @@
-import {Axis} from "../geometry/Axis";
-import {Move} from "../../manipulation/Move";
-import {Drag} from "../../../controller/Drag";
-import {Vector} from "../geometry/Vector";
+import {Axis} from "../geometry/Axis"
+import {Move} from "../../manipulation/Move"
+import {Drag} from "../../../controller/Drag"
+import {Vector} from "../geometry/Vector"
 
 export class MoveFactory {
 
@@ -13,32 +13,32 @@ export class MoveFactory {
 
     createFromNotation(notation: string): Move {
 
-        if(!this.isNotationValid(notation)) return MoveFactory.createEmpty();
+        if(!this.isNotationValid(notation)) return MoveFactory.createEmpty()
 
         // Some notations use small numbers meaning wide rotations
-        notation = notation.replace(/[rludfb]/, match => match.toUpperCase() + 'w');
+        notation = notation.replace(/[rludfb]/, match => match.toUpperCase() + 'w')
 
-        let turnDirection = 1;
-        if(/'$/.test(notation)) turnDirection *= -1;
-        if(/2$/.test(notation)) turnDirection *= 2;
-        if(/[RUFSxyz]/.test(notation)) turnDirection *= -1;
+        let steps = 1
+        if(/'$/.test(notation)) steps *= -1
+        if(/2$/.test(notation)) steps *= 2
+        if(/[RUFSxyz]/.test(notation)) steps *= -1
 
-        let axis = Axis.undefined;
-        if(/[RLMx]/.test(notation)) axis = Axis.X;
-        if(/[UDEy]/.test(notation)) axis = Axis.Y;
-        if(/[FBSz]/.test(notation)) axis = Axis.Z;
+        let axis = Axis.undefined
+        if(/[RLMx]/.test(notation)) axis = Axis.X
+        if(/[UDEy]/.test(notation)) axis = Axis.Y
+        if(/[FBSz]/.test(notation)) axis = Axis.Z
 
-        let wide = /[wxyz]/.test(notation);
+        let wide = /[wxyz]/.test(notation)
 
-        let planeInverse = /[RUF]/.test(notation);
+        let planeInverse = /[RUF]/.test(notation)
 
-        let planeNumber = /w/.test(notation) ? 2 : 1;
-        let newPlaneNumber = +(/^[0-9]*/.exec(notation)![0]);
-        if(newPlaneNumber) planeNumber = newPlaneNumber;
-        if(/[MES]/.test(notation)) planeNumber = (this.dimension + 1) / 2;
+        let planeNumber = /w/.test(notation) ? 2 : 1
+        let newPlaneNumber = +(/^[0-9]*/.exec(notation)![0])
+        if(newPlaneNumber) planeNumber = newPlaneNumber
+        if(/[MES]/.test(notation)) planeNumber = (this.dimension + 1) / 2
         if(/[xyz]/.test(notation)) planeNumber = this.dimension;
 
-        let planes: Array<number> = new Array<number>();
+        let planes: Array<number> = new Array<number>()
         for(let i = 1; i <= planeNumber; i++) {
             if(wide || i == planeNumber) {
                 planes.push(planeInverse ? this.dimension - i : i - 1)
@@ -46,7 +46,7 @@ export class MoveFactory {
         }
         planes.sort()
 
-        return new Move(axis, planes, turnDirection);
+        return new Move(axis, planes, steps)
     }
 
     createFromDrag(drag: Drag): Move {
@@ -72,15 +72,15 @@ export class MoveFactory {
     }
 
     static createEmpty(): Move {
-        return new Move(Axis.undefined, new Array<number>(), 0);
+        return new Move(Axis.undefined, new Array<number>(), 0)
     }
 
     isNotationValid(notation: string): boolean {
-        if(+(/^[0-9]*/.exec(notation)![0]) > this.dimension) return false;
-        if(/^[0-9]*([RLUDFB])w?(['2])?$/.test(notation))return true;
-        if(/^[0-9]*([rludfb])(['2])?$/.test(notation))return true;
-        if(/^([MES])(['2])?$/.test(notation) && this.dimension % 2) return true;
-        if(/^([xyz])(['2])?$/.test(notation)) return true;
-        return false;
+        if(+(/^[0-9]*/.exec(notation)![0]) > this.dimension) return false
+        if(/^[0-9]*([RLUDFB])w?(['2])?$/.test(notation))return true
+        if(/^[0-9]*([rludfb])(['2])?$/.test(notation))return true
+        if(/^([MES])(['2])?$/.test(notation) && this.dimension % 2) return true
+        if(/^([xyz])(['2])?$/.test(notation)) return true
+        return false
     }
 }

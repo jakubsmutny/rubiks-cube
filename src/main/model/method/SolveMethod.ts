@@ -1,4 +1,4 @@
-import {Displayable} from "../utility/display/Displayable";
+import {Displayable} from "../utility/display/Displayable"
 
 export interface SolveMethod {
     start(): void

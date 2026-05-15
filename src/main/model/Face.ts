@@ -1,6 +1,6 @@
-import {Vector} from "./utility/geometry/Vector";
-import {Side} from "./utility/side/Side";
-import {Rotation} from "./utility/geometry/Rotation";
+import {Vector} from "./utility/geometry/Vector"
+import {Side} from "./utility/side/Side"
+import {Rotation} from "./utility/geometry/Rotation"
 
 export class Face {
 
@@ -9,7 +9,7 @@ export class Face {
 
     visible: boolean
 
-    constructor(side: Side, visible: boolean) {
+    constructor(side: Side, visible: boolean = true) {
         this.side = side
         this.normal = side.getNormal()
         this.visible = visible

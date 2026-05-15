@@ -1,6 +1,6 @@
-import {Move} from "../../manipulation/Move";
-import {Shuffle} from "../../manipulation/Shuffle";
-import {MoveFactory} from "./MoveFactory";
+import {Move} from "../../manipulation/Move"
+import {Shuffle} from "../../manipulation/Shuffle"
+import {MoveFactory} from "./MoveFactory"
 
 export class ShuffleFactory {
 

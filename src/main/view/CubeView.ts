@@ -7,8 +7,8 @@ import {Observer} from "../model/utility/observer/Observer"
 import {Move} from "../model/manipulation/Move"
 import {Animation} from "./rotation/Animation"
 import {SceneView} from "./SceneView";
-import {GeometryProvider} from "./utility/GeometryProvider";
-import {LayerRotation} from "./rotation/LayerRotation";
+import {GeometryProvider} from "./utility/GeometryProvider"
+import {LayerRotation} from "./rotation/LayerRotation"
 
 export class CubeView implements Observer {
 
@@ -46,11 +46,11 @@ export class CubeView implements Observer {
     update(): void {
         this.tweenGroup.update()
         if(this.animationQueue.length > 0) {
-            const currentAnimation = this.animationQueue[0];
-            if(!currentAnimation.started) {
-                currentAnimation.start(this.tweenGroup)
+            const current = this.animationQueue[0];
+            if(!current.started) {
+                current.start(this.tweenGroup)
             }
-            if(currentAnimation.finished) {
+            if(current.finished) {
                 this.animationQueue.shift()
                 if(this.animationQueue.length === 0) {
                     this.cubieViews.forEach(cv => cv.updatePositionFromModel());

@@ -1,10 +1,10 @@
 import {CubePosition} from "./utility/CubePosition"
 import {Face} from "./Face"
-import {Move} from "./manipulation/Move";
-import {Rotation} from "./utility/geometry/Rotation";
-import {RotationFactory} from "./utility/factories/RotationFactory";
-import {Vector} from "./utility/geometry/Vector";
-import {Axis} from "./utility/geometry/Axis";
+import {Move} from "./manipulation/Move"
+import {Rotation} from "./utility/geometry/Rotation"
+import {RotationFactory} from "./utility/factories/RotationFactory"
+import {Vector} from "./utility/geometry/Vector"
+import {Axis} from "./utility/geometry/Axis"
 
 export class Cubie {
 

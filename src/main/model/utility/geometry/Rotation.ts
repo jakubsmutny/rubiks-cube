@@ -1,5 +1,4 @@
-import {Vector} from "./Vector";
-import {Axis} from "./Axis";
+import {Vector} from "./Vector"
 
 export class Rotation {
 
@@ -42,5 +41,9 @@ export class Rotation {
         const y: number = original.x * this.xAxis.y + original.y * this.yAxis.y + original.z * this.zAxis.y
         const z: number = original.x * this.xAxis.z + original.y * this.yAxis.z + original.z * this.zAxis.z
         return new Vector(x, y, z)
+    }
+
+    equals(other: Rotation): boolean {
+        return this.xAxis.equals(other.xAxis) && this.yAxis.equals(other.yAxis) && this.zAxis.equals(other.zAxis)
     }
 }

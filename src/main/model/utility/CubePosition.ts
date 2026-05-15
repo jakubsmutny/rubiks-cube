@@ -1,8 +1,8 @@
-import {Rotation} from "./geometry/Rotation";
-import {RotationFactory} from "./factories/RotationFactory";
-import {Move} from "../manipulation/Move";
-import {Axis} from "./geometry/Axis";
-import {Vector} from "./geometry/Vector";
+import {Rotation} from "./geometry/Rotation"
+import {RotationFactory} from "./factories/RotationFactory"
+import {Move} from "../manipulation/Move"
+import {Axis} from "./geometry/Axis"
+import {Vector} from "./geometry/Vector"
 
 export class CubePosition {
 
@@ -22,6 +22,12 @@ export class CubePosition {
         } else {
             this.rotation = RotationFactory.getDefaultRotation()
         }
+    }
+
+    equals(other: CubePosition): boolean {
+        return this.dimension === other.dimension
+            && this.i === other.i && this.j === other.j && this.k === other.k
+            && this.rotation.equals(other.rotation)
     }
 
     clone(): CubePosition {

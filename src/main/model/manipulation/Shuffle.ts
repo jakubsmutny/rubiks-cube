@@ -3,13 +3,16 @@ import { Move } from './Move';
 export class Shuffle {
 
     moves: Array<Move>
-
     fast: boolean
 
     constructor(moves?: Array<Move>, fast: boolean = false) {
         if(moves) {this.moves = moves}
         else this.moves = new Array<Move>()
         this.fast = fast
+    }
+
+    clone(): Shuffle {
+        return new Shuffle(this.moves.map(move => move.clone()), this.fast)
     }
 
     getInverse(): Shuffle {
@@ -62,5 +65,11 @@ export class Shuffle {
 
     size(): number {
         return this.moves.length
+    }
+
+    equals(other: Shuffle): boolean {
+        return this.moves.length === other.moves.length
+            && this.moves.every((move, index) => move.equals(other.moves[index]))
+            && this.fast === other.fast
     }
 }

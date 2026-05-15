@@ -6,9 +6,9 @@ import {Vector} from "./utility/geometry/Vector"
 import {Observable} from "./utility/observer/Observeble"
 import {Observer} from "./utility/observer/Observer"
 import {Move} from "./manipulation/Move"
-import {Beginners3x3Method} from "./solve/Beginners3x3Method"
-import {SolveMethod} from "./solve/SolveMethod"
-import {EmptyMethod} from "./solve/EmptyMethod"
+import {Beginners3x3Method} from "./method/Beginners3x3Method"
+import {SolveMethod} from "./method/SolveMethod"
+import {EmptyMethod} from "./method/EmptyMethod"
 
 export class CubeModel implements Observable {
 

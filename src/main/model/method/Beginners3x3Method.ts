@@ -122,7 +122,7 @@ export class Beginners3x3Method implements SolveMethod {
     getHint(): Array<Displayable> {
         switch(this.activeStep) {
             case Step.WhiteCross: return [new Heading("White cross (1/8)"),
-                                          new Text("Your task is to solve the white cross intuitively."),
+                                          new Text("Your task is to method the white cross intuitively."),
                                           new Text("Create a white cross on any side of the cube."),
                                           new Text("The best way to do this is to locate the white center piece and try to move the 4 white edges to it one by one. The white center serves as a reference where the white cross will end up."),
                                           new Picture("/white_cross.png")]
@@ -154,7 +154,7 @@ export class Beginners3x3Method implements SolveMethod {
                                            new Text("Repeat this for all 4 edges, if an edge is placed incorrectly, imagine you have the correct edge prepared in the upper layer and perform the notation. This will push the incorrectly placed edge out of the slot to the upper layer, so it's available to place differently."),
                                            new Picture("/middle_layer.png")]
             case Step.YellowCross: return [new Heading("Yellow Cross (5/8)"),
-                                           new Text("Now we need to solve the yellow cross on the upper side. This can be achieved just by applying the following notation. Always keep the white side facing down when applying the notation."),
+                                           new Text("Now we need to method the yellow cross on the upper side. This can be achieved just by applying the following notation. Always keep the white side facing down when applying the notation."),
                                            new Notation("F U R U' R' F'"),
                                            new Text("There are 3 possible cases:"),
                                            new Text("1. There is only the yellow center piece on the upper side - apply the notation with any side facing you (white side needs to face down) and pick the next case."),
@@ -162,7 +162,7 @@ export class Beginners3x3Method implements SolveMethod {
                                            new Text("3. There is a yellow \"L\" on the upper side - apply the notation with the two correct yellow edges being on the left and back of the upper side (white side needs to face down) - this should finish this step."),
                                             new Picture("/yellow_cross.png")]
             case Step.YellowCornerStickers: return [new Heading("Yellow Corner Orientation (6/8)"),
-                                                    new Text("This step will orient the corners and thus solve the yellow side."),
+                                                    new Text("This step will orient the corners and thus method the yellow side."),
                                                     new Text("You need to orient the cube with the white side facing down and any side facing you. Don't change the orientation through the whole step."),
                                                     new Text("The upper left corner is now your working space where you orient the corner, so the yellow side faces up. There are 3 possible cases:"),
                                                     new Text("1. The corner is oriented correctly - you don't need to do anything."),
@@ -183,13 +183,13 @@ export class Beginners3x3Method implements SolveMethod {
                                                 new Picture("/yellow_corners.png")]
             case Step.YellowEdgesRest: return [new Heading("Yellow Edges position (8/8)"),
                                                new Text("In the last step you need to swap some edge pieces on the upper layer."),
-                                               new Text("If all 4 edges are incorrectly placed - apply any of the following notations (with white side facing down) - this should solve one of them."),
+                                               new Text("If all 4 edges are incorrectly placed - apply any of the following notations (with white side facing down) - this should method one of them."),
                                                new Text("Orient the cube with the white side facing down and the solved side facing back. Now there are 2 possible cases:"),
                                                new Text("1. The wrongly placed edge piece in front of you belongs to the left side - apply the following notation."),
                                                new Notation("F2 U L R' F2 L' R U F2"),
                                                new Text("2. The wrongly placed edge piece in front of you belongs to the right side - apply the following notation."),
                                                new Notation("F2 U' L R' F2 L' R U' F2"),
-                                               new Text("This should solve the cube."),
+                                               new Text("This should method the cube."),
                                                new Picture("/yellow_edges.png")]
             default: return [new Heading("Solving tutorial with Hints"),
                              new Text("Hit the Scramble button to start solving with Hints!"),
